@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Created by TIBCO WSDL-->
+<wsdl:definitions xmlns:ns1="http://smubank.smu.edu.sg/schemas/serviceResponseHeader" xmlns:tns="http://xmlns.example.com/1376988003605" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns0="http://smubank.smu.edu.sg/schemas/serviceRequestMessage/" xmlns:jms="http://www.tibco.com/namespaces/ws/2004/soap/binding/JMS" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap1="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:jndi="http://www.tibco.com/namespaces/ws/2004/soap/apis/jndi" name="Untitled" targetNamespace="http://xmlns.example.com/1376988003605">
+    <wsdl:types>
+        <xs:schema xmlns="http://smubank.smu.edu.sg/schemas/serviceResponseHeader" targetNamespace="http://smubank.smu.edu.sg/schemas/serviceResponseHeader" elementFormDefault="qualified" attributeFormDefault="unqualified">
+            <xs:complexType name="ServiceRespHeader">
+                <xs:sequence>
+                    <xs:element ref="ns1:GlobalErrorID"/>
+                    <xs:element ref="ns1:ErrorText"/>
+                    <xs:element ref="ns1:ErrorDetails"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="ErrorDetails" type="xs:string"/>
+            <xs:element name="ErrorText" type="xs:string"/>
+            <xs:element name="GlobalErrorID" type="xs:string"/>
+            <xs:element name="ServiceRespHeader" type="ns1:ServiceRespHeader"/>
+        </xs:schema>
+        <xs:schema xmlns:tns="http://smubank.smu.edu.sg/schemas/serviceRequestMessage/" targetNamespace="http://smubank.smu.edu.sg/schemas/serviceRequestMessage/" elementFormDefault="unqualified" attributeFormDefault="unqualified">
+            <xs:complexType name="Content">
+                <xs:sequence>
+                    <xs:element ref="tns:ServiceReqHeader"/>
+                    <xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax" namespace="##any"/>
+                </xs:sequence>
+                <xs:anyAttribute processContents="lax" namespace="##any"/>
+            </xs:complexType>
+            <xs:complexType name="ServiceReqHeader">
+                <xs:sequence>
+                    <xs:element name="ConsumerID" type="xs:string"/>
+                    <xs:element name="TransactionID" type="xs:string"/>
+                    <xs:element name="RequestUUID" type="xs:string"/>
+                    <xs:element name="OperationName" type="xs:string"/>
+                    <xs:element name="Priority" type="xs:int"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="Content" type="tns:Content"/>
+            <xs:element name="ServiceReqHeader" type="tns:ServiceReqHeader"/>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:service name="MarketData_SpotRate">
+        <wsdl:port name="MarketData_SpotRate_JMSEndpoint" binding="tns:MarketData_SpotRate_JMSEndpointBinding">
+            <soap:address location=""/>
+            <jndi:context>
+                <jndi:property name="java.naming.factory.initial" type="java.lang.String">com.tibco.tibjms.naming.TibjmsInitialContextFactory</jndi:property>
+                <jndi:property name="java.naming.provider.url" type="java.lang.String">tibjmsnaming://localhost:5678</jndi:property>
+            </jndi:context>
+            <jms:connectionFactory>SMUBankQueueConnectionFactory</jms:connectionFactory>
+            <jms:targetAddress destination="queue">marketdata.endpoint</jms:targetAddress>
+        </wsdl:port>
+        <wsdl:port name="MarketData_SpotRate_HTTPEndpoint" binding="tns:MarketData_SpotRate_HTTPEndpointBinding">
+            <soap:address location="http://localhost:9090/MarketData_SpotRate.serviceagent/MarketData_SpotRate_HTTPEndpoint"/>
+        </wsdl:port>
+    </wsdl:service>
+    <wsdl:portType name="MarketData_SpotRate">
+        <wsdl:operation name="MarketData_SpotRate_Read">
+            <wsdl:input message="tns:MarketData_SpotRate_Read-Input"/>
+            <wsdl:output message="tns:MarketData_SpotRate_Read-Output"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="MarketData_SpotRate_JMSEndpointBinding" type="tns:MarketData_SpotRate">
+        <soap:binding style="rpc" transport="http://www.tibco.com/namespaces/ws/2004/soap/binding/JMS"/>
+        <jms:binding messageFormat="Text"/>
+        <wsdl:operation name="MarketData_SpotRate_Read">
+            <soap:operation style="rpc" soapAction="/MarketData_SpotRate.serviceagent/MarketData_SpotRate_JMSEndpoint/MarketData_SpotRate_Read"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="ServiceReqHeader BaseCurrency QuoteCurrency"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="ServiceRespHeader SpotRate"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="MarketData_SpotRate_HTTPEndpointBinding" type="tns:MarketData_SpotRate">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="MarketData_SpotRate_Read">
+            <soap:operation style="rpc" soapAction="/MarketData_SpotRate.serviceagent/MarketData_SpotRate_HTTPEndpoint/MarketData_SpotRate_Read"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="ServiceReqHeader BaseCurrency QuoteCurrency"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="ServiceRespHeader SpotRate"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:message name="MarketData_SpotRate_Read-Input">
+        <wsdl:part name="ServiceReqHeader" type="ns0:ServiceReqHeader"/>
+        <wsdl:part name="BaseCurrency" type="xs:string"/>
+        <wsdl:part name="QuoteCurrency" type="xs:string"/>
+    </wsdl:message>
+    <wsdl:message name="MarketData_SpotRate_Read-Output">
+        <wsdl:part name="ServiceRespHeader" type="ns1:ServiceRespHeader"/>
+        <wsdl:part name="SpotRate" type="xs:string"/>
+    </wsdl:message>
+</wsdl:definitions>

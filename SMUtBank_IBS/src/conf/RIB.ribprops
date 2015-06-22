@@ -1,0 +1,6 @@
+{
+    "Login page":"login.action",
+    "SMSOTP page":"otp2fa.action",
+    "Mobile 2FA page":"Success.jsp",
+    "Main page":"home.action"
+}

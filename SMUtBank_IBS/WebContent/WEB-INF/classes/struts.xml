@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+    <constant name="struts.enable.DynamicMethodInvocation" value="false" />
+    <constant name="struts.devMode" value="false" />
+    <constant name="struts.action.extension" value="action"/> 
+
+    <!-- Add packages here :) -->
+	
+	<package name="com.smutbank.IBS" extends="struts-default">
+		
+		<!-- Interceptors -->
+		<interceptors>
+			<interceptor name="loginInterceptor" class="com.smutbank.IBS.interceptors.LoginInterceptor"></interceptor>
+			<interceptor name="transactionInterceptor" class="com.smutbank.IBS.interceptors.TransactionInterceptor"></interceptor>
+			<interceptor-stack name="fullStack">
+				<interceptor-ref name="loginInterceptor" />
+				<interceptor-ref name="transactionInterceptor" />
+				<interceptor-ref name="defaultStack" />
+			</interceptor-stack>
+			<interceptor-stack name="topHalfStack">
+				<interceptor-ref name="loginInterceptor" />
+				<interceptor-ref name="defaultStack" />
+			</interceptor-stack>
+			<interceptor-stack name="bottomHalfStack">
+				<interceptor-ref name="transactionInterceptor" />
+				<interceptor-ref name="defaultStack" />
+			</interceptor-stack>
+		</interceptors>
+       
+       <!-- Login related Action Mapping -->
+        <action name="login">
+        	<result type="redirect">../SMUtBank_RIB</result>
+        </action>
+        
+        <action name="newM2FA" class="com.smutbank.IBS.actions.Login" method="newM2FA">
+        	<interceptor-ref name="fullStack" />
+        </action>
+        
+        <action name="LoginTransaction" class="com.smutbank.IBS.actions.Login" method="createRmbMobile2FATransaction">
+        	<interceptor-ref name="bottomHalfStack" />
+        </action>
+        
+        <action name="LoginSession" class="com.smutbank.IBS.actions.Login" method="createRmbMobile2FASession">
+        	<interceptor-ref name="bottomHalfStack" />
+        </action>
+        
+         <action name="ribGetMobile2FA" class="com.smutbank.IBS.actions.Login" method="createRibMobile2FASession">
+         	<interceptor-ref name="bottomHalfStack" />
+        </action>
+        
+        <action name="ribGetOTP" class="com.smutbank.IBS.actions.Login" method="createRibSMSOTPTransaction">
+        	<interceptor-ref name="bottomHalfStack" />
+        </action>
+        
+        <action name="ribOTPAuth" class="com.smutbank.IBS.actions.Login" method="createRibSMSOTPSession">
+        	<interceptor-ref name="bottomHalfStack" />
+			<result>${#session['forward']}</result> 
+        </action>
+        
+        <action name="ribLogout" class="com.smutbank.IBS.actions.Login" method="ribInvalidateSession">
+        </action>
+        
+        <action name="rmbInvalidateSession" class="com.smutbank.IBS.actions.Login" method="rmbInvalidateSession">
+        </action>
+        
+        <!-- For Development Use Only 
+        <action name="directLogin" class="com.smutbank.IBS.actions.Login" method="directRIBLogin">
+        </action>
+		-->
+        
+         <!-- QuikPay related Action Mapping -->
+         <action name="ajaxCreateQPTransaction" class="com.smutbank.IBS.actions.QuikPay" method="ajaxCreateQuikPayTransaction">
+        	<interceptor-ref name="fullStack" />
+        </action>
+        
+        <action name="ajaxUpdateQPTransaction" class="com.smutbank.IBS.actions.QuikPay" method="ajaxUpdateQuikPayTransaction">
+        	<interceptor-ref name="fullStack" />
+        </action>
+        
+        <action name="ajaxEffectQPTransaction" class="com.smutbank.IBS.actions.QuikPay" method="ajaxEffectQuikPayTransaction">
+        	<interceptor-ref name="fullStack" />
+        </action>
+        
+        <action name="ajaxGetQPTransaction" class="com.smutbank.IBS.actions.QuikPay" method="ajaxGetQuikPayTransaction">
+        	<interceptor-ref name="fullStack" />
+        </action>
+        
+        <!-- RMSchedule related Action Mapping -->
+        <action name="ajaxCreateRMAppointment" class="com.smutbank.IBS.actions.RMSchedule" method="ajaxCreateRMAppointment">
+        	<interceptor-ref name="fullStack" />
+        </action>
+        <action name="ajaxUpdateRMAppointment" class="com.smutbank.IBS.actions.RMSchedule" method="ajaxUpdateRMAppointment">
+        	<interceptor-ref name="fullStack" />
+        </action>
+        <action name="ajaxDeleteRMAppointment" class="com.smutbank.IBS.actions.RMSchedule" method="ajaxDeleteRMAppointment">
+        	<interceptor-ref name="fullStack" />
+        </action>
+        <action name="ajaxGetAllAppointments" class="com.smutbank.IBS.actions.RMSchedule" method="ajaxGetAllAppointments">
+        	<interceptor-ref name="fullStack" />
+        </action>
+        <action name="ajaxGetInvalidSlots" class="com.smutbank.IBS.actions.RMSchedule" method="ajaxGetInvalidSlots">
+        	<interceptor-ref name="fullStack" />
+        </action>
+        
+        <!-- Verification related Action Mapping -->
+        <action name="initiateVerifyOTP2FA" class="com.smutbank.IBS.actions.Verification" method="initiateVerifyOTP2FA">
+        	<interceptor-ref name="fullStack" />
+        </action>
+        
+         <action name="verifyOTP2FA" class="com.smutbank.IBS.actions.Verification" method="verifyOTP2FA">
+        	<interceptor-ref name="fullStack" />
+        </action>
+        
+         <action name="initiateVerifyMobile2FA" class="com.smutbank.IBS.actions.Verification" method="initiateVerifyMobile2FA">
+        	<interceptor-ref name="fullStack" />
+        </action>
+        
+         <action name="verifyMobile2FA" class="com.smutbank.IBS.actions.Verification" method="verifyMobile2FA">
+        	<interceptor-ref name="fullStack" />
+        </action>
+        
+        <!-- ESB Passthrough related Action Mapping -->
+        <action name="ajaxESBService" class="com.smutbank.IBS.actions.ESBService" method="ajaxESBService">
+        	<interceptor-ref name="fullStack" />
+        </action>
+        
+         <!-- Util related Action Mapping -->
+        <action name="genSCrypt" class="com.smutbank.IBS.actions.Util" method="generateKey">
+        </action>
+        
+        <action name="encodeQR" class="com.smutbank.IBS.actions.Util" method="encodeQR">
+        </action>
+        
+        <action name="getAccStatement" class="com.smutbank.IBS.actions.Util" method="generateAccountStatement">
+        	<interceptor-ref name="topHalfStack" />
+        </action>
+        
+        <action name="getCustomerName" class="com.smutbank.IBS.actions.Util" method="getCustomerName">
+        	<interceptor-ref name="topHalfStack" />
+        </action>
+        
+        <action name="getQRCode" class="com.smutbank.IBS.actions.Util" method="getQRCode">
+        	<interceptor-ref name="topHalfStack" />
+        </action>
+        
+         <!-- Admin related Action Mapping -->
+        <action name="admin" class="com.smutbank.IBS.actions.Admin" method="execute">
+			<result>
+      			/admin.jsp
+    		</result> 
+        </action>
+        
+        <action name="adminUpdate" class="com.smutbank.IBS.actions.Admin" method="update">
+			<result>
+      			/admin.jsp
+    		</result> 
+        </action>
+
+        <!-- System related Action Mapping -->
+         <action name="shutdown" class="com.smutbank.IBS.actions.IBSSystem" method="shutdown">
+         	<result>
+      			/test.jsp
+    		</result> 
+        </action>
+        
+        <action name="startup" class="com.smutbank.IBS.actions.IBSSystem" method="startup">
+        	<result>
+      			/test.jsp
+    		</result> 
+        </action>
+        
+    </package>
+
+</struts>

@@ -1,0 +1,16 @@
+{
+	"verbose":"false",
+	"tBankServerProtocol":"http",
+	"tBankServerIP":"tbankonline.com",
+	"tBankServiceMediationPort":"4567",
+	"tBankServiceMediationPath":"/ServiceMediation",
+	"tBankServiceMediationSoapAction":"/ServiceMediationService.serviceagent/ServiceMediationHTTPEndpoint/ServiceMediationOperation",
+	"SoapContentType":"application/soap+xml;charset\u003dUTF-8;action\u003d",
+	"RestrictedServicesList":"",
+	"ActiveSpacesMemberName":"",
+	"ASDataStorePath":"C:\\IBSData\\ASDatastore",
+	"PDFOutputPath":"C:\\IBSData\\PDFDatastore",
+	"RIBUrl":"http://localhost:8080/SMUtBank_RIB/",
+	"SessionlessChannels":"RMB",
+	"SessionBasedChannels":"RIB,CIB"
+}
