@@ -1,0 +1,2197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="utf-8">
+<title>tBank - Corporate Internet Banking</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<!-- CSS -->
+<link rel="shortcut icon" href="assets/img/tBank.ico">
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,400">
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Droid+Sans">
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lobster">
+<link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="assets/css/flexslider.css">
+<link rel="stylesheet" href="assets/css/font-awesome.css">
+<link rel="stylesheet" href="assets/css/jquery-ui.min.css" />
+<link rel="stylesheet"
+	href="assets/js/scheduler-codebase/dhtmlxscheduler.css">
+<link rel="stylesheet" href="assets/css/style.css">
+
+<script src="assets/js/jquery-2.1.1.js"></script>
+<script src="assets/js/jquery-ui.js"></script>
+<script src="assets/js/papaparse.js"></script>
+<script src="assets/js/jquery.ui.monthpicker.js"></script>
+<script src="assets/js/moment.js"></script>
+<script src="assets/js/jquery.iframe-transport.js"></script>
+<script src="assets/js/jquery.fileupload.js"></script>
+<script src="assets/js/highcharts.js"></script>
+<script src="assets/js/highcharts-exporting.js"></script>
+<script src="assets/js/scheduler-codebase/dhtmlxscheduler.js"></script>
+<script
+	src="assets/js/scheduler-codebase/ext/dhtmlxscheduler_container_autoresize.js"></script>
+<script src="assets/js/scheduler-codebase/ext/dhtmlxscheduler_limit.js"></script>
+<script
+	src="assets/js/scheduler-codebase/ext/dhtmlxscheduler_collision.js"></script>
+<script src="assets/js/stencil.js"></script>
+<script src="assets/js/accountsDashboard.js"></script>
+<script src="assets/js/login.js"></script>
+<script src="assets/js/accounts.js"></script>
+<script src="assets/js/fundTransfer.js"></script>
+<script src="assets/js/loans.js"></script>
+<script src="assets/js/profile.js"></script>
+<script src="assets/js/trade.js"></script>
+<script src="assets/js/verify.js"></script>
+<script src="assets/js/network.js"></script>
+<script src="assets/js/ui.js"></script>
+<script src="assets/js/system.js"></script>
+<script src="assets/js/fileUpload.js"></script>
+
+<script>
+            window.onload = function(){
+                system.init();
+            };
+</script>
+</head>
+
+<body>
+
+	<!-- Header -->
+	<div id="mainHeader" class="page-title"
+		style="padding: 20px; display: none; background-color: #000000;">
+		<stencil id="loginHeader">
+		<div class="container">
+			<div class="row">
+				<div class="span12">
+					<img style="width: 150px; margin-left: 30px"
+						src="assets/img/logo.png">
+				</div>
+			</div>
+		</div>
+		</stencil>
+		<stencil id="pageHeader">
+		<div class="header">
+			<div class="navbar">
+				<a class="btn btn-navbar" data-toggle="collapse"
+					data-target=".nav-collapse"></a>
+				<h1>
+					<a class="brand" href="home.action"></a><br> <font size="3"
+						style="color: white; vertical-align: text-top">Welcome
+						{{name}}</font>
+				</h1>
+				<div class="nav-collapse collapse">
+					<ul id="navIcons" class="nav pull-right">
+						<li><a onclick="system.home.start();"> <i
+								class="icon-home"></i><br />Home<br />&nbsp;
+						</a></li>
+						<li><a onclick="system.accounts.start();"><i
+								class="icon-list-alt"></i> <br>view<br> account<br>
+						</a></li>
+						<li><a onclick="system.fundTransfer.start();"><i
+								class="icon-retweet"></i> <br />fund<br/ > transfer<br />
+						</a></li>
+						<li><a onclick="system.loans.start();"><i
+								class="icon-money"></i> <br />Payments<br />  <br />   
+						</a></li>
+						<li><a onclick="system.trade.start();"><i
+								class="icon-globe"></i> <br />trade<br /> finance<br />
+						</a></li>
+						<li><a onclick="system.profile.start();"><i
+								class="icon-user"></i> <br />profile<br/ > settings<br />
+						</a></li>
+						<li><a onclick="system.login.logout();"><i
+								class="icon-signin"></i> <br />logout<br />&nbsp; </a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		</stencil>
+	</div>
+
+	<!-- MAIN -->
+	<div id="mainframe" style="display: none;">
+		<div id="main" style="display: none;"></div>
+		<!-- UI Stencils -->
+		<stencil id="loadingPage">
+		<div id="loadingContainer"
+			style="display: flex; flex-direction: column; align-items: center; font-size: large; height: 400px; justify-content: center; color: #1A2155;">
+			<div>
+				<span id="title">Loading... </span> <span id="completion">0%</span>
+			</div>
+			<div id="loadingBarOuter"
+				style="height: 3px; width: 200px; margin-top: 5px; border-left: 1px solid #1A2155; border-right: 1px solid #1A2155; display: flex; flex-direction: column; justify-content: center;">
+				<div id="loadingBarInner"
+					style="background-color: #1A2155; width: 0%; height: 1px; transition: width 0.5s;"></div>
+			</div>
+			<div id="message" style="margin-top: 5px; font-size: small;">
+				&nbsp;</div>
+		</div>
+		</stencil>
+		<!-- Login Stencils -->
+		<stencil id="loginMain">
+		<div class="contact-us container">
+			<div class="row">
+				<div class="contact-form span7" style="float: left">
+					<br> <span id="authDiag"></span>
+				</div>
+				<div id="advert"
+					style="float: left; width: 420px; height: 420px; color: firebrick; font-size: 40px; line-height: 40px; text-align: center; padding-top: 50px">
+					<div>Download the tBank Mobile App today!</div>
+					<div>
+						<img
+							src="../SMUtBank_IBS/encodeQR.action?height=300&ecl=H&content=https://tbankonline.com/SMUtBank_IBS/downloads.html">
+					</div>
+				</div>
+			</div>
+		</div>
+		</stencil>
+		<stencil id="loginAuthDialog">
+		<p>
+			<img src="assets/img/header-title.png" width="357" height="155"
+				alt="" />
+		</p>
+		<br />
+		<p>
+			<font color="#1A2155"><i>Please enter your login
+					credentials.</i></font>
+		</p>
+		<p id="status">{{status}}</p>
+		<div class="form">
+			<input type="text" required id="username" placeholder="Username"
+				autofocus="autofocus"> <input type="password" required
+				id="password" placeholder="PIN">
+		</div>
+		<p>
+			<button onclick="login.doMobile2faTransaction()">
+				<i class="icon-qrcode"></i>&nbsp;&nbsp;LOGIN with <b>MOBILE 2FA</b>
+			</button>
+			&nbsp;&nbsp;
+			<button onclick="login.createSMSOTP()">
+				<i class="icon-lock"></i>&nbsp;&nbsp;LOGIN with <b>SMS OTP</b>
+			</button>
+		</p>
+		</stencil>
+		<stencil id="mobile2faDialog">
+		<p>
+			<strong>Mobile 2FA Authentication</strong>
+		</p>
+		<p id="mainMessage">
+			Your mobile 2FA login transaction has been initiated, you have <b><i
+				id="timeLeft">{{timeoutLength}}</i></b> seconds to complete
+			authentication
+		<p>Please scan the onscreen QR code first before scanning your 2FA
+			QR code</p>
+		<p style="color: red">
+			<i id="statusMessage">Waiting for mobile authentication</i>
+		</p>
+		<img
+			src="../SMUtBank_IBS/encodeQR.action?height=200&ecl=H&content={{challengeID}}"></img>
+		<div>
+			<button id="m2faCancel" onclick="login.cancelAuth()">CANCEL</button>
+		</div>
+		</stencil>
+		<stencil id="smsotpDialog">
+		<p>
+			<img src="assets/img/smart_phone_icon.png" width="30" height="30" /><strong>&nbsp;One-Time
+				Password</strong>
+		</p>
+		<p>
+			<i id="statusMessage">Please enter your 6-digit One-Time Password
+				(OTP):</i>
+		</p>
+		<div class="form">
+			<input type="password" required id="otp"
+				placeholder="6-digit One-Time Password (OTP)">
+		</div>
+		<p>
+			<button id="otpButton" onclick="login.doSMSOTP()">CONFIRM</button>
+		</p>
+		<br>
+		<p>
+			<font color="#990000"><b>NOTE:</b></font> If you do not receive your
+			OTP via SMS within the next few minutes, please click <a
+				onclick="system.login.start();">HERE TO LOGIN</a> again
+		</p>
+		</stencil>
+
+		<!-- Home Stencils -->
+		<stencil id="homeMain">
+		<div style="width: 1150px; height: 450px; margin: 0px auto;">
+			<h3 style="text-align: center">
+				<font face="Georgia, Palatino, Times New Roman" size="6"
+					style="vertical-align: text-bottom; line-height: 30%; color: #CDA500;">my<font
+					color="#00CCFF">dashboard</font></font>
+			</h3>
+			<br />
+			<hr>
+			<br /> <br />
+			<div id="monthlyBalanceChart"
+				style="width: 750px; height: 400px; float: left"></div>
+			<div id="accountsOverviewChart"
+				style="width: 400px; height: 400px; float: left"></div>
+		</div>
+		<div style="height: 140px">&nbsp;</div>
+		</stencil>
+
+		<!-- Accounts Stencils -->
+		<stencil id="accountsMain">
+		<div class="services-full-width container">
+			<div class="row">
+				<div class="services-full-width-text span12"
+					style="text-align: center">
+					<h3>
+						<font face="Georgia, Palatino, Times New Roman" size="6"
+							style="vertical-align: text-bottom; line-height: 10%; color: #CDA500;">view<font
+							color="#00CCFF">account</font></font> <br /> <i class="icon-desktop"></i><font
+							color="#1A2155" size="2"><i class="icon-list-ol"></i>&nbsp;&nbsp;View
+							Deposit/Loan Account(s)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i
+							class="icon-check"></i>&nbsp;&nbsp;Check Transaction History</font>
+					</h3>
+					<hr>
+					<span style="font-size: medium"><b style="color: #9d426b">Note:</b>
+						Click on the items to view account transaction history</span>
+					<div style="text-align: center; width: 90%; margin: 0 auto">
+						<!-- CASA -->
+						<div class="accountType">
+							<h2 style="text-align: left">
+								<span>Deposit Accounts</span>
+							</h2>
+							<div class="accountItem" id="CASAAccountsList"></div>
+							<br>
+							<h2 style="text-align: left">
+								<span>Loan Accounts</span>
+							</h2>
+							<div class="accountItem" id="LoanAccountsList"></div>
+							<br>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div style="height: 80px">&nbsp;</div>
+		</div>
+		</stencil>
+		<stencil id="casaTile">
+		<div class="accountTiles" style="margin-left: 53px;">
+			<span class="accountItemHeader" style="cursor: pointer">
+				<table width="1000" cellpadding="15">
+					<tr bgcolor="#f8f8f8">
+						<td
+							style="border-left-style: solid; border-left-width: thick; border-left-color: #9d426b"></td>
+						<td width="750px" align="left"><font
+							face="Open Sans, Helvetica, Arial, sans-serif" size="+3">{{productName}}
+								Account</font><br> <font
+							face="Open Sans, Helvetica, Arial, sans-serif" size="+1">A/C
+								No.: {{accountNumber}}</font></td>
+						<td width="275px" align="left"><font
+							face="Open Sans, Helvetica, Arial, sans-serif" size="+1">Available
+								Balance</font><br /> <font
+							face="Open Sans, Helvetica, Arial, sans-serif" color="green"
+							size="+3"><span style="font-size: large">{{currency}}</span>
+								${{balance}}</font></td>
+					</tr>
+				</table>
+			</span>
+		</div>
+		<div class="acccountItemInfo" style="margin-left: 53px;">
+			<table
+				style="font-family: Arial, Helvetica, sans-serif; max-width: 1000px">
+				<tr>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+				</tr>
+				<tr>
+					<td style="text-align: left"><font size="+1">Sort
+							Transactions</font></td>
+					<td style="text-align: left"><font size="+2">Transaction
+							History</font></td>
+				</tr>
+				<tr>
+					<td width="400px" style="text-align: left; vertical-align: top">
+						<!-- Search option --> <b>Range</b><br /> <input type="radio"
+						name="data_range{{accountNumber}}" value="thisMonth"
+						checked="checked">Current month<br> <input
+						type="radio" name="data_range{{accountNumber}}" value="plusOne">Last
+						1 month and current month<br> <input type="radio"
+						name="data_range{{accountNumber}}" value="plusTwo">Last 2
+						months and current month<br> <input type="radio"
+						name="data_range{{accountNumber}}" value="range"> From
+						&nbsp;<input readonly style="width: 100px" class="dateBox"
+						type="text" id="startDate{{accountNumber}}">&nbsp;To
+						&nbsp;<input readonly style="width: 100px" class="dateBox"
+						type="text" id="endDate{{accountNumber}}">
+
+						<div style="display: none">
+							<br> <b>Sort order</b><br> <input type="radio"
+								name="sort_transaction{{accountNumber}}" value="ascending">Sort
+							by ascending date order<br> <input type="radio"
+								name="sort_transaction{{accountNumber}}" value="descending"
+								checked="checked">Sort by descending date order
+						</div>
+						<button style="width: 360px"
+							onclick="accounts.getTransactionHistory('{{accountNumber}}')">UPDATE</button>
+						<br /> <br /> <font size="+1">Account Statement</font><br />
+						Choose a month & year &nbsp;<input readonly style="width: 100px"
+						class="dateMonthBox" type="text"
+						id="accStateDate{{accountNumber}}">
+						<button style="width: 360px"
+							onclick="accounts.getAccountStatement('{{accountNumber}}')">VIEW
+							ACCOUNT STATEMENT</button>
+					</td>
+					<!-- end of searh option -->
+
+					<td valign="top" rowspan="2">
+						<!-- Transaction history results table-->
+						<table class="zebra" width="615px"
+							id="transactionHistory{{accountNumber}}">
+						</table> <!-- END of Transaction history results table-->
+					</td>
+				</tr>
+			</table>
+		</div>
+		<br>
+		</stencil>
+		<stencil id="tdTile">
+		<div class="accountTiles" style="margin-left: 53px;">
+			<span class="accountItemHeader" style="cursor: pointer">
+				<table width="1000" cellpadding="15">
+					<tr bgcolor="#f8f8f8">
+						<td
+							style="border-left-style: solid; border-left-width: thick; border-left-color: #9d426b"></td>
+						<td width="750px" align="left"><font
+							face="Open Sans, Helvetica, Arial, sans-serif" size="+3">{{productName}}</font><br>
+							<font face="Open Sans, Helvetica, Arial, sans-serif" size="+1">A/C
+								No.: {{accountNumber}}</font></td>
+						<td width="275px" align="left"><font
+							face="Open Sans, Helvetica, Arial, sans-serif" size="+1">Available
+								Balance</font><br /> <font
+							face="Open Sans, Helvetica, Arial, sans-serif" color="green"
+							size="+3"><span style="font-size: large">{{currency}}</span>
+								${{balance}}</font></td>
+					</tr>
+				</table>
+			</span>
+		</div>
+		<div class="acccountItemInfo" style="padding-left: 53px;">
+			<table
+				style="margin-left: auto; margin-right: auto; max-width: 950px;">
+				<tbody style="text-align: left; font-size: 15px">
+					<tr>
+						<td>&nbsp;</td>
+					</tr>
+					<tr>
+						<td
+							style="border-bottom: thin; border-bottom-style: solid; color: #858585; width: 25%">Interest
+							Rate</td>
+						<td style="width: 13%"></td>
+						<td
+							style="border-bottom: thin; border-bottom-style: solid; color: #858585; width: 25%">Penalty
+							Rate</td>
+						<td colspan="2"></td>
+					</tr>
+					<tr>
+						<td style="font-size: 28px; color: #1A2155">{{interestRate}}%
+							p.a.</td>
+						<td></td>
+						<td style="font-size: 28px; color: #1A2155">{{penaltyRate}}%
+							p.a.</td>
+						<td colspan="2"></td>
+					</tr>
+					<tr>
+						<th height="20" colspan="5"></th>
+					</tr>
+					<tr>
+						<td
+							style="border-bottom: thin; border-bottom-style: solid; color: #858585">Maturity
+							Date</td>
+						<td></td>
+						<td
+							style="border-bottom: thin; border-bottom-style: solid; color: #858585">Loan
+							Term (months)</td>
+						<td></td>
+						<td width="204"
+							style="border-bottom: thin; border-bottom-style: solid; color: #858585">Interest
+							Payout Account</td>
+					</tr>
+					<tr>
+						<td style="font-size: 28px; color: #1A2155; padding-top: 5px">{{maturityDate}}</td>
+						<td></td>
+						<td style="font-size: 28px; color: #1A2155; padding-top: 5px">{{depositTerm}}</td>
+						<td width="120"></td>
+						<td width="204" rowspan="2"
+							style="font-size: 28px; color: #1A2155; padding-top: 5px">{{interestPayoutAccount}}<br>
+						</td>
+					</tr>
+					<tr>
+						<th height="20" colspan="5"></th>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<br>
+		</stencil>
+		<stencil id="loanTile">
+		<div class="accountTiles" style="margin-left: 53px;">
+			<span class="accountItemHeader" style="cursor: pointer">
+				<table width="1000" cellpadding="15">
+					<tr bgcolor="#f8f8f8">
+						<td id="loanStatusHeader{{accountNumber}}"
+							style="border-left-style: solid; border-left-width: thick; border-left-color: {{statusColour">{{status}}</td>
+						<td width="750px" align="left"><font
+							face="Open Sans, Helvetica, Arial, sans-serif" size="+3">{{productName}}
+								- {{title}}</font><br> <font
+							face="Open Sans, Helvetica, Arial, sans-serif" size="+1">A/C
+								No.: {{accountNumber}}</font></td>
+						<td width="275px" align="left"><font
+							face="Open Sans, Helvetica, Arial, sans-serif" size="+1">Remaining
+								Balance</font><br /> <font
+							face="Open Sans, Helvetica, Arial, sans-serif" color="green"
+							size="+3"><span style="font-size: large">{{currency}}</span>
+								${{balance}}</font></td>
+					</tr>
+				</table>
+			</span>
+		</div>
+		<div class="acccountItemInfo" style="padding-left: 53px;">
+			<table
+				style="margin-left: auto; margin-right: auto; max-width: 950px;">
+				<tbody style="text-align: left; font-size: 15px">
+					<tr>
+						<td>&nbsp;</td>
+					</tr>
+					<tr>
+						<td
+							style="border-bottom: thin; border-bottom-style: solid; color: #858585; width: 25%">Asset
+							Value</td>
+						<td style="width: 13%"></td>
+						<td
+							style="border-bottom: thin; border-bottom-style: solid; color: #858585; width: 25%">Interest
+							Rate</td>
+						<td colspan="2"></td>
+					</tr>
+					<tr>
+						<td style="color: #00C459; padding-top: 5px">{{currency}}<span
+							style="font-size: 30px;"> ${{assetValue}}</span></td>
+						<td></td>
+						<td style="font-size: 28px; color: #1A2155">{{interestRate}}%
+							p.a.</td>
+						<td colspan="2"></td>
+					</tr>
+					<tr>
+						<th height="20" colspan="5"></th>
+					</tr>
+					<tr>
+						<td
+							style="border-bottom: thin; border-bottom-style: solid; color: #858585">Maturity
+							Date</td>
+						<td></td>
+						<td
+							style="border-bottom: thin; border-bottom-style: solid; color: #858585">Loan
+							Term (months)</td>
+						<td></td>
+						<td width="204"
+							style="border-bottom: thin; border-bottom-style: solid; color: #858585">Settlement
+							Account</td>
+					</tr>
+					<tr>
+						<td style="font-size: 28px; color: #1A2155; padding-top: 5px">{{maturityDate}}</td>
+						<td></td>
+						<td style="font-size: 28px; color: #1A2155; padding-top: 5px">{{loanTerm}}</td>
+						<td width="120"></td>
+						<td width="204" rowspan="2"
+							style="font-size: 28px; color: #1A2155; padding-top: 5px">{{settlementAccount}}<br>
+							<button id="repaymentButton{{accountNumber}}"
+								style="width: 200px; {{repaymentStyle}}"
+								onclick="system.loans.start(); loans.buildLoanRepayment('{{accountNumber}}')">REPAYMENT
+								OPTIONS</button>
+						</td>
+					</tr>
+					<tr>
+						<th height="20" colspan="5"></th>
+					</tr>
+					<tr>
+						<td width="170"
+							style="border-bottom: thin; border-bottom-style: solid; color: #858585">Installment
+							Amount
+						</th>
+						<td></td>
+						<td width="170"
+							style="border-bottom: thin; border-bottom-style: solid; color: #858585">Disbursement
+							Amount</td>
+						<td colspan="2"></td>
+					</tr>
+					<tr>
+						<td height="37" style="color: #1A2155;">{{currency}}<span
+							style="font-size: 30px; color: #1A2155">
+								${{installmentAmount}}</span></td>
+						<td></td>
+						<td style="color: #1A2155;">{{currency}}<span
+							style="font-size: 30px;"> ${{disbursementAmount}}</span></td>
+						<td colspan="2"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<br>
+		</stencil>
+		<stencil id="transactionHistory">
+		<table class="zebra" width="615px"
+			id="transactionHistory{{accountNumber}}">
+			<thead>
+				<tr style="border-bottom: solid">
+					<th style="width: 80px; text-align: left">Date</th>
+					<th style="width: 30px; text-align: left">Type</th>
+					<th style="width: 180px; text-align: left">Description</th>
+					<th style="width: 60px; text-align: right">Debit</th>
+					<th style="width: 60px; text-align: right">Credit</th>
+					<th style="width: 80px; text-align: right">Balance</th>
+				</tr>
+			</thead>
+			<tbody id="transactions">
+				<tr>
+					<td style="text-align: left">{{transactionDate}}</td>
+					<td style="text-align: left"><span
+						style="font-weight: bold; color: #1A2155">{{transactionType}}</span></td>
+					<td style="text-align: left">{{transactionDescription}}</td>
+					<td style="color: #F00; text-align: right; font-weight: bold">{{debitAmount}}</span></td>
+					<td style="color: green; text-align: right; font-weight: bold">{{creditAmount}}</td>
+					<td style="color: #CDA500; text-align: right; font-weight: bold">{{interimBalance}}</td>
+				</tr>
+			</tbody>
+			<tr style="background-color: white; {{pagingStyle}}">
+				<td colspan="2"
+					onclick="accounts.getTransactionHistory('{{accountNumber}}',({{pageNumber}}-1))"
+					style="cursor: pointer; text-align: left; padding-left: 50px; {{prevPageStyle}}"><b>Previous
+						page</b></td>
+				<td colspan="2"></td>
+				<td colspan="2"
+					onclick="accounts.getTransactionHistory('{{accountNumber}}',({{pageNumber}}+1))"
+					style="cursor: pointer; text-align: right; padding-right: 50px; {{nextPageStyle}}"><b>Next
+						page</b></td>
+			</tr>
+			<tfoot>
+				<tr>
+					<td colspan="6"></td>
+				</tr>
+			</tfoot>
+		</table>
+		</stencil>
+
+		<!-- Funds Transfer Stencils-->
+		<stencil id="fundTransferMain">
+		<div class="contact-us container">
+			<div class="row">
+				<!-- Funds Transfer MAIN-->
+				<div class="contact-form span7" id="mainTable"
+					style="text-align: center"></div>
+				<!-- SUMMARY FURTURE/RECURRING TRANSFER -->
+				<div class="contact-address span5">
+					<div class="contact-form"
+						style="border-left-style: double; border-color: #1A2155; border-width: thick; padding-left: 10px">
+						<!-- Recurring header -->
+						<i class="icon-align-justify icon-4x"></i><font face="sans-serif"
+							size="4"
+							style="vertical-align: text-bottom; line-height: 10%; color: #900; font-family: Georgia, Palatino, Times New Roman;">
+							<font size="+3" style="line-height: 80%;">STANDING <br />INSTRUCTIONS
+						</font><br /> RECURRING / FUTURE FUND TRANSFER
+						</font><br /> <br /> <span class="instructions"> <b><u>CTRL-CLICK</u></b>
+							to perform multiple selction.
+						</span><br /> <br />
+						<!-- table header-->
+						<table style="width: 97%">
+							<tr align="left" style="border-bottom: solid">
+								<th style="width: 25%">Payee</th>
+								<th style="width: 20%">Type</th>
+								<th style="width: 28%">Amount</th>
+								<th style="width: 27%">Date/Time</th>
+							</tr>
+						</table>
+						<!-- table entries -->
+						<div style="max-height: 300px; width: 100%; overflow: auto;">
+							<ol class="ui-accordion" id="standingInstList">
+							</ol>
+						</div>
+
+						<button onclick="standingInst.buildEditSITable()" id="doSIEdit"
+							style="display: none">EDIT</button>
+						&nbsp;&nbsp;
+						<button id="doSIDelete" onclick="standingInst.confirmDeleteSI()"
+							style="background-color: #900; display: none">CANCEL
+							TRANSFER</button>
+						<div id="siStatus" style="font-size: medium; color: green"></div>
+					</div>
+
+					<div class="contact-form"
+						style="border-left-style: double; border-color: #1A2155; border-width: thick; padding-left: 10px">
+						<!-- GIRO header -->
+						<font face="sans-serif" size="4"
+							style="vertical-align: text-bottom; line-height: 10%; color: #900; font-family: Georgia, Palatino, Times New Roman;">
+							GIRO AUTHORIZATIONS</font><br /> <br /> <span class="instructions">
+							<b><u>CTRL-CLICK</u></b> to perform multiple selction.
+						</span><br /> <br />
+
+						<!-- table header-->
+						<table style="width: 97%">
+							<tr align="left" style="border-bottom: solid">
+								<th style="width: 50%">Payee</th>
+								<th style="width: 50%">Account Debit</th>
+							</tr>
+						</table>
+						<!-- table entries -->
+						<div style="max-height: 300px; width: 100%; overflow: auto;">
+							<ol class="ui-accordion" id="giroList">
+							</ol>
+						</div>
+						<button id="doGiroDelete" onclick="billingOrg.confirmDeleteGiro()"
+							style="background-color: #900; display: none">CANCEL
+							GIRO</button>
+						<div id="giroStatus" style="font-size: medium; color: green"></div>
+					</div>
+				</div>
+				<!-- end of summary fund transfer -->
+			</div>
+			<div style="height: 80px">&nbsp;</div>
+		</div>
+		</stencil>
+		<stencil id="fundTransferMenu"> <font
+			face="Georgia, Palatino, Times New Roman" size="6"
+			style="vertical-align: text-bottom; line-height: 10%; color: #CDA500;">fund<font
+			color="#00CCFF">transfer</font></font> <br>
+		<br>
+		<font color="#1A2155" size="2">1. &nbsp;<i class="icon-ok"></i>&nbsp;&nbsp;Choose
+			payee / billing org&nbsp;&nbsp;&nbsp;&nbsp;
+		</font> <font color="#CCCCCC" size="2">2. &nbsp;<i class="icon-user"
+			style="color: #CCCCCC"></i>&nbsp;&nbsp;Select
+			payee&nbsp;&nbsp;&nbsp;&nbsp;
+		</font> <font color="#CCCCCC" size="2">3. &nbsp;<i class="icon-tasks"
+			style="color: #CCCCCC"></i>&nbsp;&nbsp;Enter Transfer Details
+		</font>
+		<hr>
+
+		<p>
+			<b style="color: #9d426b">Instructions: </b>Choose from the following
+			options to proceed to fund transfer.
+		</p>
+		<div class="team-text menuTiles" style="width: 30%"
+			onclick="fundTransfer.buildBeneficiaryTable(false, true);">
+			<img src="assets/img/myAcc.png" alt="">
+		</div>
+		<div class="team-text menuTiles" style="width: 30%"
+			onclick="fundTransfer.buildBeneficiaryTable();">
+			<img src="assets/img/otherAcc.png" alt="">
+		</div>
+		<div class="team-text menuTiles" style="width: 30%"
+			onclick="billingOrg.buildOrgList()">
+			<img src="assets/img/billingOrg.png" alt="">
+		</div>
+		</stencil>
+		<stencil id="beneficiaryPage"> <font
+			face="Georgia, Palatino, Times New Roman" size="6"
+			style="vertical-align: text-bottom; line-height: 10%; color: #CDA500;">fund<font
+			color="#00CCFF">transfer</font></font> <br>
+		<br>
+		<font color="#CCCCCC" size="2">1. &nbsp;<i class="icon-ok"
+			style="color: #CCCCCC"></i>&nbsp;&nbsp;Choose payee / billing
+			org&nbsp;&nbsp;&nbsp;&nbsp;
+		</font> <font color="#1A2155" size="2">2. &nbsp;<i class="icon-user"></i>&nbsp;&nbsp;Select
+			{{keyword}}&nbsp;&nbsp;&nbsp;&nbsp;
+		</font> <font color="#CCCCCC" size="2">3. &nbsp;<i class="icon-tasks"
+			style="color: #CCCCCC"></i>&nbsp;&nbsp;Enter Transfer Details
+		</font>
+		<hr>
+
+		<!-- add beneficiary -->
+		<button id="addBeneficiary" onclick="fundTransfer.addBeneficiary()"
+			style="background-color: #009900;">
+			+ <i class="icon-user"></i>&nbsp;ADD PAYEE
+		</button>
+		<p>
+			<b style="color: #9d426b">Instructions: </b>Select one or more
+			{{keywordPlural}} (Ctrl-Click) before making a transfer.
+		</p>
+		<div class="team-text-no-hover span6"
+			style="width: 90%; margin: 10px auto; float: none; padding-top: 1px">
+			<h4>
+				<b>{{listName}}</b>
+			</h4>
+			<ol class="ui-accordion" id="beneficiaryList">
+				<stencil id="beneficiaries">
+				<li
+					style="cursor: pointer; width: 104.5%; border-top-style: solid; border-width: 1px; border-color: #999"
+					class="ui-widget-content" id="beneficiaryIndex{{ctIdx}}">
+					<table style="width: 104.5%">
+						<tr>
+							<td style="width: 50%">{{beneficiaryName}}</td>
+							<td style="width: 50%">A/C No.:
+								{{beneficiaryAccountNumber}}&nbsp;&nbsp;{{beneficiaryAccountCurrency}}</td>
+						</tr>
+					</table>
+				</li>
+				</stencil>
+			</ol>
+		</div>
+		<button id="backToMain" onclick="fundTransfer.buildFundTransferMenu()">BACK</button>
+		<span>&nbsp;&nbsp;</span>
+		<button id="buildTransfers">
+			<i class="icon-tasks"></i>&nbsp;PROCEED TO TRANSFER
+		</button>
+		<span>&nbsp;&nbsp;</span>
+		<button id="deleteBeneficiary"
+			onclick="fundTransfer.confirmDeleteBeneficiary()"
+			style="background-color: #900;">
+			<i class="icon-remove"></i>&nbsp;DELETE PAYEE(S)
+		</button>
+		<br>
+		<div id="beneficiaryStatus" style="font-size: medium; color: green">
+		</div>
+		</stencil>
+		<stencil id="addBeneficiary">
+		<div class="form">
+			<table>
+				<tr>
+					<th>Payee</th>
+					<th>:</th>
+					<td><input id="createPayeeDesc" placeholder="Name" /></td>
+				</tr>
+				<th>CASA Account</th>
+				<th>:</th>
+				<td><input id="createPayeeAccountID"
+					placeholder="0000000205 or 205" /></td>
+				</tr>
+			</table>
+		</div>
+		<div id="createPayeeStatus">&nbsp;</div>
+		<button onclick="fundTransfer.addNewBeneficiary()">CREATE
+			PAYEE</button>
+		</stencil>
+		<stencil id="deleteConfirmation">
+		<div>Are you sure you want to delete the following?</div>
+		<ol>
+			<stencil id="items">
+			<li><b>{{itemLeft}} - {{itemRight}}</b></li>
+			</stencil>
+		</ol>
+		<p>
+			<b>*Any outstanding future/recurring transfers will be deleted!*</b>
+		</p>
+		<button onclick="{{onclick}} ui.closePopup();">DELETE</button>
+		</stencil>
+		<stencil id="standingInstructionsList">
+		<li class="ui-widget-content" id="standingIndex{{ctIdx}}"
+			style="width: 100%; border-bottom-style: solid; border-width: 1px; border-bottom-color: #999">
+			<table style="cursor: pointer; width: 100%">
+				<tr>
+					<td style="width: 25%; overflow: hidden; white-space: nowrap"
+						valign="top">{{beneficiaryName}}</td>
+					<td style="width: 20%; overflow: hidden; white-space: nowrap"
+						valign="top">{{recurrenceType}}</td>
+					<td style="width: 30%; overflow: hidden; white-space: nowrap">{{currency}}&nbsp;{{amount}}<br>{{description}}
+					</td>
+					<td style="width: 25%; overflow: hidden; white-space: nowrap">{{nextDateTime}}</td>
+				</tr>
+			</table>
+		</li>
+		</stencil>
+		<stencil id="transfersPage"> <font
+			face="Georgia, Palatino, Times New Roman" size="6"
+			style="vertical-align: text-bottom; line-height: 10%; color: #CDA500;">fund<font
+			color="#00CCFF">transfer</font></font> <br />
+		<br />
+		<font color="#CCCCCC" size="2">1. &nbsp;<i class="icon-ok"
+			style="color: #CCCCCC"></i>&nbsp;&nbsp;Choose payee / billing
+			org&nbsp;&nbsp;&nbsp;&nbsp;
+		</font> <font color="#CCCCCC" size="2">2. &nbsp;<i class="icon-user"
+			style="color: #CCCCCC"></i>&nbsp;&nbsp;Select
+			{{keyword}}&nbsp;&nbsp;&nbsp;&nbsp;
+		</font> <font color="#1A2155" size="2">3. &nbsp;<i class="icon-tasks"></i>&nbsp;&nbsp;Enter
+			Transfer Details
+		</font>
+		<hr>
+		<!-- instructions -->
+		<p>
+			<b style="color: #9d426b">Note: </b>Please ensure that all fields are
+			completed
+		</p>
+		<!-- transfer entry -->
+		<div id="transferTable"></div>
+		<button id="back" onclick="fundTransfer.buildBeneficiaryTable();">BACK</button>
+		<span>&nbsp;&nbsp;</span>
+		<button id="doTransfers" onclick="fundTransfer.doTransfers();"
+			style="background-color: #900">SUBMIT</button>
+		<span>&nbsp;&nbsp;</span> <img id="learningCubeFT"
+			class="learningCube" src="assets/img/tBank.ico"
+			onclick="window.open(\'assets/learning/FundTransfer-OtherAccount.pdf\', \'_blank\', \'toolbar=0,location=0,menubar=0\')"></img>
+		</stencil>
+		<stencil id="transferItems">
+		<div class="team-text span6" id="transferStatusColour{{lpIdx}}"
+			style="margin: 10px auto; float: none;">
+			<br />
+			<table style="text-align: left; width: 100%">
+				<tr>
+					<td style="width: 3%"></td>
+					<td colspan="6"><font size="+1" color="#9d426b"><b>To:
+						</b>{{beneficiaryName}} [A/C No.: <span
+							id="benefciaryAccountID{{lpIdx}}">{{beneficiaryAccountNumber}}</span>
+							{{beneficiaryAccountCurrency}}]</font></td>
+				</tr>
+				<tr>
+					<td height="75"></td>
+					<td>From account <select id="accountList{{lpIdx}}"
+						data-stencilselector="usingAccount" style="width: 100%"
+						onchange="fundTransfer.updateAccCurrency(this.getAttribute('id').replace(/[^0-9]+/ig,''), this[this.selectedIndex].value)">
+							<option value="{{accountNumber}}">{{productName}}
+								{{accountNumber}} - {{accountCurrency}}${{accountBalance}}</option>
+					</select>
+					</td>
+					<td style="width: 5%"></td>
+					<td colspan="4">Amount (<span id="transferCurrency{{lpIdx}}">{{accountCurrency}}</span>)<input
+						style id="transferAmount{{lpIdx}}" value="{{amount}}" type="text"
+						placeholder="dollars.cents"></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>Transfer Type&nbsp;&nbsp;&nbsp;&nbsp; <select
+						id="transferType{{lpIdx}}"
+						data-stencilselector="usingTransferType" style="width: 100%"
+						onchange="fundTransfer.updateTransferType(this.getAttribute('id').replace(/[^0-9]+/ig,''),this[this.selectedIndex].value)">
+							<option value="{{transferType}}">{{transferType}}</option>
+					</select>
+					</td>
+					<td>&nbsp;</td>
+					<td colspan="4"><span>{{descriptionLabel}}</span> <input
+						id="transferDesc{{lpIdx}}" value="{{description}}" type="text"
+						placeholder="{{descriptionPlaceholder}}"></td>
+				</tr>
+				<tr id="transferRow{{lpIdx}}" style="">
+					<td></td>
+					<td>Transfer Start Date <input readonly type="text"
+						value="{{nextDate}}" id="transferStartDate{{lpIdx}}"
+						class="dateBox" placeholder="Select a date" style="width: 95%" /></td>
+					<td>&nbsp;</td>
+					<td colspan="4">Transfer Time <input
+						id="transferTime{{lpIdx}}" value="{{nextTime}}" type="text"
+						placeholder="hours:minutes"></td>
+				</tr>
+			</table>
+			<div id="transferStatus{{lpIdx}}"
+				style="text-align: left; padding-left: 20px; font-size: medium; color: green"></div>
+		</div>
+		</stencil>
+		<stencil id="transferItemsErrorMessage">
+		<div class="team-text span6" id="transferStatusColour i + '">
+			Please select at least one {{keyword}} to make a transfer</div>
+		</stencil>
+		<stencil id="giroList">
+		<li class="ui-widget-content" id="giroIndex{{ctIdx}}"
+			style="width: 100%; border-bottom-style: solid; border-width: 1px; border-bottom-color: #999">
+			<table style="cursor: pointer; width: 100%">
+				<tr>
+					<td style="width: 50%; overflow: hidden; white-space: nowrap"
+						valign="top">{{giroAccountName}}</td>
+					<td style="width: 50%; overflow: hidden; white-space: nowrap"
+						valign="top">{{debitingAccountNumber}}</td>
+				</tr>
+			</table>
+		</li>
+		</stencil>
+		<stencil id="listError">
+		<li style="width: 100%;"><span>{{errorMessage}}</span></li>
+		</stencil>
+
+		<!-- Loans Stencils-->
+		<stencil id="loansMain">
+		<div class="contact-us container">
+			<div class="row">
+				<div class="contact-us span12" style="text-align: center">
+					<h3>
+						<font face="Georgia, Palatino, Times New Roman" size="6"
+							style="vertical-align: text-bottom; line-height: 10%; color: #CDA500;">payments</font>
+						<br /> <i class="icon-desktop"></i><font color="#1A2155" size="2"><i
+							class="icon-list-ol"></i>&nbsp;&nbsp;Make
+							Payments&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i
+							class="icon-check"></i>&nbsp;&nbsp;Manage
+							Payments&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i
+							class="icon-user"></i>&nbsp;&nbsp;View Payment Status</font>
+					</h3>
+					<hr>
+					<br>
+					<div id="loansContainer"
+						style="text-align: center; width: 95%; margin: 0 auto"></div>
+				</div>
+			</div>
+			<div style="height: 80px">&nbsp;</div>
+		</div>
+		</stencil>
+		<stencil id="loansMenu">
+		<div class="main" style="text-align: center;">
+			<h2 id="cusNameFromFile"></h2>
+			<h2 id="csvErrors"></h2>
+			<label for="myFile">Upload your file</label> <input align="middle"
+				type="file" id="filesParseCSV" name="filesParseCSV" accept=".txt"
+				onchange="showButtons()">
+
+			<button style="visibility: hidden;" id="submitParseCSV"
+				onclick="parseCSVFromFile()" class="green">Process Payment
+				File</button>
+			<button style="visibility: hidden;" id="uploadParsedCSVFile"
+				onclick="uploadFileViaAjax()" class="green">Submit Payment
+				File</button>
+			<button style="visibility: hidden;" id="resetUploadfunction"
+				onclick="resetUploadArea()" class="green">Reset</button>
+			<br /> <br />
+			<p id="listOfErrorsJMS"></p>
+			<table id="results" style="margin-left: auto; margin-right: auto;">
+				<tbody>
+				</tbody>
+			</table>
+		</div>
+		</stencil>
+
+		<stencil id="newLoan">
+		<div
+			style="background-color: #F8F8F8; width: 1050px; display: inline-block;">
+			<table>
+				<tbody>
+					<tr>
+						<td colspan="5" class="tableHeaderCells"><span
+							class="headers">New Loan</span></td>
+					</tr>
+					<tr>
+						<td class="tableCells minorHeader" style="width: 25%">1. Loan
+							Type</td>
+						<td class="tableCells minorHeader" style="width: 30%">2. Loan
+							Amount</td>
+						<td class="tableCells minorHeader" style="width: 25%">3. Loan
+							Term</td>
+						<td class="tableCells" style="width: 20%"></td>
+					</tr>
+					<tr>
+						<td class="tableCells"><select id="newLoanType">
+								<option value="{{productID}}">{{productName}}</option>
+						</select></td>
+						<td class="tableCells"><input class="loansTextBox"
+							type="text" id="loanAmt" style="width: 170px"
+							autofocus="autofocus"><span style="font-size: 20px;">&nbsp;SGD</span>
+						</td>
+						<td class="tableCells"><input class="loansTextBox"
+							type="text" id="loanTerm" style="width: 100px;"><span
+							style="font-size: 20px;">&nbsp;months</span></td>
+						<td class="tableCells"
+							style="padding-top: 0px; margin-top: 0px; padding-bottom: 18px;"><button
+								onclick="loans.calculateLoanInstallment()"
+								style="margin-top: 0px">CALCULATE</button></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div id="loanInfo"
+			style="width: 1050px; display: none; margin-top: 20px"></div>
+		</stencil>
+		<stencil id="newLoanInfo">
+		<table style="text-align: left">
+			<tr>
+				<td rowspan="9" style="width: 50%">
+					<div id="container"
+						style="min-width: 90px; height: 380px; margin: 0 auto"></div>
+				</td>
+				<td rowspan="9" style="width: 5%"></td>
+				<td colspan="5" style="width: 45%"><span
+					style="font-size: 28px; color: #800000">I will need to pay
+						...</span></td>
+			</tr>
+			<tr>
+				<td height="15" colspan="5"></td>
+			</tr>
+			<tr>
+				<td width="261"
+					style="border-bottom: thin; border-bottom-style: solid; color: #858585">Monthly
+					repayment</td>
+				<td width="82"></td>
+				<td width="270"
+					style="border-bottom: thin; border-bottom-style: solid; color: #858585">Interest
+					rate</td>
+			<tr>
+				<td height="49"><span style="font-size: 30px; color: #1A2155"><span
+						style="font-size: large" id="currency">SGD</span> $<span
+						id="monthlyRepayment">{{monthlyRepayment}}</span></span></td>
+				<td></td>
+				<td><span id="interestRate"
+					style="font-size: 28px; color: #1A2155">{{interestRate}}</span></td>
+			</tr>
+			<tr>
+				<td height="15" colspan="5"></td>
+			</tr>
+			<tr>
+				<td width="261" height="24"
+					style="border-bottom: thin; border-bottom-style: solid; color: #858585">Maturity
+					Date</td>
+				<td width="82"></td>
+				<td width="270"></td>
+			<tr>
+				<td height="49"><span id="maturityDate"
+					style="font-size: 28px; color: #1A2155">{{maturityDate}}</span></td>
+				<td></td>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
+				<td colspan="5" height="15"></td>
+			</tr>
+			<tr>
+				<td colspan="5" style="vertical-align: top">
+					<button style="width: 200px" onClick="loans.newLoanDetails()">APPLY
+						NOW</button> <br /> Make an appointment with any of our Relationship
+					Manager now.
+				</td>
+			</tr>
+			<tr>
+				<td align="center">*<font color="#990000"><b>NOTE:</b></font>
+					The calculator and calculation values are for illustration purposes
+					only. It is not part of the application process. Actual payments
+					may vary.
+				</td>
+			</tr>
+		</table>
+		</stencil>
+		<stencil id="loansRepayment">
+		<div
+			style="background-color: #F8F8F8; max-width: 300px; text-align: left; float: left">
+			<table>
+				<tbody>
+					<tr>
+						<td height="19"></td>
+					</tr>
+					<tr>
+						<td class="minorHeader"
+							style="color: #9d426b; padding-left: 35px; width: 300px">1.
+							Repayment Type</td>
+					</tr>
+					<tr>
+						<td style="padding-left: 35px">
+							<div class="onoffswitch">
+								<input type="checkbox" name="onoffswitch"
+									class="onoffswitch-checkbox" id="repaymentType" checked>
+								<label class="onoffswitch-label" for="repaymentType"
+									onclick="loans.showRepayment();">
+									<div class="onoffswitch-inner"></div>
+									<div class="onoffswitch-switch"></div>
+								</label>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td height="19"></td>
+					</tr>
+					<tr>
+						<td class="minorHeader" width="287"
+							style="color: #9d426b; padding-left: 35px">2. Loan Account</td>
+					</tr>
+					<tr>
+						<td style="padding-left: 35px"><select id="loanAccounts"
+							style="width: 230px;" data-stencilselector="usingAccount"
+							onchange="$('#repaymentPartialInfo').slideUp();">
+								<option value="{{accountNumber}}">{{accountName}}</option>
+						</select></td>
+					</tr>
+					<tr class="partialRepaymentOnly">
+						<td height="19"></td>
+					</tr>
+					<tr class="partialRepaymentOnly">
+						<td class="minorHeader" style="color: #9d426b; padding-left: 35px">3.
+							Repayment Amount</td>
+					</tr>
+					<tr class="partialRepaymentOnly">
+						<td style="padding-left: 35px"><input class="loansTextBox"
+							type="text" id="repaymentAmount" style="width: 150px"
+							autofocus="autofocus"><span style="font-size: 20px;">&nbsp;SGD</span>
+						</td>
+					</tr>
+					<tr class="partialRepaymentOnly">
+						<td height="19"></td>
+					</tr>
+					<tr class="partialRepaymentOnly">
+						<td class="minorHeader" style="color: #9d426b; padding-left: 35px">4.
+							Keep Maturity Date?
+							<div class="onoffswitch">
+								<input type="checkbox" name="onoffswitch"
+									class="onoffswitch-checkbox" id="keepMaturityDate" checked>
+								<label class="onoffswitch-label" for="keepMaturityDate">
+									<div class="onoffswitch-innerKMD"></div>
+									<div class="onoffswitch-switch"></div>
+								</label>
+							</div>
+					</tr>
+					<tr>
+						<td height="19"></td>
+					</tr>
+					<tr>
+						<td style="padding-left: 35px"><button id="calculateButton"
+								onclick="loans.calculateLoanRepayment()">CALCULATE</button></td>
+					</tr>
+					<tr>
+						<td height="19"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div id="repaymentPartialInfo"
+			style="float: left; margin-left: 10px; max-width: 72%; min-width: 65%; font-size: 13px; display: none">
+		</div>
+		</stencil>
+		<stencil id="loanRepaymentInfo">
+		<div id="frame1"
+			style="float: left; width: 390px; height: 300px; margin-left: 10px; margin-bottom: 20px">
+			<div id="repaymentBalanceChart"
+				style="width: 378px; height: 225px; margin: 0px auto"></div>
+			<div id="info1" style="padding-left: 10px;">
+				<div
+					style="border-bottom: thin; border-bottom-style: solid; color: #858585; margin-bottom: 10px; max-width: 50%">New
+					Payment Balance</div>
+				<div>
+					<span style="font-size: 30px; color: #1A2155"><span
+						style="font-size: large">SGD</span> ${{paymentBalance}}</span>
+				</div>
+			</div>
+		</div>
+		<div id="frame2"
+			style="float: left; width: 390px; height: 300px; margin-left: 10px; margin-bottom: 20px">
+			<div id="interestPaymentChart"
+				style="width: 378px; height: 225px; margin: 0px auto"></div>
+			<div id="info2" style="padding-left: 10px;">
+				<div
+					style="border-bottom: thin; border-bottom-style: solid; color: #858585; margin-bottom: 10px; max-width: 50%">New
+					Interest Amount</div>
+				<div>
+					<span style="font-size: 30px; color: #1A2155"><span
+						style="font-size: large">SGD</span> ${{interestAmount}}</span>
+				</div>
+			</div>
+		</div>
+		<div id="frame3"
+			style="float: left; width: 390px; height: 300px; margin-left: 10px; margin-bottom: 20px">
+			<div id="monthlyPaymentChart"
+				style="width: 378px; height: 225px; margin: 0px auto"></div>
+			<div id="info3"
+				style="max-width: 50%; display: inline-block; padding-left: 10px;">
+				<div
+					style="border-bottom: thin; border-bottom-style: solid; color: #858585; margin-bottom: 10px">New
+					Monthly Installment</div>
+				<div>
+					<span style="font-size: 28px; color: #1A2155"><span
+						style="font-size: large">SGD</span> ${{monthlyInstallment}}</span>
+				</div>
+			</div>
+			<div id="info4"
+				style="max-width: 50%; display: inline-block; padding-left: 10px;">
+				<div
+					style="border-bottom: thin; border-bottom-style: solid; color: #858585; margin-bottom: 10px">New
+					Maturity Date</div>
+				<div>
+					<span id="maturityDate" style="font-size: 28px; color: #1A2155">{{maturityDate}}</span>
+				</div>
+			</div>
+		</div>
+		<div id="frame4"
+			style="float: left; width: 390px; height: 300px; margin-left: 10px; margin-bottom: 20px; text-align: center;">
+			<div id="fullRepaymentChart"
+				style="width: 378px; height: 225px; margin: 0px auto"></div>
+			<div id="info5"
+				style="max-width: 50%; display: inline-block; padding-left: 10px;">
+				<div
+					style="border-bottom: thin; border-bottom-style: solid; color: #858585; margin-bottom: 10px">Outstanding
+					Loan Payments</div>
+				<div>
+					<span style="font-size: 23px; color: #1A2155"><span
+						style="font-size: large">SGD</span> ${{outstandingLoanPayments}}</span>
+				</div>
+			</div>
+			<div id="info6"
+				style="max-width: 50%; display: inline-block; padding-left: 10px;">
+				<div
+					style="border-bottom: thin; border-bottom-style: solid; color: #858585; margin-bottom: 10px">Repayment
+					with penalty</div>
+				<div>
+					<span style="font-size: 23px; color: #1A2155"><span
+						style="font-size: large">SGD</span> ${{repaymentWithPenalty}}</span>
+				</div>
+			</div>
+		</div>
+		<div id="frame5"
+			style="float: left; width: 390px; height: 300px; margin-left: 10px; margin-bottom: 20px">
+			<div id="table1">
+				<div
+					style="font-size: 28px; color: #800000; margin-bottom: 10px; padding-left: 10px;">Other
+					details</div>
+				<div id="info7"
+					style="min-width: 45%; max-width: 50%; display: inline-block; padding-left: 10px;">
+					<div
+						style="border-bottom: thin; border-bottom-style: solid; color: #858585; margin-bottom: 10px">Penalty
+						amount</div>
+					<div>
+						<span id="penaltyAmount" style="font-size: 25px; color: #1A2155">{{penaltyAmount}}</span>
+					</div>
+				</div>
+				<div id="info8"
+					style="min-width: 45%; max-width: 50%; display: inline-block; padding-left: 10px;">
+					<div
+						style="border-bottom: thin; border-bottom-style: solid; color: #858585; margin-bottom: 10px">Penalty
+						rate</div>
+					<div>
+						<span id="penaltyRate" style="font-size: 25px; color: #1A2155">{{penaltyRate}}</span>
+					</div>
+				</div>
+				<div
+					style="font-size: 28px; color: #800000; margin-top: 30px; margin-bottom: 10px; padding-left: 10px;">Settlement
+					Account</div>
+				<div id="info9"
+					style="min-width: 38%; max-width: 50%; display: inline-block; padding-left: 10px;">
+					<div
+						style="border-bottom: thin; border-bottom-style: solid; color: #858585; margin-bottom: 10px">Account
+						No.:</div>
+					<div>
+						<span id="accountNo" style="font-size: 23px; color: #1A2155">{{accountNumber}}</span>
+					</div>
+				</div>
+				<div id="info10"
+					style="min-width: 45%; max-width: 60%; display: inline-block; padding-left: 10px;">
+					<div
+						style="border-bottom: thin; border-bottom-style: solid; color: #858585; margin-bottom: 10px">Avaliable
+						balance</div>
+					<div>
+						<span style="font-size: 23px; color: #1A2155"><span
+							style="font-size: large">SGD</span> ${{accountBalance}}</span>
+					</div>
+				</div>
+				<div
+					style="margin-top: 30px; margin-bottom: 10px; padding-left: 10px">
+					<span id="repaymentStatus"
+						style="font-size: 20px; color: {{statusColour">{{repaymentStatus}}</span><br />
+					<span id="repaymentStatusSub"
+						style="color: #1A2155; font-style: italic">{{repaymentStatusSub}}</span>
+				</div>
+				<div
+					style="margin-top: 10px; margin-bottom: 5px; padding-right: 10px; text-align: right">
+					<button id="repaymentButton"
+						style="display: {{repaymentButtonDisplay">MAKE REPAYMENT</button>
+				</div>
+			</div>
+		</div>
+		</stencil>
+		<stencil id="newLoanDetails">
+		<div style="font-size: x-large; line-height: 32px;">New Loan
+			Details</div>
+		<div style="font-size: larger;">
+			<i>We will need the following details before proceeding</i>
+		</div>
+		<br />
+		<div style="font-size: larger;">
+			Loan Account Title: <input type="text" id="loanTitle"
+				style="width: 300px">
+		</div>
+		<div style="font-size: larger;">
+			Collateral Asset Value: <input type="text" id="assetValue"
+				placeholder="For unsecured loans, just enter 0" style="width: 278px">
+		</div>
+		<div style="font-size: larger;">
+			Repayment Account: <select id="settlementAccount"
+				style="width: 300px;">
+				<option value="{{accountNumber}}">{{accountName}}</option>
+			</select>
+		</div>
+		<div id="nldStatus" style="color: red; font-size: medium;"></div>
+		<button onclick="loans.validateLoanCreation()">CONTINUE</button>
+		&nbsp;&nbsp;
+		<button onclick="ui.closePopup('newLoanDetails')">CANCEL</button>
+		</stencil>
+		<stencil id="appointmentScheduler">
+		<div style="font-size: medium;">Double click on a valid timeslot
+			to book/modify an appointment. Click "Confirm" to confirm your
+			appointment with us.</div>
+		<br />
+		<div id="scheduler_here" class="dhx_cal_container"
+			style="width: 1090px; height: 478px; margin-left: auto; margin-right: auto; border: thin; border-style: solid; border-color: #CDA500">
+			<div class="dhx_cal_navline">
+				<div class="dhx_cal_prev_button">&nbsp;</div>
+				<div class="dhx_cal_next_button">&nbsp;</div>
+				<div class="dhx_cal_today_button"></div>
+				<div class="dhx_cal_date"></div>
+				<div class="dhx_cal_tab" name="day_tab" style="right: 204px;"></div>
+				<div class="dhx_cal_tab" name="week_tab" style="right: 140px;"></div>
+			</div>
+			<div class="dhx_cal_header"></div>
+			<div class="dhx_cal_data"></div>
+		</div>
+		<div>
+			<br />
+			<button id="rmSchedulerBack" onclick="loans.buildNewLoan()">BACK</button>
+		</div>
+		</stencil>
+		<stencil id="schedulerLightbox">
+		<div style="font-size: x-large; line-height: 32px;">Appointment
+			Details</div>
+		<div style="font-size: larger;">
+			Date/Time: <span id="eventStartDateTime"></span>
+		</div>
+		<div style="color: crimson">
+			<i>*All appointment slots are limited to 1 hour only</i>
+		</div>
+		<div id="lightboxStatus"></div>
+		<button id="previewLightbox"
+			onclick="rmScheduler.previewAppointment()">PREVIEW</button>
+		&nbsp;&nbsp;
+		<button id="confirmLightbox"
+			onclick="rmScheduler.confirmAppointment()">CONFIRM</button>
+		&nbsp;&nbsp;
+		<button id="deleteLightbox" onclick="rmScheduler.deleteAppointment()">DELETE</button>
+		&nbsp;&nbsp;
+		<button id="closeLightbox" onclick="rmScheduler.cancelLightbox()">CLOSE</button>
+		</stencil>
+
+		<!-- Trade Finance Stencils-->
+
+		<stencil id="tradeMain">
+		<div style="width: 1150px; height: 600px; margin: 0px auto;">
+			<h3 style="text-align: center">
+				<font face="Georgia, Palatino, Times New Roman" size="6"
+					style="vertical-align: text-bottom; line-height: 30%; color: #CDA500;">trade<font
+					color="#00CCFF">finance</font></font> <br /> <i class="icon-desktop"></i><font
+					color="#1A2155" size="2"><i class="icon-user"></i>&nbsp;&nbsp;Apply
+					LC&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="icon-edit"></i>&nbsp;&nbsp;Amend
+					LC&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="icon-check"></i>&nbsp;&nbsp;Request
+					Trust Receipt&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="icon-thumbs-up"></i>&nbsp;&nbsp;Request
+					Shipping Guarantee</font>
+			</h3>
+			<hr>
+			
+			<div id="tradeContainer"
+						style="width: 100%; margin: 0 auto"></div>
+			</div>
+			<div style="height: 140px">&nbsp;</div>
+		</stencil>
+
+		<stencil id="tradeMenu">
+		<div>
+			<h4>
+				<b style="color: #9d426b">Instructions: </b>Choose From the
+				Following Options to Proceed to Your Trade Finance Portal.
+			</h4>
+			<br />
+			<div class="team-text menuTiles"
+				style="width: 500px; height: 350px;" onClick ="trade.buildImporterPage();">
+				<h1><b><font face="Georgia, Palatino, Times New Roman" size="6"
+					style="vertical-align: text-bottom; line-height: 30%; color: #CDA500;">Importer</font></b></h1>
+				<!-- <img src="assets/img/myAcc.png" alt=""> -->
+			</div>
+			<div class="team-text menuTiles"
+				style="width: 500px; height: 350px;" onCLick = "trade.buildExporterPage();">
+				<h1><b><font face="Georgia, Palatino, Times New Roman" size="6"
+					style="vertical-align: text-bottom; line-height: 30%; color: #CDA500;">Exporter</font></b></h1>
+				<!-- <img src="assets/img/billingOrg.png" alt=""> -->
+			</div>
+			
+		</div>
+		</stencil>
+		
+		<stencil id = "importerPage">
+		<h2>Importer Portal</h2>
+			<div align ="left" style ="width:1165px">
+				
+				<button id = "lCApplicationBtn" style="width: 190px; height: 58px"" onclick = "trade.buildLCApplicationPage()"><i class="icon-paper"></i>&nbsp;LC Application</button>
+				<button id = "lCAmendmentBtn" style="width: 190px; height: 58px"" onclick = "trade.buildLCAmendementApplicationPage()"><i class="icon-edit"></i>&nbsp;LC Amendment</button>
+				<button id="docsAcceptanceBtn" style="width: 190px; height: 58px" onclick=""><i class="icon-check"></i>&nbsp;Document Acceptance</button>
+				<button id="shippingGuaranteeBtn" style="width: 190px; height: 58px" onclick=""><i class="icon-thumbs-up"></i>&nbsp;Shipping Guarantee</button>
+				<button id="LCStatusBtn" style="width: 190px; height: 58px" onclick=""><i class="icon-tasks"></i>&nbsp;LC Status</button>
+				<button id="importNotificationsBtn" style="width: 190px; height: 58px" onclick=""><i class="icon-comments"></i>&nbsp;Notifications</button>
+				
+			</div>
+			<button id="backToHome" onclick="trade.buildTradeMenu()"
+			style="background-color: #980000; width :150px; height:40px">
+			 <i class="icon-arrow-left"></i>&nbsp;Back
+		</button>
+				<br />
+				<br />
+			
+			<div id ="importerFunctions"></div>
+			<div style="height: 140px">&nbsp;</div>
+		</stencil>
+		<!-- Apply LC Stencil -->
+		<stencil id = "applyLC">
+			<center><h4><b>New Letter Of Credit Application</b></h4></center>
+			
+			<p>Application Reference: APP20150405</p>{{ref_num}}&nbsp;&nbsp;&nbsp;&nbsp;<p>Application Date: </p>{{today}}
+			
+			<hr>
+			
+			<!-- <h3>LC Details</h3>-->
+			<div>
+			<table cellpadding="3">
+								<tr>
+								<th align="left"><i class="icon-edit"></i><b style="color: #9d426b">&nbsp;&nbsp;LC Details</b></th>
+								</tr>
+								<tr>
+									<th width="126">Expiry Date</th>
+									<th width="4">:</th>
+									<td width="164"><input id="expiryDate" type="date"
+										style="width: 150px"></td>
+									<td width="11"></td>
+									<th width="78">Expiry Place</th>
+									<th width="4">:</th>
+									<td width="152"><input id="expiryPlace" type="text"
+										style="width: 150px"></td>
+								</tr>
+								<tr>
+									<th>Amount (in Figures)</th>
+									<th>:</th>
+									<td><input id="amountFig" type="text" style="width: 150px"></td>
+									<td></td>
+									<th width="78">Currency</th>
+									<th width="4">:</th>
+									<td width="152"><input id="currency" type="text"
+										style="width: 150px"></td>
+								</tr>
+								<tr>
+									<th>Credit Avilable By</th>
+									<th>:</th>
+									<td><select id="availableBy" 
+										style="width: 165px"><option> </option></select></td>
+									<td></td>
+									<th width="78">Confirmation</th>
+									<th width="4">:</th>
+									<td width="152"><select id="confirmation" style="width: 165px"></select></td>
+								</tr>
+								
+							</table>
+			<hr>
+			<table cellpadding="3">
+								<tr>
+								<th align="left"><i class="icon-edit"></i><b style="color: #9d426b">&nbsp;Beneficiary Details</b></th>
+								</tr>
+								<tr>
+									<th width="126">Name and Address</th>
+									<th width="4">:</th>
+									<td width="164"><textarea id="nameAddress" 
+										style="width: 150px"></textarea></td>
+									<td width="11"></td>
+									<th width="78">Contact No.</th>
+									<th width="4">:</th>
+									<td width="152"><input id="contactNum" type="text"
+										style="width: 150px"></td>
+								</tr>
+								
+							</table>
+							<hr>
+								<table cellpadding="3">
+								<tr>
+								<th align ="left"><i class="icon-edit"></i><b style="color: #9d426b">&nbsp;&nbsp;Shipment Details</b></th>
+								</tr>
+								<tr>
+									<th width="126">Shipment From</th>
+									<th width="4">:</th>
+									<td width="164"><input id="shipFrom" type = text style="width: 150px"/></td>
+									<td width="11"></td>
+									<th width="78">Shipment To</th>
+									<th width="4">:</th>
+									<td width="152"><input id="shipTo" type="text"
+										style="width: 150px"/></td>
+								</tr>
+								<tr>
+									<th width="126">Latest Shipment Date</th>
+									<th width="4">:</th>
+									<td width="164"><input id="shipDate" 
+										style="width: 150px" type="date"/></td>
+									<td width="11"></td>
+									<th width="100">Partial Shipment Allowed</th>
+									<th width="4">:</th>
+									<td width="76"><input id="partialShipAllowed" type="radio" style="width: 150px" name = "partialShip" value="Yes">Yes</td> 
+									<td width="76"><input name = "partialShip"  type="radio"
+										style="width: 150px" value="No">No </td>
+								</tr>
+							</table>
+							<hr>
+							<table cellpadding="3" >
+							<tr>
+								<th align="left"><i class="icon-edit"></i><b style="color: #9d426b">&nbsp;Documents Required</b></th>
+								</tr>
+								<tr>
+									<th width="126">Invoices and other documents</th>
+									<th width="4">:</th>
+									<td width ="8">
+										<input type="checkbox" name="invoicesAndDocs" value="signedCommInvoice" /> <br /> 
+										<input type="checkbox" name="animal" value="packingList" /><br /> 
+										<input type="checkbox" name="animal" value="weightList" /> <br /> 
+										<input type="checkbox" value="certificateOfOrigin" /><br />
+									</td>
+									<td width="164">
+										
+											Signed Commercial Invoice <br /> Packing List<br /> Weight List<br /> Certificate Of Origin 
+								
+									</td>
+									<td width="11"></td>
+									<th width="78">Insurance Documents</th>
+									<th width="4">:</th>
+									<td width="152"><input id="insuranceDocs" type="checkbox"
+										style="width: 150px" >Insurance Covered By Aplicant</td>
+								</tr>
+								
+								<tr>
+									<th width="126">Cover Number</th>
+									<th width="4">:</th>
+									<td width ="8"></td>
+									<td width="164"><input id="coverNum" 
+										style="width: 150px" type="text"/></td>
+									<td width="11"></td>
+									<th width="78">Insurance Company</th>
+									<th width="4">:</th>
+									<td width="152"><input id="insuranceCompany" type="input"
+										style="width: 150px"></td>
+								</tr>
+							</table>
+							<hr>
+								<table cellpadding="3" >
+								<tr>
+								<th align="left"><i class="icon-edit"></i><b style="color: #9d426b">&nbsp;&nbsp;Charge Details</b></th>
+								</tr>
+								<tr>
+									<th width="126">Charges Born By</th>
+									<th width="4">:</th>
+									<td width="164"><input id="chargesBornBy" type ="radio"
+										style="width: 150px" name = "charges" value= "applicant">Applicant <input type ="radio"
+										style="width: 150px" name = "charges" value = "benificiary">Benificiary</td>
+									<td width="11"></td>
+									<th width="78">Shipment To</th>
+									<th width="4">:</th>
+									<td width="152"><input id="shipTo" type="text"
+										style="width: 150px"></td>
+								</tr>
+								
+								
+							</table>
+							<hr>
+								<table cellpadding="3" >
+								<tr>
+								<th align="left"><i class="icon-edit"></i><b style="color: #9d426b">&nbsp;&nbsp;Other Details</b></th>
+								</tr>
+								<tr>
+									<th width="126">Special Instructions</th>
+									<th width="4">:</th>
+									<td width="164"><textarea id="specialInstruct"
+										style="width: 150px" name = "charges"></textarea> </td>
+									<td width="11"></td>
+								</tr>
+								<tr>
+									<th width="100">Brief Description Of Goods</th>
+									<th width="4">:</th>
+									<td width="152"><textarea id="goodsDescription"
+										style="width: 150px" ></textarea></td>
+								</tr>
+								
+							</table>
+							</div>
+							<button style="width: 250px" onclick="">Apply</button>
+							
+		</stencil>
+		
+		<stencil id = "amendLCapplication">
+			<center><h4><b>Letter Of Credit Amendment Application</b></h4></center>
+			
+			<p>Enter LC Reference Number: <input type = "text" style = "width:300px"/></p>
+			
+			<hr>
+			<div>
+			<table cellpadding="3">
+								<tr>
+								<th align="left"><i class="icon-edit"></i><b style="color: #9d426b">&nbsp;&nbsp;Amend LC Details</b></th>
+								</tr>
+								<tr>
+									<th width="126">Expiry Date</th>
+									<th width="4">:</th>
+									<td width="164"><input id="expiryDate" type="date"
+										style="width: 150px"></td>
+									<td width="11"></td>
+									<th width="78">Expiry Place</th>
+									<th width="4">:</th>
+									<td width="152"><input id="expiryPlace" type="text"
+										style="width: 150px"></td>
+								</tr>
+								<tr>
+									<th>Amount (in Figures)</th>
+									<th>:</th>
+									<td><input id="amountFig" type="text" style="width: 150px"></td>
+									<td></td>
+									<th width="78">Currency</th>
+									<th width="4">:</th>
+									<td width="152"><input id="currency" type="text"
+										style="width: 150px"></td>
+								</tr>
+								<tr>
+									<th>Credit Avilable By</th>
+									<th>:</th>
+									<td><select id="availableBy" 
+										style="width: 165px"><option> </option></select></td>
+									<td></td>
+									<th width="78">Confirmation</th>
+									<th width="4">:</th>
+									<td width="152"><select id="confirmation" style="width: 165px"></select></td>
+								</tr>
+								
+							</table>
+			<hr>
+			<table cellpadding="3">
+								<tr>
+								<th align="left"><i class="icon-edit"></i><b style="color: #9d426b">&nbsp;Amend Beneficiary Details</b></th>
+								</tr>
+								<tr>
+									<th width="126">Name and Address</th>
+									<th width="4">:</th>
+									<td width="164"><textarea id="nameAddress" 
+										style="width: 150px"></textarea></td>
+									<td width="11"></td>
+									<th width="78">Contact No.</th>
+									<th width="4">:</th>
+									<td width="152"><input id="contactNum" type="text"
+										style="width: 150px"></td>
+								</tr>
+								
+							</table>
+							<hr>
+								<table cellpadding="3">
+								<tr>
+								<th align ="left"><i class="icon-edit"></i><b style="color: #9d426b">&nbsp;&nbsp;Amend Shipment Details</b></th>
+								</tr>
+								<tr>
+									<th width="126">Shipment From</th>
+									<th width="4">:</th>
+									<td width="164"><input id="shipFrom" type = text style="width: 150px"/></td>
+									<td width="11"></td>
+									<th width="78">Shipment To</th>
+									<th width="4">:</th>
+									<td width="152"><input id="shipTo" type="text"
+										style="width: 150px"/></td>
+								</tr>
+								<tr>
+									<th width="126">Latest Shipment Date</th>
+									<th width="4">:</th>
+									<td width="164"><input id="shipDate" 
+										style="width: 150px" type="date"/></td>
+									<td width="11"></td>
+									<th width="100">Partial Shipment Allowed</th>
+									<th width="4">:</th>
+									<td width="76"><input id="partialShipAllowed" type="radio" style="width: 150px" name = "partialShip" value="Yes">Yes</td> 
+									<td width="76"><input name = "partialShip"  type="radio"
+										style="width: 150px" value="No">No </td>
+								</tr>
+							</table>
+							<hr>
+							<table cellpadding="3" >
+							<tr>
+								<th align="left"><i class="icon-edit"></i><b style="color: #9d426b">&nbsp;Amend Documents Required</b></th>
+								</tr>
+								<tr>
+									<th width="126">Invoices and other documents</th>
+									<th width="4">:</th>
+									<td width ="8">
+										<input type="checkbox" name="invoicesAndDocs" value="signedCommInvoice" /> <br /> 
+										<input type="checkbox" name="animal" value="packingList" /><br /> 
+										<input type="checkbox" name="animal" value="weightList" /> <br /> 
+										<input type="checkbox" value="certificateOfOrigin" /><br />
+									</td>
+									<td width="164">
+										
+											Signed Commercial Invoice <br /> Packing List<br /> Weight List<br /> Certificate Of Origin 
+								
+									</td>
+									<td width="11"></td>
+									<th width="78">Insurance Documents</th>
+									<th width="4">:</th>
+									<td width="152"><input id="insuranceDocs" type="checkbox"
+										style="width: 150px" >Insurance Covered By Aplicant</td>
+								</tr>
+								
+								<tr>
+									<th width="126">Cover Number</th>
+									<th width="4">:</th>
+									<td width ="8"></td>
+									<td width="164"><input id="coverNum" 
+										style="width: 150px" type="text"/></td>
+									<td width="11"></td>
+									<th width="78">Insurance Company</th>
+									<th width="4">:</th>
+									<td width="152"><input id="insuranceCompany" type="input"
+										style="width: 150px"></td>
+								</tr>
+							</table>
+							<hr>
+								<table cellpadding="3" >
+								<tr>
+								<th align="left"><i class="icon-edit"></i><b style="color: #9d426b">&nbsp;&nbsp;Amend Charge Details</b></th>
+								</tr>
+								<tr>
+									<th width="126">Charges Born By</th>
+									<th width="4">:</th>
+									<td width="164"><input id="chargesBornBy" type ="radio"
+										style="width: 150px" name = "charges" value= "applicant">Applicant <input type ="radio"
+										style="width: 150px" name = "charges" value = "benificiary">Benificiary</td>
+									<td width="11"></td>
+									<th width="78">Shipment To</th>
+									<th width="4">:</th>
+									<td width="152"><input id="shipTo" type="text"
+										style="width: 150px"></td>
+								</tr>
+								
+								
+							</table>
+							<hr>
+								<table cellpadding="3" >
+								<tr>
+								<th align="left"><i class="icon-edit"></i><b style="color: #9d426b">&nbsp;&nbsp;Amend Other Details</b></th>
+								</tr>
+								<tr>
+									<th width="126">Special Instructions</th>
+									<th width="4">:</th>
+									<td width="164"><textarea id="specialInstruct"
+										style="width: 150px" name = "charges"></textarea> </td>
+									<td width="11"></td>
+								</tr>
+								<tr>
+									<th width="100">Brief Description Of Goods</th>
+									<th width="4">:</th>
+									<td width="152"><textarea id="goodsDescription"
+										style="width: 150px" ></textarea></td>
+								</tr>
+								
+							</table>
+							</div>
+							<button style="width: 250px" onclick="">Apply</button>
+							
+		</stencil>
+		
+		<stencil id = "exporterPage">
+		<h2>Exporter Portal</h2>
+			<div align = "left" style="width:1165px">
+				
+				<button id = "acceptLCAmendmentBtn" style="width: 190px; height: 58px"" onclick = ""><i class="icon-check"></i>&nbsp;Accept LC Amendment</button>
+				<button id = "documentPresentationBt " style="width: 190px; height: 58px"" onclick = ""><i class="icon-list"></i>&nbsp;Document Presentation</button>
+				<button id="bankersGuaranteeBtn" style="width: 190px; height: 58px" onclick=""><i class="icon-thumbs-up"></i>&nbsp;Bankers Guarantee</button>
+				<button id="billDiscountingBtn" style="width: 190px; height: 58px" onclick=""><i class="icon-undo"></i>&nbsp;Bill Discounting</button>
+				<button id="importNotificationsBtn" style="width: 190px; height: 58px" onclick=""><i class="icon-comments"></i>&nbsp;Notifications</button>
+				<button id="exportPaymentsBtn" style="width: 190px; height: 58px" onclick=""> <i class="icon-money"></i>&nbsp;Payments</button>
+			
+			</div>
+				
+				<button id="backToHome" onclick="trade.buildTradeMenu()"
+			style="background-color: #980000; width :150px; height: 40px">
+			 <i class="icon-arrow-left"></i>&nbsp;Back
+		</button>
+		<br/>
+		<br/>
+		</stencil>
+
+		<!-- Profile Stencils-->
+		<stencil id="profileMain">
+		<div class="services-full-width container">
+			<div class="row">
+				<div class="services-full-width-text span12">
+					<h3 style="text-align: center">
+						<font face="Georgia, Palatino, Times New Roman" size="6"
+							style="vertical-align: text-bottom; line-height: 30%; color: #CDA500;">profile<font
+							color="#00CCFF">settings</font></font> <br /> <font color="#1A2155"
+							size="2" style="vertical-align: text-top"><i
+							class="icon-edit"></i>&nbsp;&nbsp;edit user
+							profile&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i
+							class="icon-exclamation-sign"></i>&nbsp;&nbsp;alerts
+							settings&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i
+							class="icon-tag"></i>&nbsp;&nbsp;set customer preference</font>
+					</h3>
+					<hr>
+				</div>
+			</div>
+		</div>
+		<div class="services-half-width container">
+			<div class="row">
+				<div class="services-half-width-text span5 service">
+					<table width="524" cellpadding="2" cellspacing="0">
+						<tr>
+							<td width="12"></td>
+							<td width="40"
+								style="border-top-style: solid; border-color: #9d426b; border-width: thick; background-color: #F8F8F8"></td>
+							<td colspan="3"
+								style="border-top-style: solid; border-color: #9d426b; border-width: thick; background-color: #F8F8F8">
+								<h3 style="color: #1A2155">
+									<i class="icon-user"></i> <span id="givenName"></span> <span
+										id="lastName"></span>
+								</h3>
+							</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td style="background-color: #F8F8F8">&nbsp;</td>
+							<td colspan="2"
+								style="background-color: #F8F8F8; border-bottom: medium; border-bottom-color: #999; border-bottom-style: solid;"><font
+								size="+1">USER PROFILE</font></td>
+							<td style="background-color: #F8F8F8"></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td colspan="4" style="background-color: #F8F8F8">&nbsp;</td>
+						</tr>
+						<tr>
+							<td></td>
+							<th width="40" style="background-color: #F8F8F8">&nbsp;</th>
+							<td width="124" style="background-color: #F8F8F8; size: 14px"><b>Customer
+									ID</b></td>
+							<th width="22" style="background-color: #F8F8F8">:</th>
+							<td width="218" style="background-color: #F8F8F8"><span
+								id="customerID"></span></td>
+							<th width="82">&nbsp;</th>
+						</tr>
+						<tr>
+							<td></td>
+							<th style="background-color: #F8F8F8"></th>
+							<th style="background-color: #F8F8F8">Nationality</th>
+							<th style="background-color: #F8F8F8">:</th>
+							<td style="background-color: #F8F8F8"><span id="nationality"></span></td>
+							<th width="82">&nbsp;</th>
+						</tr>
+						<tr>
+							<td></td>
+							<th style="background-color: #F8F8F8"></th>
+							<th style="background-color: #F8F8F8">Gender</th>
+							<th style="background-color: #F8F8F8">:</th>
+							<td style="background-color: #F8F8F8"><span id="gender"></span></td>
+							<th width="82">&nbsp;</th>
+						</tr>
+						<tr>
+							<td></td>
+							<th style="background-color: #F8F8F8"></th>
+							<th style="background-color: #F8F8F8">Date of birth</th>
+							<th style="background-color: #F8F8F8">:</th>
+							<td style="background-color: #F8F8F8"><span id="dob"></span></td>
+							<th width="82">&nbsp;</th>
+						</tr>
+						<tr>
+							<td></td>
+							<th style="background-color: #F8F8F8"></th>
+							<th style="background-color: #F8F8F8">Occupation</th>
+							<th style="background-color: #F8F8F8">:</th>
+							<td style="background-color: #F8F8F8"><span id="occupation"></span></td>
+							<th width="82">&nbsp;</th>
+						</tr>
+						<tr>
+							<td></td>
+							<th style="background-color: #F8F8F8"></th>
+							<th style="background-color: #F8F8F8"></th>
+							<th style="background-color: #F8F8F8"></th>
+							<td style="background-color: #F8F8F8"></td>
+							<th width="82">&nbsp;</th>
+						</tr>
+						<tr>
+							<td></td>
+							<td style="background-color: #F8F8F8"></td>
+							<td style="background-color: #F8F8F8" colspan="3"><font
+								color="#990000"><b>NOTE:</b></font> Please <i>CLICK</i> on the
+								following <i>TABS</i> to edit<br /> your profile&nbsp;<i
+								class="icon-circle-arrow-right"></i></td>
+							<th width="82">&nbsp;</th>
+						</tr>
+						<tr>
+							<td></td>
+							<th style="background-color: #F8F8F8"></th>
+							<th style="background-color: #F8F8F8"></th>
+							<th style="background-color: #F8F8F8"></th>
+							<td style="background-color: #F8F8F8"></td>
+							<th width="82">&nbsp;</th>
+						</tr>
+					</table>
+				</div>
+				<div class="services-half-width-text span7">
+					<div id="accordion"
+						style="width: 650px; background-color: #F8F8F8;">
+						<!-- Login Settings -->
+						<h3>Login Settings</h3>
+						<div>
+							<table width="528">
+								<tr>
+									<td colspan="3" style="font-size: medium">Mobile 2FA</td>
+								</tr>
+								<tr>
+									<td colspan="3"><button id="genNewM2FA"
+											style="width: 250px">GENERATE NEW MOBILE 2FA</button></td>
+								</tr>
+								<tr>
+									<td>&nbsp;</td>
+								</tr>
+								<tr>
+									<td colspan="3" style="font-size: medium">Change login ID
+										and PIN</td>
+								</tr>
+								<tr></tr>
+								<tr>
+									<td width="28"></td>
+									<td width="208"><b>Current login ID:</b> <input
+										type="text" id="oldLogin" /></td>
+									<td width="276"><b>New login ID:</b> <input type="text"
+										id="newLogin" /></td>
+								</tr>
+								<tr>
+									<td width="28"></td>
+									<td width="208"><b>Current PIN:</b> <input type="text"
+										id="oldPIN" /></td>
+									<td width="276"><b>New PIN:</b> <input type="text"
+										id="newPIN" /></td>
+								</tr>
+								<tr>
+									<td width="28" colspan="4"><button
+											onclick="profile.updateLoginID()">CHANGE LOGIN ID
+											AND PIN</button></td>
+								</tr>
+							</table>
+							<div id="updateLoginStatus"
+								style="text-align: left; padding-left: 10px; font-size: medium; color: green"></div>
+						</div>
+						<h3>Notification Settings</h3>
+						<div>
+							<!-- Alert Settings -->
+							<table width="528">
+								<tr>
+									<td colspan="3" style="font-size: medium">I would like to
+										receive my</td>
+								</tr>
+								<tr>
+									<td colspan="3">&nbsp;</td>
+								</tr>
+								<tr>
+									<td width="28"></td>
+									<td width="208"><b>MONTHLY STATEMENTS</b> via</td>
+									<td width="276"><input type="checkbox" id="mStateEmail">E-mail
+										<input type="checkbox" id="mStateSmail">Postal Mail</td>
+								</tr>
+								<tr>
+									<td width="28"></td>
+									<td width="208"><b>PROMOTIONS</b> via</td>
+									<td width="276"><input type="checkbox" id="promoEmail">E-mail
+										<input type="checkbox" id="promoSMS" value="viaSnailMail">SMS
+									</td>
+								</tr>
+								<tr>
+									<td width="28"></td>
+									<td width="208"><b>CONTACTED</b> via</td>
+									<td width="276"><input type="checkbox" id="commEmail">E-mail
+										<input type="checkbox" id="commSMS">SMS <input
+										type="checkbox" id="commPhone">Phone</td>
+								</tr>
+								<tr>
+									<td width="28" colspan="4">&nbsp;</td>
+								</tr>
+								<tr></tr>
+								<tr>
+									<td colspan="3" style="font-size: medium">I would like to
+										set my trigger alerts for</td>
+								</tr>
+								<tr>
+									<td colspan="3">&nbsp;</td>
+								</tr>
+								<tr>
+									<td>Acccount:</td>
+									<td><select id="accountList"
+										onchange="profile.populateTrigger(this[this.selectedIndex].value, null)"></select>
+									</td>
+									<td><input type="checkbox" id="triggerEmail">E-mail
+										<input type="checkbox" id="triggerSMS">SMS</td>
+								</tr>
+								<tr>
+									<td>Trigger Type:</td>
+									<td><select id="triggerType"
+										onchange="profile.populateTrigger(null, this[this.selectedIndex].value)">
+											<option value="Transaction">Transaction</option>
+											<option value="Balance">Balance</option>
+											<option value="Daily Limit">Daily Limit</option>
+									</select></td>
+									<td><input id="limit" type="text"
+										placeholder="Trigger Amount" style="width: 200px"></td>
+								</tr>
+								<tr></tr>
+								<tr>
+									<td width="28" colspan="4"><button
+											onclick="profile.updateCustPref()">UPDATE</button></td>
+								</tr>
+							</table>
+							<div id="updateCustPrefStatus"
+								style="text-align: left; padding-left: 10px; font-size: medium; color: green">&nbsp;</div>
+						</div>
+						<!-- Address -->
+						<h3>Address</h3>
+						<div>
+							<table cellpadding="3">
+								<tr>
+									<th width="126">Address 1</th>
+									<th width="4">:</th>
+									<td width="164"><input id="address1" type="text"
+										style="width: 150px" value=""></td>
+									<td width="11"></td>
+									<th width="78">City</th>
+									<th width="4">:</th>
+									<td width="152"><input id="city" type="text"
+										style="width: 150px" value=""></td>
+								</tr>
+								<tr>
+									<th>Address 2</th>
+									<th>:</th>
+									<td><input id="address2" type="text" style="width: 150px"></td>
+									<td></td>
+									<th width="78">State</th>
+									<th width="4">:</th>
+									<td width="152"><input id="state" type="text"
+										style="width: 150px" value=""></td>
+								</tr>
+								<tr>
+									<th>Postal code</th>
+									<th>:</th>
+									<td><input id="postalCode" type="text"
+										style="width: 150px"></td>
+									<td></td>
+									<th width="78">Country</th>
+									<th width="4">:</th>
+									<td width="152"><select id="country" style="width: 165px"></select></td>
+								</tr>
+								<tr>
+									<td colspan="4"><button
+											onclick="profile.updateCustomerInfo()">UPDATE</button></td>
+								</tr>
+							</table>
+							<div id="updateCustomerStatus1"
+								style="text-align: left; padding-left: 10px; font-size: medium; color: green"></div>
+						</div>
+						<!-- contact details -->
+						<h3>Contact Details</h3>
+						<div>
+							<table cellpadding="3" style="width: 100%">
+								<tbody>
+									<tr>
+										<th style="width: 15%">Email</th>
+										<th style="width: 1%">:</th>
+										<td style="width: 20%"><input id="email" type="text"
+											style="width: 150px" value="emma.tan@gmail.com"></td>
+										<td style="width: 5%"></td>
+										<th style="width: 15%">Home no.</th>
+										<th style="width: 1%">:</th>
+										<td style="width: 30%"><input id="phoneCountryCode"
+											type="text" style="width: 30px"> <input id="phoneNo"
+											type="text" style="width: 100px"></td>
+									</tr>
+									<tr>
+										<th>Fax</th>
+										<th>:</th>
+										<td><input id="fax" type="text" style="width: 150px"></td>
+										<td></td>
+										<th>Mobile no.</th>
+										<th>:</th>
+										<td><input id="mobileCountryCode" type="text"
+											style="width: 30px"> <input id="mobileNo" type="text"
+											style="width: 100px"></td>
+									</tr>
+									<tr>
+										<td colspan="4"><button
+												onclick="profile.updateCustomerInfo()">UPDATE</button></td>
+									</tr>
+								</tbody>
+							</table>
+							<div id="updateCustomerStatus2"
+								style="text-align: left; padding-left: 10px; font-size: medium; color: green"></div>
+						</div>
+						<!-- Customer Preferences -->
+						<h3>Customer Preference</h3>
+						<div>
+							<div style="font-size: medium; width: 610px">
+								Interest (You can choose more than one option) <br />
+								<div id="affCol1" style="display: inline-table; width: 200px"></div>
+								<div id="affCol2" style="display: inline-table; width: 200px"></div>
+								<div id="affCol0" style="display: inline-table; width: 200px"></div>
+								<br /> <br />
+								<button onclick="profile.updateAffinities()">UPDATE</button>
+								<br /> <span id="updateAffinitiesStatus"
+									style="text-align: left; padding-left: 10px; font-size: medium; color: green"></span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div style="height: 80px">&nbsp;</div>
+		</div>
+		</stencil>
+
+		<!-- 2FA verification Stencils-->
+		<stencil id="verificationDialog">
+		<div id="authDiag">
+			<p>Please select a 2FA verification method</p>
+			<div>
+				<button onclick="verify.doMobile2FA()">MOBILE 2FA</button>
+				<button onclick="verify.doSMSOTP()">SMS OTP</button>
+			</div>
+			<button onclick="ui.closePopup(&quot;verify2fa&quot;);">CANCEL</button>
+		</div>
+		</stencil>
+		<stencil id="verificationSms2FA">
+		<p>
+			<img src="assets/img/smart_phone_icon.png" width="30" height="30" /><strong>&nbsp;One-Time
+				Password</strong>
+		</p>
+		<p>
+			<i id="statusMessage"></i>
+		</p>
+		<form>
+			<input type="password" required id="otp"
+				placeholder="6-digit One-Time Password (OTP)">
+		</form>
+		<p>
+			<button id="otpButton">CONFIRM</button>
+			&nbsp;&nbsp;
+			<button id="cancelButton">CANCEL</button>
+		</p>
+		<br>
+		<p>
+			<font color="#990000"><b>NOTE:</b></font> If you do not receive your
+			OTP via SMS within the next few minutes, please click <a
+				style="cursor: pointer" onclick="verify.doSMSOTP()">HERE TO SEND
+				SMS </a>again
+		</p>
+		</stencil>
+		<stencil id="verificationM2FA">
+		<p>
+			<strong>Mobile 2FA Authentication</strong>
+		</p>
+		<p id="mainMessage">
+			Your mobile 2FA login transaction has been initiated, you have <b><i
+				id="timeLeft">{{timeoutLength}}</i></b> seconds to complete
+			authentication
+		</p>
+		<p>Please scan the onscreen QR code first before scanning your 2FA
+			QR code</p>
+		<p style="color: red">
+			<i id="statusMessage">Waiting for mobile authentication</i>
+		</p>
+		<img
+			src="../SMUtBank_IBS/encodeQR.action?height=150&ecl=H&content={{challengeID}}" />
+		<div>
+			<button id="m2faCancel">CANCEL</button>
+		</div>
+		</stencil>
+	</div>
+
+	<!-- Footer -->
+	<footer style="position: fixed; bottom: 0; width: 100%">
+		<div class="container">
+			<div style="position: relative" class="row">
+				<div class="copyright span4">
+					<p>&copy; 2013-2015 SMU tBank - All rights reserved.</p>
+				</div>
+			</div>
+		</div>
+	</footer>
+
+</body>
+
+</html>

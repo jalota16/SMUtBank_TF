@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>[SECRET] Your tBank Mobile Two Factor Authentication QR Code</title>
+<link rel="shortcut icon" href="assets/img/tBank.ico">
+<style>
+div {
+height:283px;
+width:170px;
+border:1px solid darkgrey;
+border-radius:10px;
+padding:10px;
+
+/* Internet Explorer 10 */
+display:-ms-flexbox;
+-ms-flex-pack:center;
+-ms-flex-align:center;
+
+/* Firefox */
+display:-moz-box;
+-moz-box-pack:center;
+-moz-box-align:center;
+
+/* Safari, Opera, and Chrome */
+display:-webkit-box;
+-webkit-box-pack:center;
+-webkit-box-align:center;
+
+/* W3C */
+display:box;
+box-pack:center;
+box-align:center;
+}
+table {
+height:100%;
+}
+</style>
+<script src="assets/js/jquery-2.1.1.js"></script>
+<script>
+$(window).load(function(){
+	$.ajax({
+		type: "POST",
+		url: "../SMUtBank_IBS/getCustomerName.action"
+	}).done(function(response) {
+		$("#custName").empty().append(response);
+	});
+	
+	$.ajax({
+		type: "POST",
+		url: "../SMUtBank_IBS/getQRCode.action"
+	}).done(function(response) {
+		console.log(response);
+		var soruce = "../SMUtBank_IBS/encodeQR.action?height=154&ecl=H&content=" + response;
+		$("#qrcode").attr("src", soruce);
+	});
+});
+</script>
+</head>
+<body onload="window.print()">
+<div>
+		<table>
+		<tr>
+			<td><img src="assets/img/logo.png"></td>
+		</tr>
+		<tr>
+			<td><img id="qrcode" style="width:170px; height:170px"></td>
+		</tr>
+		<tr>
+			<td style="text-align:center"><font id="custName" size="3" face="Arial, Helvetica, sans-serif"></font></td>
+		</tr>
+		</table>
+</div>
+
+</body>
+</html>
