@@ -35,13 +35,14 @@ fundTransfer.init = function() {
 fundTransfer.buildPage = function() {
     ui.loader.create(3, function() {
         fundTransfer.stencils.fundTransferMain.render({});
-        var chainList = [billingOrg.buildGiroList, fundTransfer.getCustomerID];
+        var chainList = [billingOrg.buildGiroList];
         standingInst.buildStandingInstructionList(chainList);
         fundTransfer.buildFundTransferMenu();
     });
     fundTransfer.getProductList(true);
     var chainList = [fundTransfer.updateAccountList, billingOrg.loadOrgList];
     fundTransfer.loadBeneficiariesList(chainList);
+    fundTransfer.getCustomerID();
 };
 
 fundTransfer.getCustomerID = function(chainList) {
