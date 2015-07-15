@@ -193,6 +193,13 @@ fundTransfer.loadBeneficiariesList = function(chainList) {
     network.doESB(populater, "BeneficiaryList", '["ns:Beneficiary"]', payload, null, true);
 };
 
+
+
+
+//My account/Other Account Tile
+
+
+
 fundTransfer.buildBeneficiaryTable = function(isBillingOrg, isPersonal) {
     if(typeof isBillingOrg !== "boolean") {
         isBillingOrg = false;
@@ -316,6 +323,7 @@ fundTransfer.addNewBeneficiary = function() {
     
     var populater = function(response, extras) {
         var message = "";
+        
         if (response.esbStatus == "invocation successful")
             message = "Added successfully";
         else if (response.esbStatus == "record not found" || response.esbStatus == "input Account ID not exist")
