@@ -1,4 +1,8 @@
 var trade = {};
+var LC = {};
+
+LC.LCList = null;
+
 trade.retrievedLC = null;
 
 trade.init = function() {
@@ -9,7 +13,9 @@ trade.init = function() {
 		exporterPage : stencil.define("exporterPage", "#tradeContainer"),
 		applyLC : stencil.define("applyLC", "#importerFunctions"),
 		amendLCapplication : stencil.define("amendLCapplication",
-				"#importerFunctions")
+				"#importerFunctions"),
+		LCEnquiry: stencil.define("LCEnquiry","#importerFunctions"),
+		LCList : stencil.define("LCList","#LCList")
 	};
 };
 
@@ -102,41 +108,87 @@ trade.applyLC = function() {
 	network.doESB(populater, "Trade_LC_ReadResponse", '["ns:ref_num","ns:importer_ID"]', payload, null, true);
 	*/
 	
-	var payload = '{"ServiceDomain":"Trade","OperationName":"Trade_LC_Create", "importer_ID":"'
+	/*var payload = '{"ServiceDomain":"Trade","OperationName":"Trade_LC_Create", "lc1:importer_ID":"'
 			+ 206
-			+ '", "exporter_ID":"'
+			+ '", "lc1:exporter_ID":"'
 			+ 208
-			+ '", "expiry_date":"'
-			+ ""
-			+ '", "confirmed":"'
+			+ '", "lc1:expiry_date":"'
+			+ "2015-07-15"
+			+ '", "lc1:confirmed":"'
 			+ false
-			+ '", "revocable":"'
+			+ '", "lc1:revocable":"'
 			+ false
-			+ '", "amount":"'
-			+ 15.00
-			+ '", "currency":"'
-			+ ""
-			+ '", "applicable_rules":"'
-			+ ""
-			+ '", "partial_shipments":"'
+			+ '", "lc1:amount":"'
+			+ 1500.00
+			+ '", "lc1:currency":"'
+			+ "SGD"
+			+ '", "lc1:applicable_rules":"'
+			+ "?"
+			+ '", "lc1:partial_shipments":"'
 			+ false
-			+ '", "ship_destination":"'
+			+ '", "lc1:ship_destination":"'
 			+ ""
-			+ '", "ship_period":"'
+			+ '", "lc1:ship_period":"' + "60 days" + '", "lc1:goods_description":"'
 			+ ""
-			+ '", "goods_description":"'
+			+ '", "lc1:docs_required":"'
 			+ ""
-			+ '", "docs_required":"'
-			+ ""
-			+ '", "additional_conditions":"'
+			+ '", "lc1:additional_conditions":"'
 			+ ""
 			+ '", "sender_to_receiver_info":"' + "" + '"}';
 	network.doESB(populater, "Trade_LC_CreateResponse", '["ns:status"]', payload, null,
-			true);
+			true);*/
 	
-	//var payload = '{"ServiceDomain":"Trade","OperationName":"Trade_LC_Read", "ref_num":"'+ "24" + '"}';
-	//network.doESB(populater, "Trade_LC_ReadResponse", '["ns:ref_num","ns:importer_ID"]', payload, null, true);
+	var payload = '{"ServiceDomain":"Trade","OperationName":"Trade_LC_Read", "ref_num":"'+ "24" + '"}';
+	network.doESB(populater, "Trade_LC_ReadResponse", '["ns:ref_num","ns:expiry_place"]', payload, null, true);
 	
 	
 	
 };
+
+trade.buildLCEnquiryPage = function() {
+	trade.stencils.LCEnquiry.render({});
+	
+	
+};
+
+trade.getLCList = function(){
+	
+	var populater = function(response, extras) {
+		console.log(response.esbStatus);
+		var message = "";
+		LC.LCList  = response;
+        message = response.esbStatus;
+        document.getElementById("messageforenquiry").innerHTML = message;
+        console.log(response);
+        console.log(extras);
+        var LCData = [];
+        if(response["ns:ref_num.length"] != null) {
+            for(var i = 1; i <= response["ns:ref_num.length"]; i++) {
+                LCData.push({
+                    LC_ref_num: response["ns:ref_num" + i],
+                	LC_currency: response["ns:currency" + i],
+                	LC_status: response["ns:status" + i],
+                	LC_amount:  response["ns:amount" + i],
+                	LC_ship_date: response["ns:ship_date" + i]
+                    
+                });
+            }
+            
+            trade.stencils.LCList.render(LCData);
+            //document.getElementById("doGiroDelete").style.display = '';
+        }
+	};
+	var customerID = document.getElementById("customerID").value;
+	var startDate = document.getElementById("startDate").value;
+	var endDate = document.getElementById("endDate").value;
+	console.log(customerID);
+	var payload = '{"ServiceDomain":"Trade","OperationName":"Trade_LCList_Read", "customer_ID":"'
+		+ customerID
+		+ '", "start_datetime":"'
+		+ startDate
+		+ '", "end_datetime":"'
+		+  endDate + '"}';
+	network.doESB(populater, "Trade_LCList_ReadResponse", '["ns:ref_num","ns:status","ns:ship_date","ns:currency","ns:amount"]', payload, null, true);
+	
+};
+

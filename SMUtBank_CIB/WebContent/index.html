@@ -1400,7 +1400,7 @@
 				
 				<button id = "lCApplicationBtn" style="width: 190px; height: 58px"" onclick = "trade.buildLCApplicationPage()"><i class="icon-paper"></i>&nbsp;LC Application</button>
 				<button id = "lCAmendmentBtn" style="width: 190px; height: 58px"" onclick = "trade.buildLCAmendementApplicationPage()"><i class="icon-edit"></i>&nbsp;LC Amendment</button>
-				<button id="docsAcceptanceBtn" style="width: 190px; height: 58px" onclick=""><i class="icon-check"></i>&nbsp;Document Acceptance</button>
+				<button id="docsAcceptanceBtn" style="width: 190px; height: 58px" onclick="trade.buildLCEnquiryPage()"><i class="icon-check"></i>&nbsp;LC Enquiry</button>
 				<button id="shippingGuaranteeBtn" style="width: 190px; height: 58px" onclick=""><i class="icon-thumbs-up"></i>&nbsp;Shipping Guarantee</button>
 				<button id="LCStatusBtn" style="width: 190px; height: 58px" onclick=""><i class="icon-tasks"></i>&nbsp;LC Status</button>
 				<button id="importNotificationsBtn" style="width: 190px; height: 58px" onclick=""><i class="icon-comments"></i>&nbsp;Notifications</button>
@@ -1767,6 +1767,81 @@
 							
 		</stencil>
 		
+		<stencil id = "LCEnquiry">
+		<div class = "container-fluid">
+		
+			<div class = "row">
+				<div class = "col-md-3"></div>
+				<div class = "col-md-9 col-md-offset-3">
+					<table>
+				<tr>
+				<th align="left"><b style="color: #9d426b">&nbsp;&nbsp;LC Enquiry</b></th>
+				</tr>
+				<tr>
+					<th width="126">Customer ID</th>
+					<th width="4">:</th>
+					<td width="164"><input id="customerID" type="text"
+						style="width: 150px"></td>
+					<td width="11"></td>
+					
+				</tr>
+				<tr>
+					<th>Start Date</th>
+					<th>:</th>
+					<td><input id="startDate" type="text" style="width: 150px"></td>
+					<td></td>
+				</tr>
+				<tr>
+					<th>End Date</th>
+					<th>:</th>
+					<td><input id="endDate" type="text" style="width: 150px"></td>
+					<td></td>
+				
+				</tr>
+				
+			</table>
+				</div>
+			</div>
+			
+			
+			<button style ="float:left" onClick= "trade.getLCList()">See LCs</button>
+			</div>
+			<div class = "row">
+				<div class = "col-md-6">
+					<div id = "messageforenquiry"></div>
+				</div>
+			</div>
+			<div class = "row">
+				<div class = "col-md-12">
+					<div style="max-height: 300px; width: 100%; overflow: auto;">
+						<ol class="ui-accordion" id="LCList">
+								
+						</ol>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		</stencil>
+		<stencil id="LCList">
+		<li class="ui-widget-content" id="LCIndex"
+			style="width: 100%; border-bottom-style: solid; border-width: 1px; border-bottom-color: #999">
+			<table style="cursor: pointer; width: 100%">
+				<tr>
+					<td style="width: 50%; overflow: hidden; white-space: nowrap"
+						valign="top">{{LC_ref_num}}</td>
+					<td style="width: 50%; overflow: hidden; white-space: nowrap"
+						valign="top">{{LC_currency}}</td>
+				</tr>
+				<tr>
+					<td style="width: 50%; overflow: hidden; white-space: nowrap"
+						valign="top">Status: {{LC_status}}</td>
+						<td style="width: 50%; overflow: hidden; white-space: nowrap"
+						valign="top">{{LC_amount}}</td>
+				</tr>
+			</table>
+		</li>
+		</stencil>
 		<stencil id = "exporterPage">
 		<h2>Exporter Portal</h2>
 			<div align = "left" style="width:1165px">
