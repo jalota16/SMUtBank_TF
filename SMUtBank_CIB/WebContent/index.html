@@ -1814,17 +1814,40 @@
 			<div class = "row">
 				<div class = "col-md-12">
 					<div style="max-height: 300px; width: 100%; overflow: auto;">
-						<ol class="ui-accordion" id="LCList">
+						<ol class="ui-accordion" id = "LCListHeader">
 								
+						</ol>
+						<ol class="ui-accordion" id="LCList">
+						
 						</ol>
 					</div>
 				</div>
 			</div>
 		</div>
-		
-		</stencil>
+		<stencil id = "LCListHeader">
+		<li class="ui-widget-content"
+			style="width: 100%; border-bottom-style: solid; border-width: 1px; border-bottom-color: #999">
+			
+	
+			<table style="cursor: pointer; width: 100%">
+				<tr>
+					<td style="width: 50%; overflow: hidden; white-space: nowrap"
+						valign="top">Reference Number</td>
+					<td style="width: 50%; overflow: hidden; white-space: nowrap"
+						valign="top">Amount</td>
+				</tr>
+				<tr>
+					<td style="width: 50%; overflow: hidden; white-space: nowrap"
+						valign="top"></td>
+						<td style="width: 50%; overflow: hidden; white-space: nowrap"
+						valign="top"></td>
+				</tr>
+			</table>
+		</li>
+	</stencil>
+	
 		<stencil id="LCList">
-		<li class="ui-widget-content" id="LCIndex"
+		<li class="ui-widget-content" id="LCIndex{{ctIdx}}"
 			style="width: 100%; border-bottom-style: solid; border-width: 1px; border-bottom-color: #999">
 			<table style="cursor: pointer; width: 100%">
 				<tr>
@@ -1842,6 +1865,11 @@
 			</table>
 		</li>
 		</stencil>
+		
+		<stencil id="LClistError">
+		<li style="width: 100%;"><span>{{errorMessage}}</span></li>
+		</stencil>
+		
 		<stencil id = "exporterPage">
 		<h2>Exporter Portal</h2>
 			<div align = "left" style="width:1165px">

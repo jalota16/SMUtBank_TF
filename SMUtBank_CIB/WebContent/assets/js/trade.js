@@ -4,6 +4,7 @@ var LC = {};
 LC.LCList = null;
 
 trade.retrievedLC = null;
+trade.selectedLCList = null;
 
 trade.init = function() {
 	trade.stencils = {
@@ -15,7 +16,9 @@ trade.init = function() {
 		amendLCapplication : stencil.define("amendLCapplication",
 				"#importerFunctions"),
 		LCEnquiry: stencil.define("LCEnquiry","#importerFunctions"),
-		LCList : stencil.define("LCList","#LCList")
+		LCList : stencil.define("LCList","#LCList"),
+		LClistError: stencil.define("LClistError","none"),
+		LCListHeader: stencil.define("LCListHeader","#LCListHeader")
 	};
 };
 
@@ -108,38 +111,38 @@ trade.applyLC = function() {
 	network.doESB(populater, "Trade_LC_ReadResponse", '["ns:ref_num","ns:importer_ID"]', payload, null, true);
 	*/
 	
-	/*var payload = '{"ServiceDomain":"Trade","OperationName":"Trade_LC_Create", "lc1:importer_ID":"'
+	var payload = '{"ServiceDomain":"Trade","OperationName":"Trade_LC_Create", "importer_ID":"'
 			+ 206
-			+ '", "lc1:exporter_ID":"'
+			+ '", "exporter_ID":"'
 			+ 208
-			+ '", "lc1:expiry_date":"'
+			+ '", "expiry_date":"'
 			+ "2015-07-15"
-			+ '", "lc1:confirmed":"'
+			+ '", "confirmed":"'
 			+ false
-			+ '", "lc1:revocable":"'
+			+ '", "revocable":"'
 			+ false
-			+ '", "lc1:amount":"'
+			+ '", "amount":"'
 			+ 1500.00
-			+ '", "lc1:currency":"'
+			+ '", "currency":"'
 			+ "SGD"
-			+ '", "lc1:applicable_rules":"'
-			+ "?"
-			+ '", "lc1:partial_shipments":"'
+			+ '", "applicable_rules":"'
+			+ ""
+			+ '", "partial_shipments":"'
 			+ false
-			+ '", "lc1:ship_destination":"'
+			+ '", "ship_destination":"'
+			+ "Singapore"
+			+ '", "ship_period":"' + "60 days" + '", "goods_description":"'
 			+ ""
-			+ '", "lc1:ship_period":"' + "60 days" + '", "lc1:goods_description":"'
+			+ '", "docs_required":"'
 			+ ""
-			+ '", "lc1:docs_required":"'
-			+ ""
-			+ '", "lc1:additional_conditions":"'
+			+ '", "additional_conditions":"'
 			+ ""
 			+ '", "sender_to_receiver_info":"' + "" + '"}';
 	network.doESB(populater, "Trade_LC_CreateResponse", '["ns:status"]', payload, null,
-			true);*/
+			true);
 	
-	var payload = '{"ServiceDomain":"Trade","OperationName":"Trade_LC_Read", "ref_num":"'+ "24" + '"}';
-	network.doESB(populater, "Trade_LC_ReadResponse", '["ns:ref_num","ns:expiry_place"]', payload, null, true);
+	//var payload = '{"ServiceDomain":"Trade","OperationName":"Trade_LC_Read", "ref_num":"'+ "24" + '"}';
+	//network.doESB(populater, "Trade_LC_ReadResponse", '["ns:ref_num","ns:expiry_place"]', payload, null, true);
 	
 	
 	
@@ -162,8 +165,9 @@ trade.getLCList = function(){
         console.log(response);
         console.log(extras);
         var LCData = [];
-        if(response["ns:ref_num.length"] != null) {
+        if(response["ns:ref_num.length"] > 0) {
             for(var i = 1; i <= response["ns:ref_num.length"]; i++) {
+            	
                 LCData.push({
                     LC_ref_num: response["ns:ref_num" + i],
                 	LC_currency: response["ns:currency" + i],
@@ -173,10 +177,16 @@ trade.getLCList = function(){
                     
                 });
             }
-            
+            trade.stencils.LCListHeader.render({});
             trade.stencils.LCList.render(LCData);
             //document.getElementById("doGiroDelete").style.display = '';
+        }else {
+        	
+            $("#LCList").empty().append(trade.stencils.LClistError.render({errorMessage: "You have no LCs"}, "fragment"));
+            //document.getElementById("doGiroDelete").style.display = 'none';
         }
+
+       
 	};
 	var customerID = document.getElementById("customerID").value;
 	var startDate = document.getElementById("startDate").value;
@@ -188,6 +198,7 @@ trade.getLCList = function(){
 		+ startDate
 		+ '", "end_datetime":"'
 		+  endDate + '"}';
+	
 	network.doESB(populater, "Trade_LCList_ReadResponse", '["ns:ref_num","ns:status","ns:ship_date","ns:currency","ns:amount"]', payload, null, true);
 	
 };
