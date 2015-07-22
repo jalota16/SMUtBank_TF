@@ -13,6 +13,7 @@ trade.init = function() {
 		importerPage : stencil.define("importerPage", "#tradeContainer"),
 		exporterPage : stencil.define("exporterPage", "#tradeContainer"),
 		applyLC : stencil.define("applyLC", "#importerFunctions"),
+		acknowledgeLC : stencil.define("acknowledgeLC", "#exporterFunctions"),
 		amendLCapplication : stencil.define("amendLCapplication",
 				"#importerFunctions"),
 		LCEnquiry: stencil.define("LCEnquiry","#importerFunctions"),
@@ -203,3 +204,10 @@ trade.getLCList = function(){
 	
 };
 
+//Exporter Functions
+
+trade.acknowledgeLCApplicationPage = function() {
+	console.log("reached ackno");
+	trade.stencils.acknowledgeLC.render({});
+
+};
