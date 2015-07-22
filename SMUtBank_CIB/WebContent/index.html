@@ -1805,65 +1805,70 @@
 			
 			
 			<button style ="float:left" onClick= "trade.getLCList()">See LCs</button>
-			</div>
+			
 			<div class = "row">
-				<div class = "col-md-6">
-					<div id = "messageforenquiry"></div>
+				<div class = "col-md-12">
+					<div id = "searchLCList" style = "float:right"></div>
 				</div>
 			</div>
 			<div class = "row">
 				<div class = "col-md-12">
 					<div style="max-height: 300px; width: 100%; overflow: auto;">
-						<ol class="ui-accordion" id = "LCListHeader">
+					
+						<ol class="ui-accordion-blue" id = "LCListHeader">
 								
 						</ol>
 						<ol class="ui-accordion" id="LCList">
 						
 						</ol>
+						
+						
 					</div>
 				</div>
-			</div>
 		</div>
+		</div>
+		</stencil>
+		<stencil id = "searchLCList">
+			<br/>
+			<h4><i class = "icon-search" onClick="trade.getLCList()"></i></h4><input type = "text" placeholder = "Search"/>
+		</stencil>
 		<stencil id = "LCListHeader">
 		<li class="ui-widget-content"
-			style="width: 100%; border-bottom-style: solid; border-width: 1px; border-bottom-color: #999">
+			style="width: 100%; border-bottom-style: solid; border-width: 1px; border-bottom-color:#999">
 			
-	
 			<table style="cursor: pointer; width: 100%">
 				<tr>
-					<td style="width: 50%; overflow: hidden; white-space: nowrap"
-						valign="top">Reference Number</td>
-					<td style="width: 50%; overflow: hidden; white-space: nowrap"
-						valign="top">Amount</td>
+					<th style="width: 20%;"><button  onClick= "trade.getLCListSortedByRef()">Ref Number</button></th>
+					<th style="width: 20%;"><button  onClick= "trade.getLCListSorted()">Status</button></th>
+					<th style="width: 20%;"><button  onClick= "trade.getLCListSortedByCreationDate()">Creation Date</button></th>
+					<th style="width: 20%;"><button  onClick= "trade.getLCListSorted()">Currency</button></th>
+					<th style="width: 20%;"><button  onClick= "trade.getLCListSorted()">Amount</button></th>
 				</tr>
-				<tr>
-					<td style="width: 50%; overflow: hidden; white-space: nowrap"
-						valign="top"></td>
-						<td style="width: 50%; overflow: hidden; white-space: nowrap"
-						valign="top"></td>
-				</tr>
+				
 			</table>
 		</li>
-	</stencil>
-	
+		</stencil>
+		
 		<stencil id="LCList">
 		<li class="ui-widget-content" id="LCIndex{{ctIdx}}"
 			style="width: 100%; border-bottom-style: solid; border-width: 1px; border-bottom-color: #999">
 			<table style="cursor: pointer; width: 100%">
 				<tr>
-					<td style="width: 50%; overflow: hidden; white-space: nowrap"
+					<td style="width: 20%; overflow: hidden; white-space: nowrap"
 						valign="top">{{LC_ref_num}}</td>
-					<td style="width: 50%; overflow: hidden; white-space: nowrap"
+					<td style="width: 20%; overflow: hidden; white-space: nowrap"
+						valign="top">{{LC_status}}</td>
+						<td style="width: 20%; overflow: hidden; white-space: nowrap"
+						valign="top">{{LC_creation}}</td>
+						<td style="width: 20%; overflow: hidden; white-space: nowrap"
 						valign="top">{{LC_currency}}</td>
-				</tr>
-				<tr>
-					<td style="width: 50%; overflow: hidden; white-space: nowrap"
-						valign="top">Status: {{LC_status}}</td>
-						<td style="width: 50%; overflow: hidden; white-space: nowrap"
+						<td style="width: 20%; overflow: hidden; white-space: nowrap"
 						valign="top">{{LC_amount}}</td>
 				</tr>
 			</table>
 		</li>
+		
+		
 		</stencil>
 		
 		<stencil id="LClistError">

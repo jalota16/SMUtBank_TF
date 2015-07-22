@@ -1534,6 +1534,12 @@ li:hover {
 .ui-accordion .ui-selected { background: #666; color: white; }
 .ui-accordion { list-style-type:none; margin: 0; padding: 0; width: 92%; background:#CCC; }
 .ui-accordion li { margin: 0px; padding: 0.8em; border:none; font-size: 14px; height: 32px; background:#f8f8f8; }
+
+.ui-accordion-blue .ui-selecting { background: #1A2155; color: white;}
+.ui-accordion-blue .ui-selected { background: #1A2155; color: white; }
+.ui-accordion-blue { list-style-type:none; margin: 0; padding: 0; width: 92%; background:#1A2155; }
+.ui-accordion-blue li { margin: 0px; padding: 0.8em; border:none; font-size: 14px; height: 32px; background:#1A2155; }
+
 .summaryTable {
     font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 }
@@ -1548,3 +1554,4 @@ li:hover {
     height: 18px;
     background: green;
 }
+
