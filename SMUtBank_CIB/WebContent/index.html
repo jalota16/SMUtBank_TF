@@ -56,6 +56,7 @@
                 system.init();
             };
 </script>
+
 </head>
 
 <body>
@@ -1438,28 +1439,29 @@
 									<td width="11"></td>
 									<th width="78">Expiry Place</th>
 									<th width="4">:</th>
-									<td width="152"><input id="expiryPlace" type="text"
-										style="width: 150px"></td>
+									<td width="152"><select id="expiryPlace" style="width: 180px"></select></td>
 								</tr>
 								<tr>
 									<th>Amount (in Figures)</th>
 									<th>:</th>
-									<td><input id="amountFig" type="text" style="width: 150px"></td>
+									<td><input id="amount" type="text" style="width: 150px"></td>
 									<td></td>
 									<th width="78">Currency</th>
 									<th width="4">:</th>
-									<td width="152"><input id="currency" type="text"
-										style="width: 150px"></td>
+									<td width="152"><select id="currency" style="width: 180px"></select></td>
 								</tr>
 								<tr>
-									<th>Credit Avilable By</th>
+									<th>Revocable</th>
 									<th>:</th>
-									<td><select id="availableBy" 
-										style="width: 165px"><option> </option></select></td>
+									<td><select id="revocable" 
+										style="width: 165px"><option value = "1">Yes</option>
+										<option value ="0">No</option></select></td>
 									<td></td>
 									<th width="78">Confirmation</th>
 									<th width="4">:</th>
-									<td width="152"><select id="confirmation" style="width: 165px"></select></td>
+									<td width="152"><select id="confirmed" 
+										style="width: 165px"><option value = "1">Yes</option>
+										<option value ="0">No</option></select> </td>
 								</tr>
 								
 							</table>
@@ -1800,17 +1802,18 @@
 				</tr>
 				
 			</table>
+			
 				</div>
 			</div>
 			
 			
-			<button style ="float:left" onClick= "trade.getLCList()">See LCs</button>
+			<button style ="float:left" onClick= "trade.getLCList()">Retrieve LC List</button>
+			<br/>
+			<br/>
 			
-			<div class = "row">
-				<div class = "col-md-12">
-					<div id = "searchLCList" style = "float:right"></div>
+				<div id = "searchLCList"></div>
+				
 				</div>
-			</div>
 			<div class = "row">
 				<div class = "col-md-12">
 					<div style="max-height: 300px; width: 100%; overflow: auto;">
@@ -1818,7 +1821,7 @@
 						<ol class="ui-accordion-blue" id = "LCListHeader">
 								
 						</ol>
-						<ol class="ui-accordion" id="LCList">
+						<ol class="LCList" id="LCList">
 						
 						</ol>
 						
@@ -1828,10 +1831,18 @@
 		</div>
 		</div>
 		</stencil>
+		
 		<stencil id = "searchLCList">
+		<br/>
+			<div style = "float:right;">
+					<input id = "LCSearch" type = "text" placeholder = "Search"/>
+			</div>
+			
+			
 			<br/>
-			<h4><i class = "icon-search" onClick="trade.getLCList()"></i></h4><input type = "text" placeholder = "Search"/>
+			
 		</stencil>
+		
 		<stencil id = "LCListHeader">
 		<li class="ui-widget-content"
 			style="width: 100%; border-bottom-style: solid; border-width: 1px; border-bottom-color:#999">
@@ -1850,7 +1861,7 @@
 		</stencil>
 		
 		<stencil id="LCList">
-		<li class="ui-widget-content" id="LCIndex{{ctIdx}}"
+		<li class="ui-widget-content" id="{{LC_status}}"
 			style="width: 100%; border-bottom-style: solid; border-width: 1px; border-bottom-color: #999">
 			<table style="cursor: pointer; width: 100%">
 				<tr>
@@ -1870,6 +1881,7 @@
 		
 		
 		</stencil>
+		
 		
 		<stencil id="LClistError">
 		<li style="width: 100%;"><span>{{errorMessage}}</span></li>

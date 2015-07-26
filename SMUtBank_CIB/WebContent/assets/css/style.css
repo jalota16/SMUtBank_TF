@@ -1540,6 +1540,23 @@ li:hover {
 .ui-accordion-blue { list-style-type:none; margin: 0; padding: 0; width: 92%; background:#1A2155; }
 .ui-accordion-blue li { margin: 0px; padding: 0.8em; border:none; font-size: 14px; height: 32px; background:#1A2155; }
 
+.ui-accordion-LC .ui-selecting { background: #999; color: white;}
+.ui-accordion-LC .ui-selected { background: #666; color: white; }
+.ui-accordion-LC { list-style-type:none; margin: 0; padding: 0; width: 92%; background:#CCC; }
+.ui-accordion-LC li { margin: 0px; padding: 0.8em; border:none; font-size: 14px; height: 32px; background:#f8f8f8; }
+
+.LCList li{
+	margin: 0px; padding: 0.8em; border:none; font-size: 14px; height: 32px; background:#f8f8f8;
+	
+	
+}
+
+.LCList {
+
+	list-style-type:none; margin: 0; padding: 0; width: 92%; background:#CCC;
+}
+
+
 .summaryTable {
     font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 }

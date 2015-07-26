@@ -419,3 +419,20 @@ ui.selectListItem = function(selectList, value) {
         }
     }
 };
+
+ui.getCurrencyOptions = function() {
+    var list =  
+
+        '<option value="USD">USD United States Dollars</option>' + 
+        '<option value= "EUR">EUR Euro</option>'+
+        '<option value="CAD">CAD Canada Dollars</option>'+ 
+        '<option value= "GBP">GBP United Kingdom Pounds</option>'+ 
+        '<option value= "DEM">DEM Germany Deutsche Marks</option>'+ 
+        '<option value= "JPY">JPY Japan Yen</option>'+ 
+        '<option value= "CHF">CHF Switzerland Francs</option>'+ 
+        '<option value= "AUD">AUD Australia Dollars</option>'+ 
+        '<option value= "BEF">BEF Belgium Francs</option>'+ 
+        '<option value= "EGP">EGP Egypt Pounds</option>';
+
+    return list;
+};
