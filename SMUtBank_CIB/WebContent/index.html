@@ -141,11 +141,7 @@
 				</div>
 				<div id="advert"
 					style="float: left; width: 420px; height: 420px; color: firebrick; font-size: 40px; line-height: 40px; text-align: center; padding-top: 50px">
-					<div>Download the tBank Mobile App today!</div>
-					<div>
-						<img
-							src="../SMUtBank_IBS/encodeQR.action?height=300&ecl=H&content=https://tbankonline.com/SMUtBank_IBS/downloads.html">
-					</div>
+					
 				</div>
 			</div>
 		</div>
@@ -1395,16 +1391,17 @@
 		</div>
 		</stencil>
 		
+		
+		
 		<stencil id = "importerPage">
 		<h2>Importer Portal</h2>
 			<div align ="left" style ="width:1165px">
-				
+				<button id="importNotificationsBtn" style="width: 190px; height: 58px" onclick="trade.buildNotificationsPage()"><i class="icon-comments"></i>&nbsp;Notifications</button>
 				<button id = "lCApplicationBtn" style="width: 190px; height: 58px"" onclick = "trade.buildLCApplicationPage()"><i class="icon-paper"></i>&nbsp;LC Application</button>
 				<button id = "lCAmendmentBtn" style="width: 190px; height: 58px"" onclick = "trade.buildLCAmendementApplicationPage()"><i class="icon-edit"></i>&nbsp;LC Amendment</button>
 				<button id="docsAcceptanceBtn" style="width: 190px; height: 58px" onclick="trade.buildLCEnquiryPage()"><i class="icon-check"></i>&nbsp;LC Enquiry</button>
 				<button id="shippingGuaranteeBtn" style="width: 190px; height: 58px" onclick=""><i class="icon-thumbs-up"></i>&nbsp;Shipping Guarantee</button>
 				<button id="LCStatusBtn" style="width: 190px; height: 58px" onclick=""><i class="icon-tasks"></i>&nbsp;LC Status</button>
-				<button id="importNotificationsBtn" style="width: 190px; height: 58px" onclick=""><i class="icon-comments"></i>&nbsp;Notifications</button>
 				
 			</div>
 			<button id="backToHome" onclick="trade.buildTradeMenu()"
@@ -1417,11 +1414,43 @@
 			<div id ="importerFunctions"></div>
 			<div style="height: 140px">&nbsp;</div>
 		</stencil>
+		
+		<stencil id ='importerNotifications'>
+			<div id = "LCSuccess" class="alert alert-success" role="alert">
+				Your LC Has been Created with the following details:
+			</div>
+			<div>&nbsp;</div>
+			
+			<div id = "LCDetailsForNotifications">
+				<table class="table" style="cursor: pointer; width: 100%">
+				<tr>
+					<th>Reference Number</th>
+					<th>Status</th>
+					<th>Creation</th>
+					<th>Currency</th>
+					<th>Amount</th>
+				</tr>
+				
+				<tr>
+					<td style="width: 20%; overflow: hidden; white-space: nowrap"
+						valign="top">{{LC_ref_num}}</td>
+					<td style="width: 20%; overflow: hidden; white-space: nowrap"
+						valign="top">{{LC_status}}</td>
+						<td style="width: 20%; overflow: hidden; white-space: nowrap"
+						valign="top">{{LC_creation}}</td>
+						<td style="width: 20%; overflow: hidden; white-space: nowrap"
+						valign="top">{{LC_currency}}</td>
+						<td style="width: 20%; overflow: hidden; white-space: nowrap"
+						valign="top">{{LC_amount}}</td>
+				</tr>
+			</table>
+			</div>
+		</stencil>
+		
 		<!-- Apply LC Stencil -->
 		<stencil id = "applyLC">
 			<center><h4><b>New Letter Of Credit Application</b></h4></center>
-			
-			<p>Application Reference: APP20150405</p>{{ref_num}}&nbsp;&nbsp;&nbsp;&nbsp;<p>Application Date: </p>{{today}}
+			<p id = "date"></p>
 			
 			<hr>
 			
@@ -1444,7 +1473,7 @@
 								<tr>
 									<th>Amount (in Figures)</th>
 									<th>:</th>
-									<td><input id="amount" type="text" style="width: 150px"></td>
+									<td><input id="amount" type="text" style="width: 150px" required></td>
 									<td></td>
 									<th width="78">Currency</th>
 									<th width="4">:</th>
@@ -1460,7 +1489,7 @@
 									<th width="78">Confirmation</th>
 									<th width="4">:</th>
 									<td width="152"><select id="confirmed" 
-										style="width: 165px"><option value = "1">Yes</option>
+										style="width: 180px"><option value = "1">Yes</option>
 										<option value ="0">No</option></select> </td>
 								</tr>
 								
@@ -1471,15 +1500,26 @@
 								<th align="left"><i class="icon-edit"></i><b style="color: #9d426b">&nbsp;Beneficiary Details</b></th>
 								</tr>
 								<tr>
-									<th width="126">Name and Address</th>
+									<th width="126">Beneficiary Account Number</th>
 									<th width="4">:</th>
-									<td width="164"><textarea id="nameAddress" 
-										style="width: 150px"></textarea></td>
-									<td width="11"></td>
-									<th width="78">Contact No.</th>
-									<th width="4">:</th>
-									<td width="152"><input id="contactNum" type="text"
+									<td width="164"><input id="benAccountNumber" type="text"
 										style="width: 150px"></td>
+									<td width="11"></td>
+									<th width="78">Address</th>
+									<th width="4">:</th>
+									<td width="152"><textarea id="benNameAddress" 
+										style="width: 150px" disabled></textarea></td>
+								</tr>
+								<tr>
+									<th width="126">Your Account Number</th>
+									<th width="4">:</th>
+									<td width="164"><input id="importerAccNum" type="text"
+										style="width: 150px"></td>
+									<td width="11"></td>
+									<th width="78">Address</th>
+									<th width="4">:</th>
+									<td width="152"><textarea id="importerNameAdd" 
+										style="width: 150px" disabled></textarea></td>
 								</tr>
 								
 							</table>
@@ -1489,27 +1529,17 @@
 								<th align ="left"><i class="icon-edit"></i><b style="color: #9d426b">&nbsp;&nbsp;Shipment Details</b></th>
 								</tr>
 								<tr>
-									<th width="126">Shipment From</th>
+									<th width="126">Shipment To</th>
 									<th width="4">:</th>
-									<td width="164"><input id="shipFrom" type = text style="width: 150px"/></td>
+									<td width="164"><input id="shipDest" type = text style="width: 150px"/></td>
 									<td width="11"></td>
-									<th width="78">Shipment To</th>
+									<th width="126">Shipment Period</th>
 									<th width="4">:</th>
-									<td width="152"><input id="shipTo" type="text"
-										style="width: 150px"/></td>
-								</tr>
-								<tr>
-									<th width="126">Latest Shipment Date</th>
-									<th width="4">:</th>
-									<td width="164"><input id="shipDate" 
-										style="width: 150px" type="date"/></td>
+									<td width="164"><input id="shipPeriod" type = text style="width: 100px"/>&nbsp;&nbsp;<b>Days</b></td> 
 									<td width="11"></td>
-									<th width="100">Partial Shipment Allowed</th>
-									<th width="4">:</th>
-									<td width="76"><input id="partialShipAllowed" type="radio" style="width: 150px" name = "partialShip" value="Yes">Yes</td> 
-									<td width="76"><input name = "partialShip"  type="radio"
-										style="width: 150px" value="No">No </td>
+									
 								</tr>
+								
 							</table>
 							<hr>
 							<table cellpadding="3" >
@@ -1519,55 +1549,13 @@
 								<tr>
 									<th width="126">Invoices and other documents</th>
 									<th width="4">:</th>
-									<td width ="8">
-										<input type="checkbox" name="invoicesAndDocs" value="signedCommInvoice" /> <br /> 
-										<input type="checkbox" name="animal" value="packingList" /><br /> 
-										<input type="checkbox" name="animal" value="weightList" /> <br /> 
-										<input type="checkbox" value="certificateOfOrigin" /><br />
+									<td width ="126">
+										<input type="checkbox" id="invoicesAndDocs" value="signedCommInvoice" />&nbsp;Signed Invoice&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br /> 
+										<input type="checkbox" id="invoicesAndDocs" value="packingList" />&nbsp;Packing List&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br /> 
+										<input type="checkbox" id="invoicesAndDocs" value="weightList" />&nbsp;Weight List&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br /> 
+										<input type="checkbox" id="invoicesAndDocs" value="certificateOfOrigin" />&nbsp;Certificate Of Origin <br />
 									</td>
-									<td width="164">
-										
-											Signed Commercial Invoice <br /> Packing List<br /> Weight List<br /> Certificate Of Origin 
-								
-									</td>
-									<td width="11"></td>
-									<th width="78">Insurance Documents</th>
-									<th width="4">:</th>
-									<td width="152"><input id="insuranceDocs" type="checkbox"
-										style="width: 150px" >Insurance Covered By Aplicant</td>
 								</tr>
-								
-								<tr>
-									<th width="126">Cover Number</th>
-									<th width="4">:</th>
-									<td width ="8"></td>
-									<td width="164"><input id="coverNum" 
-										style="width: 150px" type="text"/></td>
-									<td width="11"></td>
-									<th width="78">Insurance Company</th>
-									<th width="4">:</th>
-									<td width="152"><input id="insuranceCompany" type="input"
-										style="width: 150px"></td>
-								</tr>
-							</table>
-							<hr>
-								<table cellpadding="3" >
-								<tr>
-								<th align="left"><i class="icon-edit"></i><b style="color: #9d426b">&nbsp;&nbsp;Charge Details</b></th>
-								</tr>
-								<tr>
-									<th width="126">Charges Born By</th>
-									<th width="4">:</th>
-									<td width="164"><input id="chargesBornBy" type ="radio"
-										style="width: 150px" name = "charges" value= "applicant">Applicant <input type ="radio"
-										style="width: 150px" name = "charges" value = "benificiary">Benificiary</td>
-									<td width="11"></td>
-									<th width="78">Shipment To</th>
-									<th width="4">:</th>
-									<td width="152"><input id="shipTo" type="text"
-										style="width: 150px"></td>
-								</tr>
-								
 								
 							</table>
 							<hr>
@@ -1591,8 +1579,12 @@
 								
 							</table>
 							</div>
-							<button style="width: 250px" onclick="trade.applyLC()">Apply</button>
-							<div id = "applyMessage">&nbsp;</div>
+							<button style="width: 250px" onclick="trade.addLC()">Apply</button>
+							<div>&nbsp;</div>
+							<div id = "applyMessage">
+								
+							</div>
+							
 		</stencil>
 		
 		<stencil id = "amendLCapplication">
@@ -1886,6 +1878,85 @@
 		<stencil id="LClistError">
 		<li style="width: 100%;"><span>{{errorMessage}}</span></li>
 		</stencil>
+		
+		
+		<stencil id="addLC">
+		<div style="max-height: 300px; width: 100%; overflow: auto;">
+					<h3>New LC Application Details:</h3>
+					<hr>
+
+			<ol class="ui-accordion" id = "LCDetailsToAdd">
+					
+			</ol>		
+							
+		</div>
+		<div id="createLCStatus">&nbsp;</div>
+		<button onclick="trade.applyLC()">Confirm Add LC</button>
+		</stencil>
+		
+		<stencil id = "LCDetailsToAddStencil">
+			<li class="ui-widget-content" 
+			style="width: 100%; border-bottom-style: solid; border-width: 1px; border-bottom-color: #999">
+			<table style="cursor: pointer; width: 100%">
+				<tr>
+					<th style="width: 20%;">Expiry Date</th>
+					<th style="width: 20%;">Expiry Place</th>
+					<th style="width: 20%;">Amount</th>
+					<th style="width: 20%;">Currency</th>
+					<th style="width: 20%;">Revocable</th>
+				</tr>
+				</table>
+			</li>
+			<li class="ui-widget-content" 
+			style="width: 100%; border-bottom-style: solid; border-width: 1px; border-bottom-color: #999">
+			<table>
+				<tr>
+					<td style="width: 20%; overflow: hidden; white-space: nowrap"
+						valign="top"><input style = "width:120px" type = "text" id = "expiryDateM" value = "{{expiryDate}}"></td>
+					<td style="width: 20%; overflow: hidden; white-space: nowrap"
+						valign="top"><input style = "width:120px" type = "text" id = "expiryPlaceM" value = "{{expiryPlace}}"></td>
+						<td style="width: 20%; overflow: hidden; white-space: nowrap"
+						valign="top"><input style = "width:120px" type = "text" id = "amountM" value = "{{amount}}"></td>
+						<td style="width: 20%; overflow: hidden; white-space: nowrap"
+						valign="top"><input style = "width:120px" type = "text" id = "currencyM" value = "{{currency}}"></td>
+						<td style="width: 20%; overflow: hidden; white-space: nowrap"
+						valign="top"><input  style = "width:120px"type = "text" id = "revocableM" value = "{{revocable}}"></td>
+				</tr>
+			</table>
+		</li>
+		<li class="ui-widget-content"
+			style="width: 100%; border-bottom-style: solid; border-width: 1px; border-bottom-color: #999">
+			<table style="cursor: pointer; width: 100%">
+				<tr>
+					<th style="width: 20%;">Confirmation</th>
+					<th style="width: 20%;">Shipment To</th>
+					<th style="width: 20%;">Ship Period</th>
+					<th style="width: 20%;">Goods Description</th>
+					<th style="width: 20%;">Additional Conditions</th>
+				</tr>
+				</table>
+			</li>
+			<li class="ui-widget-content"
+			style="width: 100%; border-bottom-style: solid; border-width: 1px; border-bottom-color: #999">
+			<table>
+				<tr>
+					<td style="width: 20%; overflow: hidden; white-space: nowrap"
+						valign="top"><input style = "width:120px" type = "text" id = "confirmedM" value = "{{confirmation}}"></td>
+					<td style="width: 20%; overflow: hidden; white-space: nowrap"
+						valign="top"><input style = "width:120px" type = "text" id = "shipToM" value = "{{shipTo}}"></td>
+						<td style="width: 20%; overflow: hidden; white-space: nowrap"
+						valign="top"><input style = "width:120px" type = "text" id = "shipPeriodM" value = "{{shipPeriod}}"></td>
+						<td style="width: 20%; overflow: hidden; white-space: nowrap"
+						valign="top"><input style = "width:120px" type = "text" id = "goodsDescM" value = "{{goodsDesc}}"></td>
+						<td style="width: 20%; overflow: hidden; white-space: nowrap"
+						valign="top"><input style = "width:120px" type = "text" id ="addConditionsM" value = "{{addConditions}}"></td>
+				</tr>
+			</table>
+		</li>
+		</stencil>
+		
+		<!--  Exporter -->
+		
 		
 		<stencil id = "exporterPage">
 		<h2>Exporter Portal</h2>
@@ -2491,7 +2562,7 @@
 			</div>
 		</div>
 	</footer>
-
+    
 </body>
 
 </html>

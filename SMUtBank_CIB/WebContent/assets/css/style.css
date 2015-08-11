@@ -1240,7 +1240,7 @@ div.square div.msg {
 
 div.square div.msg form input, .contact-us form textarea {
     width: 90%;
-    height: 24px;
+    min-height: 24px;
     border: 1px solid #ddd;
     -moz-border-radius: 0;
     -webkit-border-radius: 0;
@@ -1262,12 +1262,12 @@ div.square div.msg form input:focus, .contact-us form textarea:focus {
 }
 
 div.square div.msg form textarea {
-    height: 160px;
+    min-height: 160px;
 }
 
 div.square div.msg button {
-    width: 120px;
-    height: 30px;
+    min-width: 120px;
+    min-height: 30px;
     margin-top: 15px;
     background: #1A2155;
     border: 0;

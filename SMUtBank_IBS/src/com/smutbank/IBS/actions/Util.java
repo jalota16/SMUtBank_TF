@@ -46,6 +46,9 @@ public class Util extends ActionSupport implements ParameterAware, SessionAware 
 	
 	public void getCustomerName() {
 		sendResponse((String)session.get("customerName"));
+		//System.out.println("Here it is customerName: "+(String)session.get("customerName"));
+		//System.out.println("Here it is: "+(String)session.get("bankID"));
+		
 	}
 	
 	public void generateKey() throws IOException{
