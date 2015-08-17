@@ -44,6 +44,8 @@
                     <xs:element ref="ns1:status"/>
                     <xs:element ref="ns1:importer_ID"/>
                     <xs:element ref="ns1:exporter_ID"/>
+                    <xs:element ref="ns1:importer_account_num"/>
+                    <xs:element ref="ns1:exporter_account_num"/>
                     <xs:element ref="ns1:expiry_date"/>
                     <xs:element ref="ns1:expiry_place"/>
                     <xs:element ref="ns1:issue_date"/>
@@ -148,8 +150,10 @@
             <xs:element name="expiry_date" type="xs:string"/>
             <xs:element name="expiry_place" type="xs:string"/>
             <xs:element name="exporter_ID" type="xs:string"/>
+            <xs:element name="exporter_account_num" type="xs:string"/>
             <xs:element name="goods_description" type="xs:string"/>
             <xs:element name="importer_ID" type="xs:string"/>
+            <xs:element name="importer_account_num" type="xs:string"/>
             <xs:element name="issue_date" type="xs:string"/>
             <xs:element name="issuing_bank_id" type="xs:string"/>
             <xs:element name="partial_shipments" type="xs:boolean"/>
@@ -167,7 +171,7 @@
         <wsdl:port name="Trade_LC_JMSEndpoint" binding="tns:Trade_LC_JMSEndpointBinding">
             <soap:address location=""/>
             <jms:connectionFactory>SMUBankQueueConnectionFactory</jms:connectionFactory>
-            <jms:targetAddress destination="queue">tf.endpoint</jms:targetAddress>
+            <jms:targetAddress destination="queue">trade.endpoint</jms:targetAddress>
         </wsdl:port>
         <wsdl:port name="Trade_LC_HTTPEndpoint" binding="tns:Trade_LC_HTTPEndpointBinding">
             <soap:address location="http://localhost:9091/Trade_LC.serviceagent/Trade_LC_HTTPEndpoint"/>

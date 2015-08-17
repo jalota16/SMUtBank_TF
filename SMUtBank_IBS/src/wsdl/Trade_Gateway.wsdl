@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Created by TIBCO WSDL-->
+<wsdl:definitions xmlns:ns2="http://smubank.smu.edu.sg/schemas/serviceResponseHeader" xmlns:ns1="http://smubank.smu.edu.sg/schemas/TF/LC" xmlns:tns="http://smubank.smu.edu.sg/Trade/Gateway" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns0="http://smubank.smu.edu.sg/schemas/serviceRequestMessage/" xmlns:jms="http://www.tibco.com/namespaces/ws/2004/soap/binding/JMS" xmlns:soap1="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:jndi="http://www.tibco.com/namespaces/ws/2004/soap/apis/jndi" name="Untitled" targetNamespace="http://smubank.smu.edu.sg/Trade/Gateway">
+    <wsdl:types>
+        <xs:schema xmlns:tns="http://smubank.smu.edu.sg/schemas/serviceRequestMessage/" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://smubank.smu.edu.sg/schemas/serviceRequestMessage/" elementFormDefault="unqualified" attributeFormDefault="unqualified">
+            <xs:complexType name="Content">
+                <xs:sequence>
+                    <xs:element ref="tns:ServiceReqHeader"/>
+                    <xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax" namespace="##any"/>
+                </xs:sequence>
+                <xs:anyAttribute processContents="lax" namespace="##any"/>
+            </xs:complexType>
+            <xs:complexType name="ServiceReqHeader">
+                <xs:sequence>
+                    <xs:element name="ConsumerID" type="xs:string"/>
+                    <xs:element name="TransactionID" type="xs:string"/>
+                    <xs:element name="RequestUUID" type="xs:string"/>
+                    <xs:element name="OperationName" type="xs:string"/>
+                    <xs:element name="Priority" type="xs:int"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="Content" type="tns:Content"/>
+            <xs:element name="ServiceReqHeader" type="tns:ServiceReqHeader"/>
+        </xs:schema>
+        <xs:schema xmlns="http://smubank.smu.edu.sg/schemas/serviceResponseHeader" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://smubank.smu.edu.sg/schemas/serviceResponseHeader" elementFormDefault="qualified" attributeFormDefault="unqualified">
+            <xs:complexType name="ServiceRespHeader">
+                <xs:sequence>
+                    <xs:element ref="ns2:GlobalErrorID"/>
+                    <xs:element ref="ns2:ErrorText"/>
+                    <xs:element ref="ns2:ErrorDetails"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="ErrorDetails" type="xs:string"/>
+            <xs:element name="ErrorText" type="xs:string"/>
+            <xs:element name="GlobalErrorID" type="xs:string"/>
+            <xs:element name="ServiceRespHeader" type="ns2:ServiceRespHeader"/>
+        </xs:schema>
+        <xs:schema xmlns="http://smubank.smu.edu.sg/schemas/TF/LC" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://smubank.smu.edu.sg/schemas/TF/LC" elementFormDefault="qualified" attributeFormDefault="unqualified">
+            <xs:complexType name="LC_Acknowledge">
+                <xs:sequence>
+                    <xs:element ref="ns1:LC_ID"/>
+                    <xs:element ref="ns1:ref_num"/>
+                    <xs:element ref="ns1:creation_datetime"/>
+                    <xs:element ref="ns1:status"/>
+                    <xs:element ref="ns1:importer_ID"/>
+                    <xs:element ref="ns1:importer_account_num"/>
+                    <xs:element ref="ns1:exporter_ID"/>
+                    <xs:element ref="ns1:exporter_account_num"/>
+                    <xs:element ref="ns1:expiry_date"/>
+                    <xs:element ref="ns1:expiry_place"/>
+                    <xs:element ref="ns1:issue_date"/>
+                    <xs:element ref="ns1:confirmed"/>
+                    <xs:element ref="ns1:revocable"/>
+                    <xs:element ref="ns1:amount"/>
+                    <xs:element ref="ns1:currency"/>
+                    <xs:element ref="ns1:applicable_rules"/>
+                    <xs:element ref="ns1:partial_shipments"/>
+                    <xs:element ref="ns1:ship_destination"/>
+                    <xs:element ref="ns1:ship_date"/>
+                    <xs:element ref="ns1:ship_period"/>
+                    <xs:element ref="ns1:goods_description"/>
+                    <xs:element ref="ns1:docs_required"/>
+                    <xs:element ref="ns1:additional_conditions"/>
+                    <xs:element ref="ns1:sender_to_receiver_info"/>
+                    <xs:element ref="ns1:issuing_bank_id"/>
+                    <xs:element ref="ns1:advising_bank_id"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="LC_Issue">
+                <xs:sequence>
+                    <xs:element ref="ns1:LC_ID"/>
+                    <xs:element ref="ns1:ref_num"/>
+                    <xs:element ref="ns1:creation_datetime"/>
+                    <xs:element ref="ns1:status"/>
+                    <xs:element ref="ns1:importer_ID"/>
+                    <xs:element ref="ns1:importer_account_num"/>
+                    <xs:element ref="ns1:exporter_ID"/>
+                    <xs:element ref="ns1:exporter_account_num"/>
+                    <xs:element ref="ns1:expiry_date"/>
+                    <xs:element ref="ns1:expiry_place"/>
+                    <xs:element ref="ns1:issue_date"/>
+                    <xs:element ref="ns1:confirmed"/>
+                    <xs:element ref="ns1:revocable"/>
+                    <xs:element ref="ns1:amount"/>
+                    <xs:element ref="ns1:currency"/>
+                    <xs:element ref="ns1:applicable_rules"/>
+                    <xs:element ref="ns1:partial_shipments"/>
+                    <xs:element ref="ns1:ship_destination"/>
+                    <xs:element ref="ns1:ship_date"/>
+                    <xs:element ref="ns1:ship_period"/>
+                    <xs:element ref="ns1:goods_description"/>
+                    <xs:element ref="ns1:docs_required"/>
+                    <xs:element ref="ns1:additional_conditions"/>
+                    <xs:element ref="ns1:sender_to_receiver_info"/>
+                    <xs:element ref="ns1:issuing_bank_id"/>
+                    <xs:element ref="ns1:advising_bank_id"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="Trade_LC_Acknowledge-Request">
+                <xs:sequence>
+                    <xs:element name="LC_Acknowledge_record" type="ns1:LC_Acknowledge"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="Trade_LC_Acknowledge-Response">
+                <xs:sequence>
+                    <xs:element ref="ns1:ref_num"/>
+                    <xs:element ref="ns1:status"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="Trade_LC_Issue-Request">
+                <xs:sequence>
+                    <xs:element name="LC_Issue_record" type="ns1:LC_Issue"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="Trade_LC_Issue-Response">
+                <xs:sequence>
+                    <xs:element ref="ns1:ref_num"/>
+                    <xs:element ref="ns1:status"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="LC_ID" type="xs:string"/>
+            <xs:element name="additional_conditions" type="xs:string"/>
+            <xs:element name="advising_bank_id" type="xs:string"/>
+            <xs:element name="amount" type="xs:decimal"/>
+            <xs:element name="applicable_rules" type="xs:string"/>
+            <xs:element name="confirmed" type="xs:boolean"/>
+            <xs:element name="creation_datetime" type="xs:string"/>
+            <xs:element name="currency" type="xs:string"/>
+            <xs:element name="customer_ID" type="xs:string"/>
+            <xs:element name="docs_required" type="xs:string"/>
+            <xs:element name="end_datetime" type="xs:string"/>
+            <xs:element name="expiry_date" type="xs:string"/>
+            <xs:element name="expiry_place" type="xs:string"/>
+            <xs:element name="exporter_ID" type="xs:string"/>
+            <xs:element name="exporter_account_num" type="xs:string"/>
+            <xs:element name="goods_description" type="xs:string"/>
+            <xs:element name="importer_ID" type="xs:string"/>
+            <xs:element name="importer_account_num" type="xs:string"/>
+            <xs:element name="issue_date" type="xs:string"/>
+            <xs:element name="issuing_bank_id" type="xs:string"/>
+            <xs:element name="partial_shipments" type="xs:boolean"/>
+            <xs:element name="ref_num" type="xs:string"/>
+            <xs:element name="revocable" type="xs:boolean"/>
+            <xs:element name="sender_to_receiver_info" type="xs:string"/>
+            <xs:element name="ship_date" type="xs:string"/>
+            <xs:element name="ship_destination" type="xs:string"/>
+            <xs:element name="ship_period" type="xs:string"/>
+            <xs:element name="start_datetime" type="xs:string"/>
+            <xs:element name="status" type="xs:string"/>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:service name="Trade_Gateway">
+        <wsdl:port name="Trade_Gateway_JMSEndpoint" binding="tns:Trade_Gateway_JMSEndpointBinding">
+            <soap:address location=""/>
+            <jms:connectionFactory>SMUBankQueueConnectionFactory</jms:connectionFactory>
+            <jms:targetAddress destination="queue">trade.endpoint</jms:targetAddress>
+        </wsdl:port>
+        <wsdl:port name="Trade_Gateway_HTTPEndpoint" binding="tns:Trade_Gateway_HTTPEndpointBinding">
+            <soap:address location="http://localhost:9093/Trade_Gateway.serviceagent/Trade_Gateway_HTTPEndpoint"/>
+        </wsdl:port>
+    </wsdl:service>
+    <wsdl:portType name="Trade_Gateway">
+        <wsdl:operation name="Trade_MT700_Produce">
+            <wsdl:input message="tns:Trade_LC_Issue-Input"/>
+            <wsdl:output message="tns:Trade_LC_Issue-Output"/>
+        </wsdl:operation>
+        <wsdl:operation name="Trade_MT730_Produce">
+            <wsdl:input message="tns:Trade_LC_Acknowledge-Input"/>
+            <wsdl:output message="tns:Trade_LC_Acknowledge-Output"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="Trade_Gateway_JMSEndpointBinding" type="tns:Trade_Gateway">
+        <soap:binding style="rpc" transport="http://www.tibco.com/namespaces/ws/2004/soap/binding/JMS"/>
+        <jms:binding messageFormat="Text"/>
+        <wsdl:operation name="Trade_MT700_Produce">
+            <soap:operation style="rpc" soapAction="/Trade_Gateway.serviceagent/Trade_Gateway_JMSEndpoint/Trade_MT700_Produce"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="ServiceReqHeader Trade_LC_Issue-Request"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="ServiceRespHeader Trade_LC_Issue-Response"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="Trade_MT730_Produce">
+            <soap:operation style="rpc" soapAction="/Trade_Gateway.serviceagent/Trade_Gateway_JMSEndpoint/Trade_MT730_Produce"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="ServiceReqHeader Trade_LC_Acknowledge-Request"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="ServiceRespHeader Trade_LC_Issue-Response"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="Trade_Gateway_HTTPEndpointBinding" type="tns:Trade_Gateway">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="Trade_MT700_Produce">
+            <soap:operation style="rpc" soapAction="/Trade_Gateway.serviceagent/Trade_Gateway_HTTPEndpoint/Trade_MT700_Produce"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="ServiceReqHeader Trade_LC_Issue-Request"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="ServiceRespHeader Trade_LC_Issue-Response"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="Trade_MT730_Produce">
+            <soap:operation style="rpc" soapAction="/Trade_Gateway.serviceagent/Trade_Gateway_HTTPEndpoint/Trade_MT730_Produce"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="ServiceReqHeader Trade_LC_Acknowledge-Request"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="ServiceRespHeader Trade_LC_Issue-Response"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:message name="Trade_LC_Issue-Input">
+        <wsdl:part name="ServiceReqHeader" type="ns0:ServiceReqHeader"/>
+        <wsdl:part name="Trade_LC_Issue-Request" type="ns1:Trade_LC_Issue-Request"/>
+    </wsdl:message>
+    <wsdl:message name="Trade_LC_Issue-Output">
+        <wsdl:part name="ServiceRespHeader" type="ns2:ServiceRespHeader"/>
+        <wsdl:part name="Trade_LC_Issue-Response" type="ns1:Trade_LC_Issue-Response"/>
+    </wsdl:message>
+    <wsdl:message name="Trade_LC_Acknowledge-Input">
+        <wsdl:part name="ServiceReqHeader" type="ns0:ServiceReqHeader"/>
+        <wsdl:part name="Trade_LC_Acknowledge-Request" type="ns1:Trade_LC_Acknowledge-Request"/>
+    </wsdl:message>
+    <wsdl:message name="Trade_LC_Acknowledge-Output">
+        <wsdl:part name="ServiceRespHeader" type="ns2:ServiceRespHeader"/>
+        <wsdl:part name="Trade_LC_Issue-Response" type="ns1:Trade_LC_Issue-Response"/>
+    </wsdl:message>
+</wsdl:definitions>

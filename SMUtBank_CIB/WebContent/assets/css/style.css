@@ -1556,6 +1556,18 @@ li:hover {
 	list-style-type:none; margin: 0; padding: 0; width: 92%; background:#CCC;
 }
 
+.LCListExp li{
+	margin: 0px; padding: 0.8em; border:none; font-size: 14px; height: 32px; background:#f8f8f8;
+	
+	
+}
+
+.LCListExp {
+
+	list-style-type:none; margin: 0; padding: 0; width: 92%; background:#CCC;
+}
+
+
 
 .summaryTable {
     font-family: 'Open Sans', Helvetica, Arial, sans-serif;
