@@ -1394,7 +1394,6 @@
 		</stencil>
 		
 		
-		
 		<stencil id = "importerPage">
 		<br/>
 		<font face="Georgia, Palatino, Times New Roman" size="6"
@@ -1418,6 +1417,94 @@
 			
 			<div id ="importerFunctions"></div>
 			<div style="height: 140px">&nbsp;</div>
+		</stencil>
+		
+		<stencil id = "teachingMenuImporter">
+		<span style="font-size: medium"><b style="color: #9d426b">Note:</b>
+						Don't Understand what's going on? Click on any of the following documents</span>
+		<br/>
+		<br/>
+		<h3><b>Document Information: </b></h3>
+		<br/>
+				<table class = "table table-hover">
+				
+				<tr>
+					<td style="overflow: hidden; white-space: nowrap"
+						valign="top"><img onclick= "trade.buildLCApplicationPage()" style ="height:100px; width:100px;" src = "http://mystartupuniversity.com/wp-content/uploads/2015/06/1433487577_attest_authorize_award.png"/></td>
+					<td style="overflow: hidden; white-space: nowrap"
+						valign="top"><h3>Letter Of Credit</h3></td>
+						<td style="overflow: hidden; white-space: nowrap"
+						valign="top"><img onclick = "trade.popDetails('LC')" style ="height:40px; width:40px;" src = "http://www.thelifeyoucansave.org/portals/0/about/img/icons/faq.png"/></td>
+						
+				</tr>
+				
+				<tr>
+					<td style="overflow: hidden; white-space: nowrap"
+						valign="top"><img style ="height:100px; width:100px;" src = "http://mystartupuniversity.com/wp-content/uploads/2015/05/1432954642_target_money.png"/></td>
+					<td style="overflow: hidden; white-space: nowrap"
+						valign="top"><h3>Shipping Guarantee</h3></td>
+						<td style="overflow: hidden; white-space: nowrap"
+						valign="top"><img onclick = "trade.popDetails('SG')" style ="height:40px; width:40px;" src = "http://www.thelifeyoucansave.org/portals/0/about/img/icons/faq.png"/></td>
+						
+				</tr>
+				
+				<tr>
+					<td style="overflow: hidden; white-space: nowrap"
+						valign="top"><img style ="height:100px; width:100px;" src = "https://easycompanies.com.au/assets/1401090959_finance_asset_paper_security_financial_securities_item_flat_icon_symbol-7ac0e649f9758c20c5ea280a8c26e549.png"/></td>
+					<td style="overflow: hidden; white-space: nowrap"
+						valign="top"><h3>Trust Receipt</h3></td>
+						<td style="overflow: hidden; white-space: nowrap"
+						valign="top"><img onclick = "trade.popDetails('TR')" style ="height:40px; width:40px;" src = "http://www.thelifeyoucansave.org/portals/0/about/img/icons/faq.png"/></td>
+						
+				</tr>
+			</table>
+			
+			<div style = "height:150px;">&nbsp;</div>
+		</stencil>
+		<stencil id = "LCTeach">
+		
+
+			<h1><b>Letter of Credit: </b></h1>
+			<h4>A letter issued by a bank to another bank (especially one in a different country) </h4>
+			<h4>to serve as a guarantee for payments made to a specified person under specified conditions.</h4>
+
+		</stencil>
+		
+		<stencil id = "BGTeach">
+		
+
+			<h1><b>Bankers Guarantee: </b></h1>
+			<h4>A guarantee from the advising bank to the exporter ensuring that if the importer fails to </h4>
+			<h4>settle a debt, the bank will cover it</h4>
+		</stencil>
+		
+		<stencil id = "BDTeach">
+		
+			<h1><b>Bill Discounting: </b></h1>
+			<h4> Cashing or trading a bill of exchange at less than its par value and before its maturity date </h4>
+			<h4> (When a buyer buys goods from the seller, the payment is usually made through letter of credit. </h4>
+			<h4>The credit period may vary from 30 days to 120 days. Depending upon the creditworthiness of the buyer, </h4>
+			<h4>the advising bank discounts the amount that needs to be paid at the end of credit period.)</h4>
+			
+		</stencil>
+		
+		<stencil id = "TRTeach">
+		
+			
+			<h1><b>Trust Receipt: </b></h1>
+			<h4> A type of short-term loan to provide the importer with financing to settle goods imported under </h4>
+			<h4>Letter of Credit where title of goods is held by the bank (e.g. taken when importer can’t pay </h4>
+			<h4>back before reselling the goods)</h4>
+			
+		</stencil>
+		
+		<stencil id = "SGTeach">
+		
+			
+			<h1><b>Shipping Guarantee: </b></h1>
+			<h4>A written guarantee, issued by the bank which will bear joint liability, and is presented by </h4>
+			<h4>the importer to the carrier for picking up the goods in the case of arrival of cargo prior to the </h4>
+			<h4>shipping documents (bill of lading)</h4>
 		</stencil>
 		
 		<stencil id ='importerNotifications'>
@@ -1987,6 +2074,7 @@
 		<br/>
 		<br/>
 		<div id = "exporterFunctions"></div>
+		<div style = "height:150px;">&nbsp;</div>
 		</stencil>
 		
 		<!-- Acknowledge LC Stencil -->
@@ -2121,7 +2209,7 @@
 		</stencil>
 		
 		<stencil id="LCListExp">
-		<li class="ui-widget-content" id="{{LC_status}}"
+		<li class="ui-widget-content" id="LCIndex{{ctx}}"
 			style="width: 100%; border-bottom-style: solid; border-width: 1px; border-bottom-color: #999">
 			<table style="cursor: pointer; width: 100%">
 				<tr>
@@ -2180,7 +2268,46 @@
 			</table>
 			</div>
 		</stencil>
-		
+		<stencil id = "teachingMenuExporter">
+		<span style="font-size: medium"><b style="color: #9d426b">Note:</b>
+						Don't Understand what's going on? Click on any of the following question marks</span>
+		<br/>
+		<br/>
+		<h3><b>Document Information: </b></h3>
+		<br/>
+				<table class = "table table-hover">
+				<tr>
+					<td style="overflow: hidden; white-space: nowrap"
+						valign="top"><img onClick= "trade.buildLCAdvisePage()" style ="height:100px; width:100px;" src = "http://mystartupuniversity.com/wp-content/uploads/2015/06/1433487577_attest_authorize_award.png"/></td>
+					<td style="overflow: hidden; white-space: nowrap"
+						valign="top"><h3>Letter Of Credit</h3></td>
+						<td style="overflow: hidden; white-space: nowrap"
+						valign="top"><img onclick = "trade.popDetails('LC')" style ="height:40px; width:40px;" src = "http://www.thelifeyoucansave.org/portals/0/about/img/icons/faq.png"/></td>
+						
+				</tr>
+				<tr>
+					<td style="overflow: hidden; white-space: nowrap"
+						valign="top"><img style ="height:100px; width:100px;" src = "http://mystartupuniversity.com/wp-content/uploads/2015/06/1433376097_bank-building.png"/></td>
+					<td style="overflow: hidden; white-space: nowrap"
+						valign="top"><h3>Bankers Guarantee</h3></td>
+						<td style="overflow: hidden; white-space: nowrap"
+						valign="top"><img onclick = "trade.popDetails('BG')" style ="height:40px; width:40px;"  src = "http://www.thelifeyoucansave.org/portals/0/about/img/icons/faq.png"/></td>
+						
+				</tr>
+				<tr>
+					<td style="overflow: hidden; white-space: nowrap"
+						valign="top"><img style ="height:100px; width:100px;" src = "http://mystartupuniversity.com/wp-content/uploads/2014/02/Money.png"/></td>
+					<td style="overflow: hidden; white-space: nowrap"
+						valign="top"><h3>Bill Discounting</h3></td>
+						<td style="overflow: hidden; white-space: nowrap"
+						valign="top"><img onclick = "trade.popDetails('BD')" style ="height:40px; width:40px;" src = "http://www.thelifeyoucansave.org/portals/0/about/img/icons/faq.png"/></td>
+						
+				</tr>
+				
+			</table>
+			
+			
+		</stencil>
 		
 		
 		<!-- Profile Stencils-->

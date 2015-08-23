@@ -5,6 +5,7 @@ LC.LCList = null;
 fundTransfer.customerID = null;
 trade.retrievedLC = null;
 trade.selectedLCList = null;
+trade.selectedLCs = null;
 var exporterIDToFind = null;
 var importerIDToFind = null;
 
@@ -36,7 +37,15 @@ trade.init = function() {
 		LCListHeaderExp : stencil.define("LCListHeaderExp", "#LCListHeaderExp"),
 		searchLCListExp : stencil.define("searchLCListExp", "#searchLCListExp"),
 		exporterAccRejBtn : stencil.define("exporterAccRejBtn",
-				"#exporterAccRejBtn")
+				"#exporterAccRejBtn"),
+		teachingMenuImporter : stencil.define("teachingMenuImporter",
+		"#importerFunctions"),
+		teachingMenuExporter: stencil.define("teachingMenuExporter","#exporterFunctions"),
+		LCTeach: stencil.define("LCTeach","none"),
+		TRTeach: stencil.define("TRTeach","none"),
+		SGTeach: stencil.define("SGTeach","none"),
+		BGTeach: stencil.define("BGTeach","none"),
+		BDTeach: stencil.define("BDTeach","none"),
 
 	};
 };
@@ -54,6 +63,7 @@ trade.buildTradeMenu = function() {
 
 trade.buildImporterPage = function() {
 	trade.stencils.importerPage.render({});
+	trade.stencils.teachingMenuImporter.render({});
 
 };
 
@@ -191,6 +201,7 @@ trade.buildLCAmendementApplicationPage = function() {
 
 trade.buildExporterPage = function() {
 	trade.stencils.exporterPage.render({});
+	trade.stencils.teachingMenuExporter.render({});
 
 };
 
@@ -890,6 +901,7 @@ trade.getLCListForAdvise = function() {
 		console.log(extras);
 		var LCData = [];
 		var ctr = 0;
+		var counter = 0;
 		if (response["ns:ref_num.length"] > 0) {
 			// document.getElementById("customerID").innerHTML
 			var fullID = document.getElementById("customerID").value;
@@ -904,7 +916,7 @@ trade.getLCListForAdvise = function() {
 				// var searchterm = document.getElementById("LCSearch").value;
 				// if(response["ns:ref_num" + i] == searchterm ||
 				// response["ns:status" + i] == searchterm ){
-
+				
 				if (response["ns:status" + i] == "ADVISED"
 						&& response["ns:exporter_ID" + i] == fullID) {
 					ctr++;
@@ -928,10 +940,13 @@ trade.getLCListForAdvise = function() {
 						LC_ship_date: response["ns:ship_date" + i],
 						LC_ship_period: response["ns:ship_period" + i],
 						LC_ship_destination: response["ns:ship_destination" + i],
-						LC_expiry_date: response["ns:expiry_date" + i]
+						LC_expiry_date: response["ns:expiry_date" + i],
+						ctx: counter
 
 					});
-				} console.log(LCData);
+				}
+				counter++;
+				console.log(LCData);
 
 				// }
 			}
@@ -1001,15 +1016,32 @@ trade.getLCListForAdvise = function() {
 					'["ns:LC_ID","ns:ref_num","ns:status","ns:ship_date","ns:currency","ns:amount","ns:creation_datetime","ns:exporter_ID","ns:importer_account_num","ns:exporter_account_num","ns:expiry_place","ns:issue_date","ns:issue_date","ns:confirmed","ns:revocable","ns:ship_destination","ns:ship_date","ns:ship_period","ns:ship_destination","ns:expiry_date"]',
 					payload, null, true);
 
+	 $(function() {
+		 console.log("Reached selectable");
+	        $("#LCListExp").selectable({
+	            stop: function() {
+	                trade.selectedLCs = [];
+	                $(".ui-selected", $("#LCListExp")).each(function() {
+	                    if($(this).attr('id') != null && $(this).attr('id').indexOf("LCIndex") != -1) {
+	                        var itemId = $(this).attr('id');
+	                        var item = itemId.replace("LCIndex", "");
+	                        trade.selectedLCs.push(item);
+	                    }
+	                });
+	            }
+	        });
+	    });
+
 };
 
 trade.exporterAcceptRejectLC = function(acceptBoolean) {
 
 	if (acceptBoolean == true) {
-		
+		trade.sendAcknowledgement(document.getElementById("ref_num").value,"accepted");
 		var populater = function(response,extras){
 			
 			trade.buildExporterNotificationsPage(document.getElementById("ref_num").value,response["ns:status1"]);
+			
 			
 		}
 		var payload = '{"ServiceDomain":"Trade","OperationName":"Trade_LCStatus_Update", "ref_num":"'
@@ -1019,6 +1051,7 @@ trade.exporterAcceptRejectLC = function(acceptBoolean) {
 
 		network.doESB(populater,"Trade_LCStatus_UpdateResponse",'["ns:status"]', payload, null, true);	
 	}else{
+		trade.sendAcknowledgement(document.getElementById("ref_num").value,"rejected");
 var populater = function(response,extras){
 			
 			console.log("Rejected!");
@@ -1108,6 +1141,68 @@ var populater = function(response,extras){
 	}*/
 
 
+trade.sendAcknowledgement = function(ref_num,status){
+	console.log("Reached Ack with ref "+ref_num + "and "+ status);
+		console.log("reached accepted");
+		 //Approve LC
+		var populater = function(response, extras) {
+			
+			console.log("THIS"+response.esbStatus);
+			console.log(document.getElementById("LC_ID").value);
+		};
+
+		console.log(document.getElementById("ref_num").value);
+		var payload ='{"ServiceDomain":"Trade","OperationName":"Trade_MT730_Produce","LC_ID":"'
+	 		+ document.getElementById("ref_num").value
+	 		+ '","ref_num":"'
+	 		+ document.getElementById("LC_ID").value
+	 		+ '","creation_datetime":"'
+	 		+ document.getElementById("creation").value
+	 		+ '",  "status":"'
+	 		+ "AUTH_ACCEPT"
+	 		+ '", "importer_ID":"'
+		+ 879
+		+ '", "importer_account_num":"'
+		+ document.getElementById("importerAccNum").value
+		+ '", "exporter_ID":"'
+		+ document.getElementById("exporterID").value
+		+ '", "exporter_account_num":"'
+		+ document.getElementById("benAccountNumber").value
+		+ '", "expiry_date":"'
+		+ document.getElementById("expiry_date").value
+		+ '", "expiry_place":"'
+		+ document.getElementById("expiry_place").value
+		+ '", "issue_date":"'
+		+ "2015-06-07"
+		+ '", "confirmed":"'
+		+ document.getElementById("confirmed").value
+		+ '", "revocable":"'
+		+ document.getElementById("revocable").value
+		+ '", "amount":"'
+		+ document.getElementById("amount").value
+		+ '", "currency":"'
+		+ document.getElementById("currency").value
+		+ '", "applicable_rules":"'
+		+ ""
+		+ '", "partial_shipments":"'
+		+ false
+		+ '", "ship_destination":"'
+		+ document.getElementById("ship_dest").value
+		+ '", "ship_date":"'
+		+ document.getElementById("ship_date").value
+		+ '", "ship_period":"'
+		+ document.getElementById("ship_period").value
+		+ '", "docs_required":"'
+		+ ""
+		+ '", "sender_to_receiver_info":"' + "" + '"}';
+  
+	  network.doESB(populater, "Trade_MT730_ProduceResponse",'[]',payload, null, true);
+
+	
+};
+
+
+
 trade.buildExporterNotificationsPage = function(ref_num,passed_status) {
 	//if (ref_num == undefined) {
 
@@ -1116,10 +1211,10 @@ trade.buildExporterNotificationsPage = function(ref_num,passed_status) {
 	var statusdisplay = "";
 	if(passed_status == "AUTH_ACCEPT"){
 		statusdisplay = "Accepted"
-			console.log(status);
+			//console.log(status);
 	}else if(passed_status == "AUTH_REJECT"){
 		statusdisplay = "Rejected"
-			console.log(status);
+			//console.log(status);
 	}
 	var populater = function(response, extras) {
 		console.log(response.esbStatus);
@@ -1142,7 +1237,7 @@ trade.buildExporterNotificationsPage = function(ref_num,passed_status) {
 					LC_amount : response["ns:amount" + i],
 					LC_ship_date : response["ns:ship_date" + i],
 					LC_creation : response["ns:creation_datetime" + i],
-					status: status
+					status: statusdisplay
 
 				});
 				// }
@@ -1183,13 +1278,49 @@ trade.buildExporterNotificationsPage = function(ref_num,passed_status) {
 	var payload = '{"ServiceDomain":"Trade","OperationName":"Trade_LC_Read", "ref_num":"'
 			+ ref_num + '"}';
 
-	network
-			.doESB(
-					populater,
-					"Trade_LC_ReadResponse",
-					'["ns:ref_num","ns:status","ns:ship_date","ns:currency","ns:amount","ns:creation_datetime"]',
+	network.doESB(populater,"Trade_LC_ReadResponse",
+			'["ns:ref_num","ns:status","ns:ship_date","ns:currency","ns:amount","ns:creation_datetime"]',
 					payload, null, true);
 
 	// document.getElementById("importNotificationsBtn").style.background='#999999';
 
 };
+
+
+trade.popDetails = function(nameOfDoc){
+	console.log("reached POP");
+	if(nameOfDoc == "LC"){
+		var modal = new myPop();
+		modal.popOut(trade.stencils.LCTeach.render({},"string"));
+		
+	} 
+	if(nameOfDoc == "BG"){
+		var modal = new myPop();
+		modal.popOut(trade.stencils.BGTeach.render({},"string"));
+		
+			
+		}
+	if(nameOfDoc == "SG"){
+		var modal = new myPop();
+		modal.popOut(trade.stencils.SGTeach.render({},"string"));
+		
+		
+	}
+	if(nameOfDoc == "TR"){
+		var modal = new myPop();
+		modal.popOut(trade.stencils.TRTeach.render({},"string"));
+		
+		
+	}
+	if(nameOfDoc == "BD"){
+		var modal = new myPop();
+		modal.popOut(trade.stencils.BDTeach.render({},"string"));
+		
+		
+	}
+	
+	
+};
+
+
+
