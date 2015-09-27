@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns:ns2="http://smubank.smu.edu.sg/schemas/TF/LC" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:ns4="http://smubank.smu.edu.sg/schemas/TF/SG" xmlns:ns="http://smubank.smu.edu.sg/schemas/serviceRequestMessage/" xmlns:ns3="http://smubank.smu.edu.sg/schemas/serviceResponseHeader" xmlns:tns="http://smubank.smu.edu.sg/Trade/SG" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://smubank.smu.edu.sg/Trade/SG">
+    <import location="Schemas/ServiceReqMessage.xsd" namespace="http://smubank.smu.edu.sg/schemas/serviceRequestMessage/"/>
+    <import location="Schemas/ServiceRespHeader.xsd" namespace="http://smubank.smu.edu.sg/schemas/serviceResponseHeader"/>
+    <import location="Schemas/ShippingGuarantee.xsd" namespace="http://smubank.smu.edu.sg/schemas/TF/SG"/>
+    <message name="Trade_SG_Create-Input">
+        <part name="ServiceReqHeader" type="ns:ServiceReqHeader"/>
+        <part name="Trade_SG_Create-Request" type="ns4:Trade_SG_Create-Request"/>
+    </message>
+    <message name="Trade_SG_Create-Output">
+        <part name="ServiceRespHeader" type="ns3:ServiceRespHeader"/>
+        <part name="Trade_SG_Create-Response" type="ns4:Trade_SG_Create-Response"/>
+    </message>
+    <message name="Trade_SG_Read-Input">
+        <part name="ServiceReqHeader" type="ns:ServiceReqHeader"/>
+        <part name="Trade_SG_Read-Request" type="ns4:Trade_SG_Read-Request"/>
+    </message>
+    <message name="Trade_SG_Read-Output">
+        <part name="ServiceRespHeader" type="ns3:ServiceRespHeader"/>
+        <part name="Trade_LC_Read-Response" type="ns4:Trade_SG_Read-Response"/>
+    </message>
+    <portType name="Trade_SG">
+        <operation name="Trade_SG_Create">
+            <input message="tns:Trade_SG_Create-Input"/>
+            <output message="tns:Trade_SG_Create-Output"/>
+        </operation>
+        <operation name="Trade_SG_Read">
+            <input message="tns:Trade_SG_Read-Input"/>
+            <output message="tns:Trade_SG_Read-Output"/>
+        </operation>
+    </portType>
+</definitions>

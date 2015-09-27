@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Created by TIBCO WSDL-->
+<wsdl:definitions xmlns:ns2="http://smubank.smu.edu.sg/schemas/BankParameters" xmlns:ns1="http://smubank.smu.edu.sg/schemas/serviceResponseHeader" xmlns:tns="http://smubank.smu.edu.sg/Bank/Parameters" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns0="http://smubank.smu.edu.sg/schemas/serviceRequestMessage/" xmlns:jms="http://www.tibco.com/namespaces/ws/2004/soap/binding/JMS" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap1="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:jndi="http://www.tibco.com/namespaces/ws/2004/soap/apis/jndi" name="Untitled" targetNamespace="http://smubank.smu.edu.sg/Bank/Parameters">
+    <wsdl:types>
+        <xs:schema xmlns:tns="http://smubank.smu.edu.sg/schemas/serviceRequestMessage/" targetNamespace="http://smubank.smu.edu.sg/schemas/serviceRequestMessage/" elementFormDefault="unqualified" attributeFormDefault="unqualified">
+            <xs:complexType name="Content">
+                <xs:sequence>
+                    <xs:element ref="tns:ServiceReqHeader"/>
+                    <xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax" namespace="##any"/>
+                </xs:sequence>
+                <xs:anyAttribute processContents="lax" namespace="##any"/>
+            </xs:complexType>
+            <xs:complexType name="ServiceReqHeader">
+                <xs:sequence>
+                    <xs:element name="ConsumerID" type="xs:string"/>
+                    <xs:element name="TransactionID" type="xs:string"/>
+                    <xs:element name="RequestUUID" type="xs:string"/>
+                    <xs:element name="OperationName" type="xs:string"/>
+                    <xs:element name="Priority" type="xs:int"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="Content" type="tns:Content"/>
+            <xs:element name="ServiceReqHeader" type="tns:ServiceReqHeader"/>
+        </xs:schema>
+        <xs:schema xmlns="http://smubank.smu.edu.sg/schemas/serviceResponseHeader" targetNamespace="http://smubank.smu.edu.sg/schemas/serviceResponseHeader" elementFormDefault="qualified" attributeFormDefault="unqualified">
+            <xs:complexType name="ServiceRespHeader">
+                <xs:sequence>
+                    <xs:element ref="ns1:GlobalErrorID"/>
+                    <xs:element ref="ns1:ErrorText"/>
+                    <xs:element ref="ns1:ErrorDetails"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="ErrorDetails" type="xs:string"/>
+            <xs:element name="ErrorText" type="xs:string"/>
+            <xs:element name="GlobalErrorID" type="xs:string"/>
+            <xs:element name="ServiceRespHeader" type="ns1:ServiceRespHeader"/>
+        </xs:schema>
+        <xs:schema xmlns="http://smubank.smu.edu.sg/schemas/BankParameters" targetNamespace="http://smubank.smu.edu.sg/schemas/BankParameters" elementFormDefault="qualified" attributeFormDefault="unqualified">
+            <xs:complexType name="BankParameters">
+                <xs:sequence>
+                    <xs:element ref="ns2:BankID"/>
+                    <xs:element ref="ns2:BankName"/>
+                    <xs:element ref="ns2:BankAddress"/>
+                    <xs:element ref="ns2:BaseCurrency"/>
+                    <xs:element ref="ns2:BIC"/>
+                    <xs:element ref="ns2:BankLogoLocation"/>
+                    <xs:element ref="ns2:InitialCapital"/>
+                    <xs:element ref="ns2:MinimumReserveRatio"/>
+                    <xs:element ref="ns2:MessageType"/>
+                    <xs:element ref="ns2:ACH_ID"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="ACH_ID" type="xs:string"/>
+            <xs:element name="BIC" type="xs:string"/>
+            <xs:element name="BankAddress" type="xs:string"/>
+            <xs:element name="BankID" type="xs:string"/>
+            <xs:element name="BankLogoLocation" type="xs:string"/>
+            <xs:element name="BankName" type="xs:string"/>
+            <xs:element name="BaseCurrency" type="xs:string"/>
+            <xs:element name="InitialCapital" type="xs:decimal"/>
+            <xs:element name="MessageType" type="xs:string"/>
+            <xs:element name="MinimumReserveRatio" type="xs:decimal"/>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:service name="Bank_Parameters">
+        <wsdl:port name="Bank_Parameters_Read_HTTPEndpoint" binding="tns:Bank_Parameters_Read_HTTPEndpointBinding">
+            <soap:address location="http://localhost:9090/Bank_Parameters-Service.serviceagent/Bank_Parameters_HTTPEndpoint"/>
+        </wsdl:port>
+        <wsdl:port name="Bank_Parameters_Read_JMSEndpoint" binding="tns:Bank_Parameters_Read_JMSEndpointBinding">
+            <soap:address location=""/>
+            <jms:connectionFactory>SMUBankQueueConnectionFactory</jms:connectionFactory>
+            <jms:targetAddress destination="queue">bank.endpoint</jms:targetAddress>
+        </wsdl:port>
+    </wsdl:service>
+    <wsdl:portType name="Bank_Parameters">
+        <wsdl:operation name="Bank_Parameters_Read">
+            <wsdl:input message="tns:Bank_Parameters_Read-Input"/>
+            <wsdl:output message="tns:Bank_Parameters_Read-Output"/>
+        </wsdl:operation>
+        <wsdl:operation name="Bank_Pararmeters_Create">
+            <wsdl:input message="tns:Bank_Parameters_Create-Input"/>
+            <wsdl:output message="tns:Bank_Parameters_Create-Output"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="Bank_Parameters_Read_HTTPEndpointBinding" type="tns:Bank_Parameters">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="Bank_Parameters_Read">
+            <soap:operation style="rpc" soapAction="/Bank_Parameters-Service.serviceagent/Bank_Parameters_HTTPEndpoint/Bank_Parameters_Read"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="ServiceReqHeader BankID"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="ServiceRespHeader BankParameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="Bank_Pararmeters_Create">
+            <soap:operation style="rpc" soapAction="/Bank_Parameters-Service.serviceagent/Bank_Parameters_HTTPEndpoint/Bank_Parameters_Create"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="ServiceReqHeader BankParameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="ServiceRespHeader BankID"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="Bank_Parameters_Read_JMSEndpointBinding" type="tns:Bank_Parameters">
+        <soap:binding style="rpc" transport="http://www.tibco.com/namespaces/ws/2004/soap/binding/JMS"/>
+        <jms:binding messageFormat="Text"/>
+        <wsdl:operation name="Bank_Parameters_Read">
+            <soap:operation style="rpc" soapAction="/Bank_Parameters-Service.serviceagent/Bank_Parameters_JMSEndpoint/Bank_Parameters_Read"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="ServiceReqHeader BankID"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="ServiceRespHeader BankParameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="Bank_Pararmeters_Create">
+            <soap:operation style="rpc" soapAction="/Bank_Parameters-Service.serviceagent/Bank_Parameters_JMSEndpoint/Bank_Parameters_Create"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="ServiceReqHeader BankParameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="ServiceRespHeader BankID"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:message name="Bank_Parameters_Read-Input">
+        <wsdl:part name="ServiceReqHeader" type="ns0:ServiceReqHeader"/>
+        <wsdl:part name="BankID" type="xs:string"/>
+    </wsdl:message>
+    <wsdl:message name="Bank_Parameters_Read-Output">
+        <wsdl:part name="ServiceRespHeader" element="ns1:ServiceRespHeader"/>
+        <wsdl:part name="BankParameters" type="ns2:BankParameters"/>
+    </wsdl:message>
+    <wsdl:message name="Bank_Parameters_Create-Input">
+        <wsdl:part name="ServiceReqHeader" type="ns0:ServiceReqHeader"/>
+        <wsdl:part name="BankParameters" type="ns2:BankParameters"/>
+    </wsdl:message>
+    <wsdl:message name="Bank_Parameters_Create-Output">
+        <wsdl:part name="ServiceRespHeader" type="ns1:ServiceRespHeader"/>
+        <wsdl:part name="BankID" type="xs:string"/>
+    </wsdl:message>
+</wsdl:definitions>

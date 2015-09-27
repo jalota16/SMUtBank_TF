@@ -45,7 +45,7 @@ public class ESBService  extends ActionSupport {
         out.print(responseJSON);
         out.flush();
         out.close();
-    }
+	}
 
 	public static HashMap<String,String> doSecuredESBService(String sessionID, String verificationCode, HashMap<String,String> requestData, String tagRoot, ArrayList<String> tagList) {
         LinkedHashMap<String,String> responseData = new LinkedHashMap<String,String>();

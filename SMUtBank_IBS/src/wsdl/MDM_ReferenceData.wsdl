@@ -1,21 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--Created by TIBCO WSDL-->
-<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:jms="http://www.tibco.com/namespaces/ws/2004/soap/binding/JMS" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap1="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:ns5="http://smubank.smu.edu.sg/schemas/CustomerTypeList" xmlns:ns6="http://smubank.smu.edu.sg/schemas/CurrencyList" xmlns:ns2="http://www.tibco.com/schemas/MDM_Product_ReadList/Schemas/ProductList.xsd" xmlns:ns1="http://smubank.smu.edu.sg/schemas/serviceResponseHeader" xmlns:ns4="http://smubank.smu.edu.sg/schemas/TransactionTypeList" xmlns:ns3="http://smubank.smu.edu.sg/schemas/AffinityList" xmlns:tns="http://smubank.smu.edu.sg/MDM/ReferenceData" xmlns:ns0="http://smubank.smu.edu.sg/schemas/serviceRequestMessage/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:jndi="http://www.tibco.com/namespaces/ws/2004/soap/apis/jndi" name="Untitled" targetNamespace="http://smubank.smu.edu.sg/MDM/ReferenceData">
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:jms="http://www.tibco.com/namespaces/ws/2004/soap/binding/JMS" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap1="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:ns5="http://smubank.smu.edu.sg/schemas/TransactionTypeList" xmlns:ns6="http://smubank.smu.edu.sg/schemas/DocumentTypeList" xmlns:ns7="http://smubank.smu.edu.sg/schemas/LCStatusTypeList" xmlns:ns8="http://smubank.smu.edu.sg/schemas/CurrencyList" xmlns:ns2="http://www.tibco.com/schemas/MDM_Product_ReadList/Schemas/ProductList.xsd" xmlns:ns1="http://smubank.smu.edu.sg/schemas/serviceResponseHeader" xmlns:ns4="http://smubank.smu.edu.sg/schemas/CustomerTypeList" xmlns:ns3="http://smubank.smu.edu.sg/schemas/AffinityList" xmlns:tns="http://smubank.smu.edu.sg/MDM/ReferenceData" xmlns:ns0="http://smubank.smu.edu.sg/schemas/serviceRequestMessage/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:jndi="http://www.tibco.com/namespaces/ws/2004/soap/apis/jndi" name="Untitled" targetNamespace="http://smubank.smu.edu.sg/MDM/ReferenceData">
     <wsdl:types>
         <xs:schema xmlns="http://smubank.smu.edu.sg/schemas/CustomerTypeList" targetNamespace="http://smubank.smu.edu.sg/schemas/CustomerTypeList" elementFormDefault="qualified" attributeFormDefault="unqualified">
             <xs:complexType name="CustomerType">
                 <xs:sequence>
-                    <xs:element ref="ns5:CustomerTypeID"/>
-                    <xs:element ref="ns5:CustomerTypeName"/>
+                    <xs:element ref="ns4:CustomerTypeID"/>
+                    <xs:element ref="ns4:CustomerTypeName"/>
                 </xs:sequence>
             </xs:complexType>
             <xs:complexType name="CustomerTypeList">
                 <xs:sequence>
-                    <xs:element name="CustomerType" type="ns5:CustomerType" minOccurs="0" maxOccurs="unbounded"/>
+                    <xs:element name="CustomerType" type="ns4:CustomerType" minOccurs="0" maxOccurs="unbounded"/>
                 </xs:sequence>
             </xs:complexType>
             <xs:element name="CustomerTypeID" type="xs:string"/>
             <xs:element name="CustomerTypeName" type="xs:string"/>
+        </xs:schema>
+        <xs:schema xmlns="http://smubank.smu.edu.sg/schemas/DocumentTypeList" targetNamespace="http://smubank.smu.edu.sg/schemas/DocumentTypeList" elementFormDefault="qualified" attributeFormDefault="unqualified">
+            <xs:complexType name="DocumentType">
+                <xs:sequence>
+                    <xs:element ref="ns6:DocumentTypeID"/>
+                    <xs:element ref="ns6:DocumentName"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="DocumentTypeList">
+                <xs:sequence>
+                    <xs:element name="DocumentType" type="ns6:DocumentType" minOccurs="0" maxOccurs="unbounded"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="DocumentName" type="xs:string"/>
+            <xs:element name="DocumentTypeID" type="xs:string"/>
         </xs:schema>
         <xs:schema xmlns="http://smubank.smu.edu.sg/schemas/AffinityList" targetNamespace="http://smubank.smu.edu.sg/schemas/AffinityList" elementFormDefault="qualified" attributeFormDefault="unqualified">
             <xs:complexType name="Affinity">
@@ -34,6 +49,23 @@
             <xs:element name="Level1" type="xs:string"/>
             <xs:element name="Level2" type="xs:string"/>
         </xs:schema>
+        <xs:schema xmlns="http://smubank.smu.edu.sg/schemas/LCStatusTypeList" targetNamespace="http://smubank.smu.edu.sg/schemas/LCStatusTypeList" elementFormDefault="qualified" attributeFormDefault="unqualified">
+            <xs:complexType name="LCStatusType">
+                <xs:sequence>
+                    <xs:element ref="ns7:LCStatusTypeID"/>
+                    <xs:element ref="ns7:LCStatusName"/>
+                    <xs:element ref="ns7:LCStatusDescription"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="LCStatusTypeList">
+                <xs:sequence>
+                    <xs:element name="LCStatusType" type="ns7:LCStatusType" minOccurs="0" maxOccurs="unbounded"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="LCStatusDescription" type="xs:string"/>
+            <xs:element name="LCStatusName" type="xs:string"/>
+            <xs:element name="LCStatusTypeID" type="xs:string"/>
+        </xs:schema>
         <xs:schema xmlns="http://smubank.smu.edu.sg/schemas/serviceResponseHeader" targetNamespace="http://smubank.smu.edu.sg/schemas/serviceResponseHeader" elementFormDefault="qualified" attributeFormDefault="unqualified">
             <xs:complexType name="ServiceRespHeader">
                 <xs:sequence>
@@ -50,14 +82,14 @@
         <xs:schema xmlns="http://smubank.smu.edu.sg/schemas/TransactionTypeList" targetNamespace="http://smubank.smu.edu.sg/schemas/TransactionTypeList" elementFormDefault="qualified" attributeFormDefault="unqualified">
             <xs:complexType name="TransactionType">
                 <xs:sequence>
-                    <xs:element ref="ns4:TransactionTypeID"/>
-                    <xs:element ref="ns4:TransactionTypeName"/>
-                    <xs:element ref="ns4:TransactionCode"/>
+                    <xs:element ref="ns5:TransactionTypeID"/>
+                    <xs:element ref="ns5:TransactionTypeName"/>
+                    <xs:element ref="ns5:TransactionCode"/>
                 </xs:sequence>
             </xs:complexType>
             <xs:complexType name="TransactionTypeList">
                 <xs:sequence>
-                    <xs:element name="TransactionType" type="ns4:TransactionType" minOccurs="0" maxOccurs="unbounded"/>
+                    <xs:element name="TransactionType" type="ns5:TransactionType" minOccurs="0" maxOccurs="unbounded"/>
                 </xs:sequence>
             </xs:complexType>
             <xs:element name="TransactionCode" type="xs:string"/>
@@ -102,14 +134,14 @@
         <xs:schema xmlns="http://smubank.smu.edu.sg/schemas/CurrencyList" targetNamespace="http://smubank.smu.edu.sg/schemas/CurrencyList" elementFormDefault="qualified" attributeFormDefault="unqualified">
             <xs:complexType name="Currency">
                 <xs:sequence>
-                    <xs:element ref="ns6:CountryName"/>
-                    <xs:element ref="ns6:CurrencyName"/>
-                    <xs:element ref="ns6:CurrencyCode"/>
+                    <xs:element ref="ns8:CountryName"/>
+                    <xs:element ref="ns8:CurrencyName"/>
+                    <xs:element ref="ns8:CurrencyCode"/>
                 </xs:sequence>
             </xs:complexType>
             <xs:complexType name="CurrencyList">
                 <xs:sequence>
-                    <xs:element name="Currency" type="ns6:Currency" minOccurs="0" maxOccurs="unbounded"/>
+                    <xs:element name="Currency" type="ns8:Currency" minOccurs="0" maxOccurs="unbounded"/>
                 </xs:sequence>
             </xs:complexType>
             <xs:element name="CountryName" type="xs:string"/>
@@ -128,9 +160,17 @@
         </wsdl:port>
     </wsdl:service>
     <wsdl:portType name="MDM_ReferenceData">
+        <wsdl:operation name="MDM_ProductList_Read_v2">
+            <wsdl:input message="tns:MDM_ProductList_Read_v2-Input"/>
+            <wsdl:output message="tns:MDM_ProductList_Read-Output"/>
+        </wsdl:operation>
         <wsdl:operation name="MDM_AffinityList_Read">
             <wsdl:input message="tns:MDM_AffinityList_Read-Input"/>
             <wsdl:output message="tns:MDM_AffinityList_Read-Output"/>
+        </wsdl:operation>
+        <wsdl:operation name="MDM_ChannelTypeList_Read">
+            <wsdl:input message="tns:MDM_ChannelTypeList_Read-Input"/>
+            <wsdl:output message="tns:MDM_ChannelTypeList_Read-Output"/>
         </wsdl:operation>
         <wsdl:operation name="MDM_TransactionTypeList_Read">
             <wsdl:input message="tns:MDM_TransactionTypeList_Read-Input"/>
@@ -139,6 +179,14 @@
         <wsdl:operation name="MDM_CustomerTypeList_Read">
             <wsdl:input message="tns:MDM_CustomerTypeList_Read-Input"/>
             <wsdl:output message="tns:MDM_CustomerTypeList_Read-Output"/>
+        </wsdl:operation>
+        <wsdl:operation name="MDM_DocumentTypeList_Read">
+            <wsdl:input message="tns:MDM_DocumentTypeList_Read-Input"/>
+            <wsdl:output message="tns:MDM_DocumentTypeList_Read-Output"/>
+        </wsdl:operation>
+        <wsdl:operation name="MDM_LCStatusTypeList_Read">
+            <wsdl:input message="tns:MDM_LCStatusTypeList_Read-Input"/>
+            <wsdl:output message="tns:MDM_LCStatusTypeList_Read-Output"/>
         </wsdl:operation>
         <wsdl:operation name="MDM_CurrencyList_Read">
             <wsdl:input message="tns:MDM_CurrencyList_Read-Input"/>
@@ -160,6 +208,15 @@
     <wsdl:binding name="MDM_ReferenceData_JMSEndpointBinding" type="tns:MDM_ReferenceData">
         <soap:binding style="rpc" transport="http://www.tibco.com/namespaces/ws/2004/soap/binding/JMS"/>
         <jms:binding messageFormat="Text"/>
+        <wsdl:operation name="MDM_ProductList_Read_v2">
+            <soap:operation style="rpc" soapAction="/MDM_ReferenceData.serviceagent/MDM_ReferenceData_JMSEndpoint/MDM_ProductList_Read_v2"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="ServiceReqHeader CustomerType"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="ServiceRespHeader ProductList"/>
+            </wsdl:output>
+        </wsdl:operation>
         <wsdl:operation name="MDM_AffinityList_Read">
             <soap:operation style="rpc" soapAction="/MDM_ReferenceData.serviceagent/MDM_ReferenceData_JMSEndpoint/MDM_AffinityList_Read"/>
             <wsdl:input>
@@ -167,6 +224,15 @@
             </wsdl:input>
             <wsdl:output>
                 <soap:body use="literal" parts="ServiceRespHeader AffinityList"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="MDM_ChannelTypeList_Read">
+            <soap:operation style="rpc" soapAction="/MDM_ReferenceData.serviceagent/MDM_ReferenceData_JMSEndpoint/MDM_ChannelTypeList_Read"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="ServiceReqHeader"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="ServiceRespHeader CustomerTypeList"/>
             </wsdl:output>
         </wsdl:operation>
         <wsdl:operation name="MDM_TransactionTypeList_Read">
@@ -185,6 +251,24 @@
             </wsdl:input>
             <wsdl:output>
                 <soap:body use="literal" parts="ServiceRespHeader CustomerTypeList"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="MDM_DocumentTypeList_Read">
+            <soap:operation style="rpc" soapAction="/MDM_ReferenceData.serviceagent/MDM_ReferenceData_JMSEndpoint/MDM_DocumentTypeList_Read"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="ServiceReqHeader"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="ServiceRespHeader DocumentTypeList"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="MDM_LCStatusTypeList_Read">
+            <soap:operation style="rpc" soapAction="/MDM_ReferenceData.serviceagent/MDM_ReferenceData_JMSEndpoint/MDM_LCStatusTypeList_Read"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="ServiceReqHeader"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="ServiceRespHeader LCStatusTypeList"/>
             </wsdl:output>
         </wsdl:operation>
         <wsdl:operation name="MDM_CurrencyList_Read">
@@ -226,6 +310,15 @@
     </wsdl:binding>
     <wsdl:binding name="MDM_ReferenceData_HTTPEndpointBinding" type="tns:MDM_ReferenceData">
         <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="MDM_ProductList_Read_v2">
+            <soap:operation style="rpc" soapAction="/MDM_ReferenceData.serviceagent/MDM_ReferenceData_HTTPEndpoint/MDM_ProductList_Read_v2"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="ServiceReqHeader CustomerType"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="ServiceRespHeader ProductList"/>
+            </wsdl:output>
+        </wsdl:operation>
         <wsdl:operation name="MDM_AffinityList_Read">
             <soap:operation style="rpc" soapAction="/MDM_ReferenceData.serviceagent/MDM_ReferenceData_HTTPEndpoint/MDM_AffinityList_Read"/>
             <wsdl:input>
@@ -233,6 +326,15 @@
             </wsdl:input>
             <wsdl:output>
                 <soap:body use="literal" parts="ServiceRespHeader AffinityList"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="MDM_ChannelTypeList_Read">
+            <soap:operation style="rpc" soapAction="/MDM_ReferenceData.serviceagent/MDM_ReferenceData_HTTPEndpoint/MDM_ChannelTypeList_Read"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="ServiceReqHeader"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="ServiceRespHeader CustomerTypeList"/>
             </wsdl:output>
         </wsdl:operation>
         <wsdl:operation name="MDM_TransactionTypeList_Read">
@@ -251,6 +353,24 @@
             </wsdl:input>
             <wsdl:output>
                 <soap:body use="literal" parts="ServiceRespHeader CustomerTypeList"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="MDM_DocumentTypeList_Read">
+            <soap:operation style="rpc" soapAction="/MDM_ReferenceData.serviceagent/MDM_ReferenceData_HTTPEndpoint/MDM_DocumentTypeList_Read"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="ServiceReqHeader"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="ServiceRespHeader DocumentTypeList"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="MDM_LCStatusTypeList_Read">
+            <soap:operation style="rpc" soapAction="/MDM_ReferenceData.serviceagent/MDM_ReferenceData_HTTPEndpoint/MDM_LCStatusTypeList_Read"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="ServiceReqHeader"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="ServiceRespHeader LCStatusTypeList"/>
             </wsdl:output>
         </wsdl:operation>
         <wsdl:operation name="MDM_CurrencyList_Read">
@@ -290,6 +410,10 @@
             </wsdl:output>
         </wsdl:operation>
     </wsdl:binding>
+    <wsdl:message name="MDM_ProductList_Read_v2-Input">
+        <wsdl:part name="ServiceReqHeader" type="ns0:ServiceReqHeader"/>
+        <wsdl:part name="CustomerType" type="xs:string"/>
+    </wsdl:message>
     <wsdl:message name="MDM_ProductList_Read-Output">
         <wsdl:part name="ServiceRespHeader" type="ns1:ServiceRespHeader"/>
         <wsdl:part name="ProductList" type="ns2:ProductList"/>
@@ -301,26 +425,47 @@
         <wsdl:part name="ServiceRespHeader" type="ns1:ServiceRespHeader"/>
         <wsdl:part name="AffinityList" type="ns3:AffinityList"/>
     </wsdl:message>
+    <wsdl:message name="MDM_ChannelTypeList_Read-Input">
+        <wsdl:part name="ServiceReqHeader" type="ns0:ServiceReqHeader"/>
+    </wsdl:message>
+    <wsdl:message name="MDM_ChannelTypeList_Read-Output">
+        <wsdl:part name="ServiceRespHeader" type="ns1:ServiceRespHeader"/>
+        <wsdl:part name="CustomerTypeList" type="ns4:CustomerTypeList"/>
+    </wsdl:message>
     <wsdl:message name="MDM_TransactionTypeList_Read-Input">
         <wsdl:part name="ServiceReqHeader" type="ns0:ServiceReqHeader"/>
     </wsdl:message>
     <wsdl:message name="MDM_TransactionTypeList_Read-Output">
         <wsdl:part name="ServiceRespHeader" type="ns1:ServiceRespHeader"/>
-        <wsdl:part name="TransactionTypeList" type="ns4:TransactionTypeList"/>
+        <wsdl:part name="TransactionTypeList" type="ns5:TransactionTypeList"/>
     </wsdl:message>
     <wsdl:message name="MDM_CustomerTypeList_Read-Input">
         <wsdl:part name="ServiceReqHeader" type="ns0:ServiceReqHeader"/>
     </wsdl:message>
     <wsdl:message name="MDM_CustomerTypeList_Read-Output">
         <wsdl:part name="ServiceRespHeader" type="ns1:ServiceRespHeader"/>
-        <wsdl:part name="CustomerTypeList" type="ns5:CustomerTypeList"/>
+        <wsdl:part name="CustomerTypeList" type="ns4:CustomerTypeList"/>
+    </wsdl:message>
+    <wsdl:message name="MDM_DocumentTypeList_Read-Input">
+        <wsdl:part name="ServiceReqHeader" type="ns0:ServiceReqHeader"/>
+    </wsdl:message>
+    <wsdl:message name="MDM_DocumentTypeList_Read-Output">
+        <wsdl:part name="ServiceRespHeader" type="ns1:ServiceRespHeader"/>
+        <wsdl:part name="DocumentTypeList" type="ns6:DocumentTypeList"/>
+    </wsdl:message>
+    <wsdl:message name="MDM_LCStatusTypeList_Read-Input">
+        <wsdl:part name="ServiceReqHeader" type="ns0:ServiceReqHeader"/>
+    </wsdl:message>
+    <wsdl:message name="MDM_LCStatusTypeList_Read-Output">
+        <wsdl:part name="ServiceRespHeader" type="ns1:ServiceRespHeader"/>
+        <wsdl:part name="LCStatusTypeList" type="ns7:LCStatusTypeList"/>
     </wsdl:message>
     <wsdl:message name="MDM_CurrencyList_Read-Input">
         <wsdl:part name="ServiceReqHeader" type="ns0:ServiceReqHeader"/>
     </wsdl:message>
     <wsdl:message name="MDM_CurrencyList_Read-Output">
         <wsdl:part name="ServiceRespHeader" type="ns1:ServiceRespHeader"/>
-        <wsdl:part name="CurrencyList" type="ns6:CurrencyList"/>
+        <wsdl:part name="CurrencyList" type="ns8:CurrencyList"/>
     </wsdl:message>
     <wsdl:message name="MDM_ProductList_Read-Input">
         <wsdl:part name="ServiceReqHeader" type="ns0:ServiceReqHeader"/>

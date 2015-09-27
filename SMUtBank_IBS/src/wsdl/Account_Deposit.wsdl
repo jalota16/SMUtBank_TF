@@ -1,0 +1,645 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Created by TIBCO WSDL-->
+<wsdl:definitions xmlns:ns2="http://smubank.smu.edu.sg/schemas/serviceResponseHeader" xmlns:ns1="http://com/smubank/account/deposit/update" xmlns:ns4="http://com/smubank/account/deposit" xmlns:ns3="http://com/smubank/account/deposit/create" xmlns:tns="http://smubank.smu.edu.sg/Account/Deposit" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns0="http://smubank.smu.edu.sg/schemas/serviceRequestMessage/" xmlns:jms="http://www.tibco.com/namespaces/ws/2004/soap/binding/JMS" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap1="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:jndi="http://www.tibco.com/namespaces/ws/2004/soap/apis/jndi" name="Untitled" targetNamespace="http://smubank.smu.edu.sg/Account/Deposit">
+    <wsdl:types>
+        <xsd:schema xmlns:hxt="http://com/smubank/account/deposit/create" xmlns="http://com/smubank/account/deposit/create" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://com/smubank/account/deposit/create" elementFormDefault="unqualified" attributeFormDefault="unqualified">
+            <xsd:annotation>
+                <xsd:documentation>BOMORIGIN::platform:/resource/test/Business%20Objects/BusinessObjectModel.bom#_3MonEP3WEeGxCID84adpgg</xsd:documentation>
+            </xsd:annotation>
+            <xsd:complexType name="CASAAccount">
+                <xsd:sequence>
+                    <xsd:element name="interestPayoutAccount" default="0">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:integer"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="parentAccountFlag" default="false">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:boolean"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="isRestricted" default="false">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:boolean"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="minorStatus" default="false">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:boolean"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="minimumAmount">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:decimal"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="DepositAccount">
+                <xsd:sequence>
+                    <xsd:element name="casaaccount" type="hxt:CASAAccount"/>
+                    <xsd:element name="product" type="hxt:Product"/>
+                    <xsd:element name="maintenancehistory" type="hxt:MaintenanceHistory"/>
+                    <xsd:element name="customerID">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:integer"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="currency">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string">
+                                <xsd:maxLength value="50"/>
+                            </xsd:restriction>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="homeBranch">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string">
+                                <xsd:maxLength value="50"/>
+                            </xsd:restriction>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="officerID">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string">
+                                <xsd:maxLength value="50"/>
+                            </xsd:restriction>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="accountOpenDate">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string">
+                                <xsd:maxLength value="50"/>
+                            </xsd:restriction>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="balance">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:decimal"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="currentStatus">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string">
+                                <xsd:maxLength value="50"/>
+                            </xsd:restriction>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="interestRate">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:decimal"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="assignedAccountForAccountManagementFeeDeduction" default="0">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:integer"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="narrative">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string">
+                                <xsd:maxLength value="50"/>
+                            </xsd:restriction>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="isServiceChargeWaived" default="false">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:boolean"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="penaltyRate" type="xsd:decimal"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="MaintenanceHistory">
+                <xsd:sequence>
+                    <xsd:element name="lastTransactionBranch">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string">
+                                <xsd:maxLength value="250"/>
+                            </xsd:restriction>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="lastMaintenanceOfficer">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string">
+                                <xsd:maxLength value="50"/>
+                            </xsd:restriction>
+                        </xsd:simpleType>
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="Product">
+                <xsd:sequence>
+                    <xsd:element name="productID">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string">
+                                <xsd:maxLength value="50"/>
+                            </xsd:restriction>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="productName">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string">
+                                <xsd:maxLength value="50"/>
+                            </xsd:restriction>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="dateBasisForRate">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string">
+                                <xsd:maxLength value="50"/>
+                            </xsd:restriction>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="rateChartCode">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string">
+                                <xsd:maxLength value="50"/>
+                            </xsd:restriction>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="compoundInterestRateBasis">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string">
+                                <xsd:maxLength value="50"/>
+                            </xsd:restriction>
+                        </xsd:simpleType>
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:schema>
+        <xsd:schema xmlns:hxt="http://com/smubank/account/deposit" xmlns="http://com/smubank/account/deposit" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://com/smubank/account/deposit" elementFormDefault="unqualified" attributeFormDefault="unqualified">
+            <xsd:annotation>
+                <xsd:documentation>BOMORIGIN::platform:/resource/test/Business%20Objects/BusinessObjectModel.bom#_3MonEP3WEeGxCID84adpgg</xsd:documentation>
+            </xsd:annotation>
+            <xsd:complexType name="CASAAccount">
+                <xsd:sequence>
+                    <xsd:element name="interestPayoutAccount">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string">
+                                <xsd:maxLength value="50"/>
+                            </xsd:restriction>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="parentAccountFlag" default="false">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:boolean"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="accountCloseDate">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string">
+                                <xsd:maxLength value="50"/>
+                            </xsd:restriction>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="accrueInterestAmount">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string">
+                                <xsd:maxLength value="50"/>
+                            </xsd:restriction>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="dueInterestAmount">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string">
+                                <xsd:maxLength value="50"/>
+                            </xsd:restriction>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="depositTerm">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string">
+                                <xsd:maxLength value="50"/>
+                            </xsd:restriction>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="isRestricted" default="false">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:boolean"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="minorStatus" default="false">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:boolean"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="minimumAmount">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string">
+                                <xsd:maxLength value="50"/>
+                            </xsd:restriction>
+                        </xsd:simpleType>
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="DepositAccount">
+                <xsd:sequence>
+                    <xsd:element name="product" type="hxt:Product"/>
+                    <xsd:element name="maintenancehistory" type="hxt:MaintenanceHistory"/>
+                    <xsd:element name="casaaccount" type="hxt:CASAAccount"/>
+                    <xsd:element name="customerID">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string">
+                                <xsd:maxLength value="50"/>
+                            </xsd:restriction>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="currency">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string">
+                                <xsd:maxLength value="50"/>
+                            </xsd:restriction>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="homeBranch">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string">
+                                <xsd:maxLength value="50"/>
+                            </xsd:restriction>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="officerID">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string">
+                                <xsd:maxLength value="50"/>
+                            </xsd:restriction>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="accountOpenDate">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string">
+                                <xsd:maxLength value="50"/>
+                            </xsd:restriction>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="balance">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string">
+                                <xsd:maxLength value="50"/>
+                            </xsd:restriction>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="currentStatus">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string">
+                                <xsd:maxLength value="50"/>
+                            </xsd:restriction>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="interestRate">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string">
+                                <xsd:maxLength value="50"/>
+                            </xsd:restriction>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="assignedAccountForAccountManagementFeeDeduction">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string">
+                                <xsd:maxLength value="50"/>
+                            </xsd:restriction>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="maturityDate">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string">
+                                <xsd:maxLength value="50"/>
+                            </xsd:restriction>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="narrative">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string">
+                                <xsd:maxLength value="50"/>
+                            </xsd:restriction>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="isServiceChargeWaived" default="false">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:boolean"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="penaltyRate" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="MaintenanceHistory">
+                <xsd:sequence>
+                    <xsd:element name="lastTransactionBranch">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string">
+                                <xsd:maxLength value="50"/>
+                            </xsd:restriction>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="lastMaintenanceOfficer">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string">
+                                <xsd:maxLength value="50"/>
+                            </xsd:restriction>
+                        </xsd:simpleType>
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="Product">
+                <xsd:sequence>
+                    <xsd:element name="productID">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string">
+                                <xsd:maxLength value="50"/>
+                            </xsd:restriction>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="productName">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string">
+                                <xsd:maxLength value="50"/>
+                            </xsd:restriction>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="dateBasisForRate" minOccurs="0">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string">
+                                <xsd:maxLength value="50"/>
+                            </xsd:restriction>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="rateChartCode" minOccurs="0">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string">
+                                <xsd:maxLength value="50"/>
+                            </xsd:restriction>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="compoundInterestRateBasis" minOccurs="0">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string">
+                                <xsd:maxLength value="50"/>
+                            </xsd:restriction>
+                        </xsd:simpleType>
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:schema>
+        <xs:schema xmlns:tns="http://smubank.smu.edu.sg/schemas/serviceRequestMessage/" targetNamespace="http://smubank.smu.edu.sg/schemas/serviceRequestMessage/" elementFormDefault="unqualified" attributeFormDefault="unqualified">
+            <xs:complexType name="Content">
+                <xs:sequence>
+                    <xs:element ref="tns:ServiceReqHeader"/>
+                    <xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax" namespace="##any"/>
+                </xs:sequence>
+                <xs:anyAttribute processContents="lax" namespace="##any"/>
+            </xs:complexType>
+            <xs:complexType name="ServiceReqHeader">
+                <xs:sequence>
+                    <xs:element name="ConsumerID" type="xs:string"/>
+                    <xs:element name="TransactionID" type="xs:string"/>
+                    <xs:element name="RequestUUID" type="xs:string"/>
+                    <xs:element name="OperationName" type="xs:string"/>
+                    <xs:element name="Priority" type="xs:int"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="Content" type="tns:Content"/>
+            <xs:element name="ServiceReqHeader" type="tns:ServiceReqHeader"/>
+        </xs:schema>
+        <xs:schema xmlns="http://smubank.smu.edu.sg/schemas/serviceResponseHeader" targetNamespace="http://smubank.smu.edu.sg/schemas/serviceResponseHeader" elementFormDefault="qualified" attributeFormDefault="unqualified">
+            <xs:complexType name="ServiceRespHeader">
+                <xs:sequence>
+                    <xs:element ref="ns2:GlobalErrorID"/>
+                    <xs:element ref="ns2:ErrorText"/>
+                    <xs:element ref="ns2:ErrorDetails"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="ErrorDetails" type="xs:string"/>
+            <xs:element name="ErrorText" type="xs:string"/>
+            <xs:element name="GlobalErrorID" type="xs:string"/>
+            <xs:element name="ServiceRespHeader" type="ns2:ServiceRespHeader"/>
+        </xs:schema>
+        <xsd:schema xmlns:hxt="http://com/smubank/account/deposit/update" xmlns="http://com/smubank/account/deposit/update" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://com/smubank/account/deposit/update" elementFormDefault="unqualified" attributeFormDefault="unqualified">
+            <xsd:annotation>
+                <xsd:documentation>BOMORIGIN::platform:/resource/test/Business%20Objects/BusinessObjectModel.bom#_3MonEP3WEeGxCID84adpgg</xsd:documentation>
+            </xsd:annotation>
+            <xsd:complexType name="CASAAccount">
+                <xsd:sequence>
+                    <xsd:element name="interestPayoutAccount" default="0">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:integer"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="parentAccountFlag" default="false">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:boolean"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="accountCloseDate">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string">
+                                <xsd:maxLength value="50"/>
+                            </xsd:restriction>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="accrueInterestAmount" default="0.0">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:decimal"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="dueInterestAmount" default="0.0">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:decimal"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="depositTerm" default="0">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:integer"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="isRestricted" default="false">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:boolean"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="minorStatus" default="false">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:boolean"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="minimumAmount" default="0.0">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:decimal"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="DepositAccount">
+                <xsd:sequence>
+                    <xsd:element name="maintenancehistory" type="hxt:MaintenanceHistory"/>
+                    <xsd:element name="currentStatus">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string">
+                                <xsd:maxLength value="50"/>
+                            </xsd:restriction>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="interestRate" default="0.0">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:decimal"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="accountID">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:integer"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="assignedAccountForAccountManagementFeeDeduction" default="0">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:integer"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="maturityDate">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:date"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="narrative">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string">
+                                <xsd:maxLength value="50"/>
+                            </xsd:restriction>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="isServiceChargeWaived" default="false">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:boolean"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="casaaccount" type="hxt:CASAAccount"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="MaintenanceHistory">
+                <xsd:sequence>
+                    <xsd:element name="lastTransactionBranch">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string">
+                                <xsd:maxLength value="250"/>
+                            </xsd:restriction>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="lastMaintenanceOfficer">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string">
+                                <xsd:maxLength value="50"/>
+                            </xsd:restriction>
+                        </xsd:simpleType>
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:service name="Account_Deposit">
+        <wsdl:port name="Account_Deposit_JMSEndpoint" binding="tns:Account_Deposit_JMSEndpointBinding">
+            <soap:address location=""/>
+            <jms:connectionFactory>SMUBankQueueConnectionFactory</jms:connectionFactory>
+            <jms:targetAddress destination="queue">account.endpoint</jms:targetAddress>
+        </wsdl:port>
+        <wsdl:port name="Account_Deposit_HTTPEndpoint" binding="tns:Account_Deposit_HTTPEndpointBinding">
+            <soap:address location="http://localhost:9090/Service.serviceagent/Account_Deposit_HTTPEndpoint"/>
+        </wsdl:port>
+    </wsdl:service>
+    <wsdl:portType name="Account_Deposit">
+        <wsdl:operation name="Account_Deposit_Update">
+            <wsdl:input message="tns:Account_Deposit_Update-Input"/>
+            <wsdl:output message="tns:Account_Deposit_Update-Output"/>
+        </wsdl:operation>
+        <wsdl:operation name="Account_Deposit_Create">
+            <wsdl:input message="tns:Account_Deposit_Create-Input"/>
+            <wsdl:output message="tns:Account_Deposit_Create-Output"/>
+        </wsdl:operation>
+        <wsdl:operation name="Account_Deposit_Read">
+            <wsdl:input message="tns:Account_Deposit_Read-Input"/>
+            <wsdl:output message="tns:Account_Deposit_Read-Output"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="Account_Deposit_JMSEndpointBinding" type="tns:Account_Deposit">
+        <soap:binding style="rpc" transport="http://www.tibco.com/namespaces/ws/2004/soap/binding/JMS"/>
+        <jms:binding messageFormat="Text"/>
+        <wsdl:operation name="Account_Deposit_Update">
+            <soap:operation style="rpc" soapAction="/Account_Deposit.serviceagent/Account_Deposit_JMSEndpoint/Account_Deposit_Update"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="ServiceReqHeader DepositAccount"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="ServiceRespHeader"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="Account_Deposit_Create">
+            <soap:operation style="rpc" soapAction="/Account_Deposit.serviceagent/Account_Deposit_JMSEndpoint/Account_Deposit_Create"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="ServiceReqHeader DepositAccount"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="ServiceRespHeader accountID"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="Account_Deposit_Read">
+            <soap:operation style="rpc" soapAction="/Account_Deposit.serviceagent/Account_Deposit_JMSEndpoint/Account_Deposit_Read"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="ServiceReqHeader accountID"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="ServiceRespHeader DepositAccount"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="Account_Deposit_HTTPEndpointBinding" type="tns:Account_Deposit">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="Account_Deposit_Update">
+            <soap:operation style="rpc" soapAction="/Account_Deposit.serviceagent/Account_Deposit_HTTPEndpoint/Account_Deposit_Update"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="ServiceReqHeader DepositAccount"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="ServiceRespHeader"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="Account_Deposit_Create">
+            <soap:operation style="rpc" soapAction="/Account_Deposit.serviceagent/Account_Deposit_HTTPEndpoint/Account_Deposit_Create"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="ServiceReqHeader DepositAccount"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="ServiceRespHeader accountID"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="Account_Deposit_Read">
+            <soap:operation style="rpc" soapAction="/Account_Deposit.serviceagent/Account_Deposit_HTTPEndpoint/Account_Deposit_Read"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="ServiceReqHeader accountID"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="ServiceRespHeader DepositAccount"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:message name="Account_Deposit_Update-Input">
+        <wsdl:part name="ServiceReqHeader" type="ns0:ServiceReqHeader"/>
+        <wsdl:part name="DepositAccount" type="ns1:DepositAccount"/>
+    </wsdl:message>
+    <wsdl:message name="Account_Deposit_Update-Output">
+        <wsdl:part name="ServiceRespHeader" type="ns2:ServiceRespHeader"/>
+    </wsdl:message>
+    <wsdl:message name="Account_Deposit_Create-Input">
+        <wsdl:part name="ServiceReqHeader" type="ns0:ServiceReqHeader"/>
+        <wsdl:part name="DepositAccount" type="ns3:DepositAccount"/>
+    </wsdl:message>
+    <wsdl:message name="Account_Deposit_Create-Output">
+        <wsdl:part name="ServiceRespHeader" type="ns2:ServiceRespHeader"/>
+        <wsdl:part name="accountID" type="xs:string"/>
+    </wsdl:message>
+    <wsdl:message name="Account_Deposit_Read-Input">
+        <wsdl:part name="ServiceReqHeader" type="ns0:ServiceReqHeader"/>
+        <wsdl:part name="accountID" type="xs:int"/>
+    </wsdl:message>
+    <wsdl:message name="Account_Deposit_Read-Output">
+        <wsdl:part name="ServiceRespHeader" type="ns2:ServiceRespHeader"/>
+        <wsdl:part name="DepositAccount" type="ns4:DepositAccount"/>
+    </wsdl:message>
+</wsdl:definitions>

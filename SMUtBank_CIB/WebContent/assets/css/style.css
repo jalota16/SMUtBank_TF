@@ -590,6 +590,34 @@ button {
     -ms-transition: all .3s;
 }
 
+.btn-tbank {
+	
+	height: 30px;
+    min-width: 150px;
+    padding-left: 30px;
+    padding-right: 30px;
+    margin-top: 10px;
+    background: #1A2155;
+    border: 0;
+    font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    color: #fff;
+    -moz-box-shadow:
+        0 1px 25px 0 rgba(0,0,0,.05) inset,
+        0 -1px 25px 0 rgba(0,0,0,.05) inset;
+    -webkit-box-shadow:
+        0 1px 25px 0 rgba(0,0,0,.05) inset,
+        0 -1px 25px 0 rgba(0,0,0,.05) inset;
+    box-shadow:
+        0 1px 25px 0 rgba(0,0,0,.05) inset,
+        0 -1px 25px 0 rgba(0,0,0,.05) inset;
+
+    -o-transition: all .3s;
+    -moz-transition: all .3s;
+    -webkit-transition: all .3s;
+    -ms-transition: all .3s;
+}
+
 .about-us {
     margin-top: 20px;
 }
@@ -1584,3 +1612,14 @@ li:hover {
     background: green;
 }
 
+.dinosaurs {
+  list-style-position: inside;
+}
+
+.dinosaurs li{
+  position: relative;
+}
+.dinosaurs li a {
+  position: absolute;
+  left: 30px;
+}

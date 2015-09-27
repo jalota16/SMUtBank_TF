@@ -74,6 +74,7 @@
             <xs:complexType name="Trade_LCList_Read-Request">
                 <xs:sequence>
                     <xs:element ref="ns1:customer_ID"/>
+                    <xs:element ref="ns1:ref_num"/>
                     <xs:element ref="ns1:start_datetime"/>
                     <xs:element ref="ns1:end_datetime"/>
                 </xs:sequence>

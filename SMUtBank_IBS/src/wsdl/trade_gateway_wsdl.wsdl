@@ -147,36 +147,6 @@
                     <xs:element ref="ns1:advising_bank_id"/>
                 </xs:sequence>
             </xs:complexType>
-            <xs:complexType name="LC_Payment_Advice">
-                <xs:sequence>
-                    <xs:element ref="ns1:LC_ID"/>
-                    <xs:element ref="ns1:ref_num"/>
-                    <xs:element ref="ns1:creation_datetime"/>
-                    <xs:element ref="ns1:status"/>
-                    <xs:element ref="ns1:importer_ID"/>
-                    <xs:element ref="ns1:importer_account_num"/>
-                    <xs:element ref="ns1:exporter_ID"/>
-                    <xs:element ref="ns1:exporter_account_num"/>
-                    <xs:element ref="ns1:expiry_date"/>
-                    <xs:element ref="ns1:expiry_place"/>
-                    <xs:element ref="ns1:issue_date"/>
-                    <xs:element ref="ns1:confirmed"/>
-                    <xs:element ref="ns1:revocable"/>
-                    <xs:element ref="ns1:amount"/>
-                    <xs:element ref="ns1:currency"/>
-                    <xs:element ref="ns1:applicable_rules"/>
-                    <xs:element ref="ns1:partial_shipments"/>
-                    <xs:element ref="ns1:ship_destination"/>
-                    <xs:element ref="ns1:ship_date"/>
-                    <xs:element ref="ns1:ship_period"/>
-                    <xs:element ref="ns1:goods_description"/>
-                    <xs:element ref="ns1:docs_required"/>
-                    <xs:element ref="ns1:additional_conditions"/>
-                    <xs:element ref="ns1:sender_to_receiver_info"/>
-                    <xs:element ref="ns1:issuing_bank_id"/>
-                    <xs:element ref="ns1:advising_bank_id"/>
-                </xs:sequence>
-            </xs:complexType>
             <xs:complexType name="Trade_LC_Acknowledge-Request">
                 <xs:sequence>
                     <xs:element name="LC_Acknowledge_record" type="ns1:LC_Acknowledge"/>
@@ -205,17 +175,6 @@
                 </xs:sequence>
             </xs:complexType>
             <xs:complexType name="Trade_LC_Issue-Response">
-                <xs:sequence>
-                    <xs:element ref="ns1:ref_num"/>
-                    <xs:element ref="ns1:status"/>
-                </xs:sequence>
-            </xs:complexType>
-            <xs:complexType name="Trade_LC_Payment_Advice-Request">
-                <xs:sequence>
-                    <xs:element name="LC_Payment_Advice_record" type="ns1:LC_Payment_Advice"/>
-                </xs:sequence>
-            </xs:complexType>
-            <xs:complexType name="Trade_LC_Payment_Advice-Response">
                 <xs:sequence>
                     <xs:element ref="ns1:ref_num"/>
                     <xs:element ref="ns1:status"/>
@@ -263,21 +222,9 @@
         </wsdl:port>
     </wsdl:service>
     <wsdl:portType name="Trade_Gateway">
-        <wsdl:operation name="Trade_MT754_Produce">
-            <wsdl:input message="tns:Trade_LC_Payment_Advice-Input"/>
-            <wsdl:output message="tns:Trade_LC_Payment_Advice-Output"/>
-        </wsdl:operation>
         <wsdl:operation name="Trade_tsrv001_Produce">
             <wsdl:input message="tns:Trade_LC_Issue-Input"/>
             <wsdl:output message="tns:Trade_LC_Issue-Output"/>
-        </wsdl:operation>
-        <wsdl:operation name="Trade_tsrv019_IB-AB_Produce">
-            <wsdl:input message="tns:Trade_LC_Payment_Advice-Input"/>
-            <wsdl:output message="tns:Trade_LC_Payment_Advice-Output"/>
-        </wsdl:operation>
-        <wsdl:operation name="Trade_tsrv019_AB-IB_Produce">
-            <wsdl:input message="tns:Trade_LC_Payment_Advice-Input"/>
-            <wsdl:output message="tns:Trade_LC_Payment_Advice-Output"/>
         </wsdl:operation>
         <wsdl:operation name="Trade_tsrv019_Produce">
             <wsdl:input message="tns:Trade_LC_Acknowledge-Input"/>
@@ -299,10 +246,6 @@
             <wsdl:input message="tns:Trade_LC_Acknowledge-Input"/>
             <wsdl:output message="tns:Trade_LC_Acknowledge-Output"/>
         </wsdl:operation>
-        <wsdl:operation name="Trade_MT756_Produce">
-            <wsdl:input message="tns:Trade_LC_Payment_Advice-Input"/>
-            <wsdl:output message="tns:Trade_LC_Payment_Advice-Output"/>
-        </wsdl:operation>
         <wsdl:operation name="Trade_MT707_Produce">
             <wsdl:input message="tns:Trade_LC_Amend-Input"/>
             <wsdl:output message="tns:Trade_LC_Amend-Output"/>
@@ -311,15 +254,6 @@
     <wsdl:binding name="Trade_Gateway_JMSEndpointBinding" type="tns:Trade_Gateway">
         <soap:binding style="rpc" transport="http://www.tibco.com/namespaces/ws/2004/soap/binding/JMS"/>
         <jms:binding messageFormat="Text"/>
-        <wsdl:operation name="Trade_MT754_Produce">
-            <soap:operation style="rpc" soapAction="/Trade_Gateway.serviceagent//Trade_MT754_Produce"/>
-            <wsdl:input>
-                <soap:body use="literal" parts="ServiceReqHeader Trade_LC_Payment_Advice-Request"/>
-            </wsdl:input>
-            <wsdl:output>
-                <soap:body use="literal" parts="ServiceRespHeader Trade_LC_Payment_Advice-Response"/>
-            </wsdl:output>
-        </wsdl:operation>
         <wsdl:operation name="Trade_tsrv001_Produce">
             <soap:operation style="rpc" soapAction="/Trade_Gateway.serviceagent/Trade_Gateway_JMSEndpoint//Trade_tsrv001_Produce"/>
             <wsdl:input>
@@ -327,24 +261,6 @@
             </wsdl:input>
             <wsdl:output>
                 <soap:body use="literal" parts="ServiceRespHeader Trade_LC_Issue-Response"/>
-            </wsdl:output>
-        </wsdl:operation>
-        <wsdl:operation name="Trade_tsrv019_IB-AB_Produce">
-            <soap:operation style="rpc" soapAction="/Trade_Gateway.serviceagent//Trade_tsrv019_IB-AB_Produce"/>
-            <wsdl:input>
-                <soap:body use="literal" parts="ServiceReqHeader Trade_LC_Payment_Advice-Request"/>
-            </wsdl:input>
-            <wsdl:output>
-                <soap:body use="literal" parts="ServiceRespHeader Trade_LC_Payment_Advice-Response"/>
-            </wsdl:output>
-        </wsdl:operation>
-        <wsdl:operation name="Trade_tsrv019_AB-IB_Produce">
-            <soap:operation style="rpc" soapAction="/Trade_Gateway.serviceagent//Trade_tsrv019_AB-IB_Produce"/>
-            <wsdl:input>
-                <soap:body use="literal" parts="ServiceReqHeader Trade_LC_Payment_Advice-Request"/>
-            </wsdl:input>
-            <wsdl:output>
-                <soap:body use="literal" parts="ServiceRespHeader Trade_LC_Payment_Advice-Response"/>
             </wsdl:output>
         </wsdl:operation>
         <wsdl:operation name="Trade_tsrv019_Produce">
@@ -392,15 +308,6 @@
                 <soap:body use="literal" parts="ServiceRespHeader Trade_LC_Issue-Response"/>
             </wsdl:output>
         </wsdl:operation>
-        <wsdl:operation name="Trade_MT756_Produce">
-            <soap:operation style="rpc" soapAction="/Trade_Gateway.serviceagent//Trade_MT756_Produce"/>
-            <wsdl:input>
-                <soap:body use="literal" parts="ServiceReqHeader Trade_LC_Payment_Advice-Request"/>
-            </wsdl:input>
-            <wsdl:output>
-                <soap:body use="literal" parts="ServiceRespHeader Trade_LC_Payment_Advice-Response"/>
-            </wsdl:output>
-        </wsdl:operation>
         <wsdl:operation name="Trade_MT707_Produce">
             <soap:operation style="rpc" soapAction="/Trade_Gateway.serviceagent/Trade_Gateway_JMSEndpoint//Trade_MT707_Produce"/>
             <wsdl:input>
@@ -413,15 +320,6 @@
     </wsdl:binding>
     <wsdl:binding name="Trade_Gateway_HTTPEndpointBinding" type="tns:Trade_Gateway">
         <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
-        <wsdl:operation name="Trade_MT754_Produce">
-            <soap:operation style="rpc" soapAction="/Trade_Gateway.serviceagent//Trade_MT754_Produce"/>
-            <wsdl:input>
-                <soap:body use="literal" parts="ServiceReqHeader Trade_LC_Payment_Advice-Request"/>
-            </wsdl:input>
-            <wsdl:output>
-                <soap:body use="literal" parts="ServiceRespHeader Trade_LC_Payment_Advice-Response"/>
-            </wsdl:output>
-        </wsdl:operation>
         <wsdl:operation name="Trade_tsrv001_Produce">
             <soap:operation style="rpc" soapAction="/Trade_Gateway.serviceagent/Trade_Gateway_HTTPEndpoint/Trade_tsrv001_Produce"/>
             <wsdl:input>
@@ -429,24 +327,6 @@
             </wsdl:input>
             <wsdl:output>
                 <soap:body use="literal" parts="ServiceRespHeader Trade_LC_Issue-Response"/>
-            </wsdl:output>
-        </wsdl:operation>
-        <wsdl:operation name="Trade_tsrv019_IB-AB_Produce">
-            <soap:operation style="rpc" soapAction="/Trade_Gateway.serviceagent//Trade_tsrv019_IB-AB_Produce"/>
-            <wsdl:input>
-                <soap:body use="literal" parts="ServiceReqHeader Trade_LC_Payment_Advice-Request"/>
-            </wsdl:input>
-            <wsdl:output>
-                <soap:body use="literal" parts="ServiceRespHeader Trade_LC_Payment_Advice-Response"/>
-            </wsdl:output>
-        </wsdl:operation>
-        <wsdl:operation name="Trade_tsrv019_AB-IB_Produce">
-            <soap:operation style="rpc" soapAction="/Trade_Gateway.serviceagent//Trade_tsrv019_AB-IB_Produce"/>
-            <wsdl:input>
-                <soap:body use="literal" parts="ServiceReqHeader Trade_LC_Payment_Advice-Request"/>
-            </wsdl:input>
-            <wsdl:output>
-                <soap:body use="literal" parts="ServiceRespHeader Trade_LC_Payment_Advice-Response"/>
             </wsdl:output>
         </wsdl:operation>
         <wsdl:operation name="Trade_tsrv019_Produce">
@@ -494,15 +374,6 @@
                 <soap:body use="literal" parts="ServiceRespHeader Trade_LC_Issue-Response"/>
             </wsdl:output>
         </wsdl:operation>
-        <wsdl:operation name="Trade_MT756_Produce">
-            <soap:operation style="rpc" soapAction="/Trade_Gateway.serviceagent//Trade_MT756_Produce"/>
-            <wsdl:input>
-                <soap:body use="literal" parts="ServiceReqHeader Trade_LC_Payment_Advice-Request"/>
-            </wsdl:input>
-            <wsdl:output>
-                <soap:body use="literal" parts="ServiceRespHeader Trade_LC_Payment_Advice-Response"/>
-            </wsdl:output>
-        </wsdl:operation>
         <wsdl:operation name="Trade_MT707_Produce">
             <soap:operation style="rpc" soapAction="/Trade_Gateway.serviceagent/Trade_Gateway_HTTPEndpoint/Trade_MT707_Produce"/>
             <wsdl:input>
@@ -513,14 +384,6 @@
             </wsdl:output>
         </wsdl:operation>
     </wsdl:binding>
-    <wsdl:message name="Trade_LC_Payment_Advice-Input">
-        <wsdl:part name="ServiceReqHeader" type="ns0:ServiceReqHeader"/>
-        <wsdl:part name="Trade_LC_Payment_Advice-Request" type="ns1:Trade_LC_Payment_Advice-Request"/>
-    </wsdl:message>
-    <wsdl:message name="Trade_LC_Payment_Advice-Output">
-        <wsdl:part name="ServiceRespHeader" type="ns2:ServiceRespHeader"/>
-        <wsdl:part name="Trade_LC_Payment_Advice-Response" type="ns1:Trade_LC_Payment_Advice-Response"/>
-    </wsdl:message>
     <wsdl:message name="Trade_LC_Issue-Input">
         <wsdl:part name="ServiceReqHeader" type="ns0:ServiceReqHeader"/>
         <wsdl:part name="Trade_LC_Issue-Request" type="ns1:Trade_LC_Issue-Request"/>

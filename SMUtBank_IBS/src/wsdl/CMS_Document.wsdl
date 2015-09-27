@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Created by TIBCO WSDL-->
+<wsdl:definitions xmlns:ns2="http://smubank.smu.edu.sg/schemas/serviceResponseHeader" xmlns:ns1="http://smubank.smu.edu.sg/schemas/Content_Management" xmlns:tns="http://smubank.smu.edu.sg/CMS/Document" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns0="http://smubank.smu.edu.sg/schemas/serviceRequestMessage/" xmlns:jms="http://www.tibco.com/namespaces/ws/2004/soap/binding/JMS" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap1="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:jndi="http://www.tibco.com/namespaces/ws/2004/soap/apis/jndi" name="Untitled" targetNamespace="http://smubank.smu.edu.sg/CMS/Document">
+    <wsdl:types>
+        <xs:schema xmlns:tns="http://smubank.smu.edu.sg/schemas/serviceRequestMessage/" targetNamespace="http://smubank.smu.edu.sg/schemas/serviceRequestMessage/" elementFormDefault="unqualified" attributeFormDefault="unqualified">
+            <xs:complexType name="Content">
+                <xs:sequence>
+                    <xs:element ref="tns:ServiceReqHeader"/>
+                    <xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax" namespace="##any"/>
+                </xs:sequence>
+                <xs:anyAttribute processContents="lax" namespace="##any"/>
+            </xs:complexType>
+            <xs:complexType name="ServiceReqHeader">
+                <xs:sequence>
+                    <xs:element name="ConsumerID" type="xs:string"/>
+                    <xs:element name="TransactionID" type="xs:string"/>
+                    <xs:element name="RequestUUID" type="xs:string"/>
+                    <xs:element name="OperationName" type="xs:string"/>
+                    <xs:element name="Priority" type="xs:int"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="Content" type="tns:Content"/>
+            <xs:element name="ServiceReqHeader" type="tns:ServiceReqHeader"/>
+        </xs:schema>
+        <xs:schema xmlns="http://smubank.smu.edu.sg/schemas/serviceResponseHeader" targetNamespace="http://smubank.smu.edu.sg/schemas/serviceResponseHeader" elementFormDefault="qualified" attributeFormDefault="unqualified">
+            <xs:complexType name="ServiceRespHeader">
+                <xs:sequence>
+                    <xs:element ref="ns2:GlobalErrorID"/>
+                    <xs:element ref="ns2:ErrorText"/>
+                    <xs:element ref="ns2:ErrorDetails"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="ErrorDetails" type="xs:string"/>
+            <xs:element name="ErrorText" type="xs:string"/>
+            <xs:element name="GlobalErrorID" type="xs:string"/>
+            <xs:element name="ServiceRespHeader" type="ns2:ServiceRespHeader"/>
+        </xs:schema>
+        <xs:schema xmlns="http://smubank.smu.edu.sg/schemas/Content_Management" targetNamespace="http://smubank.smu.edu.sg/schemas/Content_Management" elementFormDefault="qualified" attributeFormDefault="unqualified">
+            <xs:complexType name="CMS_Document_Delete-Request">
+                <xs:sequence>
+                    <xs:element ref="ns1:filename"/>
+                    <xs:element ref="ns1:party_id"/>
+                    <xs:element ref="ns1:document_type_id"/>
+                    <xs:element ref="ns1:version"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="CMS_Document_Delete-Response">
+                <xs:sequence>
+                    <xs:element ref="ns1:party_id"/>
+                    <xs:element ref="ns1:document_type_id"/>
+                    <xs:element ref="ns1:filename"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="CMS_Document_Retrieve-Request">
+                <xs:sequence>
+                    <xs:element ref="ns1:filename"/>
+                    <xs:element ref="ns1:party_id"/>
+                    <xs:element ref="ns1:document_type_id"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="CMS_Document_Retrieve-Response">
+                <xs:sequence>
+                    <xs:element name="document" type="ns1:Document"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="CMS_Document_Search-Request">
+                <xs:sequence>
+                    <xs:element ref="ns1:party_id"/>
+                    <xs:element ref="ns1:document_type_id"/>
+                    <xs:element ref="ns1:latest_version"/>
+                    <xs:element ref="ns1:StartDate"/>
+                    <xs:element ref="ns1:EndDate"/>
+                    <xs:element ref="ns1:RecordsPerPage"/>
+                    <xs:element ref="ns1:PageNumber"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="CMS_Document_Search-Response">
+                <xs:sequence>
+                    <xs:element name="document_list" type="ns1:DocumentList"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="CMS_Document_Store-Request">
+                <xs:sequence>
+                    <xs:element ref="ns1:filename"/>
+                    <xs:element ref="ns1:party_id"/>
+                    <xs:element ref="ns1:document_type_id"/>
+                    <xs:element ref="ns1:MyBinaryData"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="CMS_Document_Store-Response">
+                <xs:sequence>
+                    <xs:element ref="ns1:filename"/>
+                    <xs:element ref="ns1:date_uploaded"/>
+                    <xs:element ref="ns1:url"/>
+                    <xs:element ref="ns1:size"/>
+                    <xs:element ref="ns1:version"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="DatapointDetail">
+                <xs:sequence>
+                    <xs:element ref="ns1:snapshot"/>
+                    <xs:element ref="ns1:point_datetime"/>
+                    <xs:element ref="ns1:report_type"/>
+                    <xs:element ref="ns1:document_type_id"/>
+                    <xs:element ref="ns1:point_value"/>
+                    <xs:element ref="ns1:channel"/>
+                    <xs:element ref="ns1:bank_id"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="DatapointList">
+                <xs:sequence>
+                    <xs:element name="datapoint_detail" type="ns1:DatapointDetail" minOccurs="0" maxOccurs="unbounded"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="Document">
+                <xs:sequence>
+                    <xs:element ref="ns1:party_id"/>
+                    <xs:element ref="ns1:document_type_id"/>
+                    <xs:element ref="ns1:filename"/>
+                    <xs:element ref="ns1:version"/>
+                    <xs:element ref="ns1:date_uploaded"/>
+                    <xs:element ref="ns1:url"/>
+                    <xs:element ref="ns1:size"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="DocumentList">
+                <xs:sequence>
+                    <xs:element name="document" type="ns1:Document" minOccurs="0" maxOccurs="unbounded"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="EndDate" type="xs:string"/>
+            <xs:element name="MyBinaryData">
+                <xs:complexType>
+                    <xs:simpleContent>
+                        <xs:extension base="xs:base64Binary"/>
+                    </xs:simpleContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="PageNumber" type="xs:string"/>
+            <xs:element name="RecordsPerPage" type="xs:string"/>
+            <xs:element name="StartDate" type="xs:string"/>
+            <xs:element name="bank_id" type="xs:int"/>
+            <xs:element name="channel" type="xs:string"/>
+            <xs:element name="date_uploaded" type="xs:string"/>
+            <xs:element name="document_ID" type="xs:int"/>
+            <xs:element name="document_type_id" type="xs:int"/>
+            <xs:element name="filename" type="xs:string"/>
+            <xs:element name="latest_version" type="xs:boolean"/>
+            <xs:element name="party_id" type="xs:string"/>
+            <xs:element name="point_datetime" type="xs:string"/>
+            <xs:element name="point_value" type="xs:decimal"/>
+            <xs:element name="report_type" type="xs:string"/>
+            <xs:element name="size" type="xs:int"/>
+            <xs:element name="snapshot" type="xs:string"/>
+            <xs:element name="url" type="xs:anyURI"/>
+            <xs:element name="version" type="xs:int"/>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:service name="CMS_Document">
+        <wsdl:port name="CMS_Document_JMSEndpoint" binding="tns:CMS_Document_JMSEndpointBinding">
+            <soap:address location=""/>
+            <jms:connectionFactory>SMUBankQueueConnectionFactory</jms:connectionFactory>
+            <jms:targetAddress destination="queue">cms.endpoint</jms:targetAddress>
+        </wsdl:port>
+        <wsdl:port name="CMS_Document_HTTPEndpoint" binding="tns:CMS_Document_HTTPEndpointBinding">
+            <soap:address location="http://localhost:9090/CMS_Document.serviceagent/CMS_Document_HTTPEndpoint"/>
+        </wsdl:port>
+    </wsdl:service>
+    <wsdl:portType name="CMS_Document">
+        <wsdl:operation name="CMS_Document_Search">
+            <wsdl:input message="tns:CMS_Document_Search-Input"/>
+            <wsdl:output message="tns:CMS_Document_Search-Output"/>
+        </wsdl:operation>
+        <wsdl:operation name="CMS_Document_Store">
+            <wsdl:input message="tns:CMS_Document_Store-Input"/>
+            <wsdl:output message="tns:CMS_Document_Store-Output"/>
+        </wsdl:operation>
+        <wsdl:operation name="CMS_Document_Delete">
+            <wsdl:input message="tns:CMS_Document_Delete-Input"/>
+            <wsdl:output message="tns:CMS_Document_Delete-Output"/>
+        </wsdl:operation>
+        <wsdl:operation name="CMS_Document_Retrieve">
+            <wsdl:input message="tns:CMS_Document_Retrieve-Input"/>
+            <wsdl:output message="tns:CMS_Document_Retrieve-Output"/>
+        </wsdl:operation>
+        <wsdl:operation name="CMS_ReportBucket_Read">
+            <wsdl:input message="tns:CMS_ReportBucket_Read-Input"/>
+            <wsdl:output message="tns:CMS_ReportBucket_Read-Output"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="CMS_Document_JMSEndpointBinding" type="tns:CMS_Document">
+        <soap:binding style="rpc" transport="http://www.tibco.com/namespaces/ws/2004/soap/binding/JMS"/>
+        <jms:binding messageFormat="Text"/>
+        <wsdl:operation name="CMS_Document_Search">
+            <soap:operation style="rpc" soapAction="/CMS_Document.serviceagent/CMS_Document_JMSEndpoint/CMS_Document_Search"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="ServiceReqHeader CMS_Document_Search-Request"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="ServiceRespHeader CMS_Document_Search-Response"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="CMS_Document_Store">
+            <soap:operation style="rpc" soapAction="/CMS_Document.serviceagent/CMS_Document_JMSEndpoint/CMS_Document_Store"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="ServiceReqHeader CMS_Document_Store-Request"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="ServiceRespHeader CMS_Document_Store-Response"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="CMS_Document_Delete">
+            <soap:operation style="rpc" soapAction="/CMS_Document.serviceagent/CMS_Document_JMSEndpoint/CMS_Document_Delete"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="ServiceReqHeader CMS_Document_Delete-Request"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="ServiceRespHeader CMS_Document_Delete-Response"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="CMS_Document_Retrieve">
+            <soap:operation style="rpc" soapAction="/CMS_Document.serviceagent/CMS_Document_JMSEndpoint/CMS_Document_Retrieve"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="ServiceReqHeader CMS_Document_Retrieve-Request"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="ServiceRespHeader CMS_Document_Retrieve-Response"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="CMS_ReportBucket_Read">
+            <soap:operation style="rpc" soapAction="/CMS_Document.serviceagent/CMS_Document_JMSEndpoint/CMS_ReportBucket_Read"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="ServiceReqHeader DatapointDetail start_datetime end_datetime GroupBy OrderBy"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="ServiceRespHeader DatapointList"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="CMS_Document_HTTPEndpointBinding" type="tns:CMS_Document">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="CMS_Document_Search">
+            <soap:operation style="rpc" soapAction="/CMS_Document.serviceagent/CMS_Document_HTTPEndpoint/CMS_Document_Search"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="ServiceReqHeader CMS_Document_Search-Request"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="ServiceRespHeader CMS_Document_Search-Response"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="CMS_Document_Store">
+            <soap:operation style="rpc" soapAction="/CMS_Document.serviceagent/CMS_Document_HTTPEndpoint/CMS_Document_Store"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="ServiceReqHeader CMS_Document_Store-Request"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="ServiceRespHeader CMS_Document_Store-Response"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="CMS_Document_Delete">
+            <soap:operation style="rpc" soapAction="/CMS_Document.serviceagent/CMS_Document_HTTPEndpoint/CMS_Document_Delete"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="ServiceReqHeader CMS_Document_Delete-Request"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="ServiceRespHeader CMS_Document_Delete-Response"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="CMS_Document_Retrieve">
+            <soap:operation style="rpc" soapAction="/CMS_Document.serviceagent/CMS_Document_HTTPEndpoint/CMS_Document_Retrieve"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="ServiceReqHeader CMS_Document_Retrieve-Request"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="ServiceRespHeader CMS_Document_Retrieve-Response"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="CMS_ReportBucket_Read">
+            <soap:operation style="rpc" soapAction="/CMS_Document.serviceagent/CMS_Document_HTTPEndpoint/CMS_ReportBucket_Read"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="ServiceReqHeader DatapointDetail start_datetime end_datetime GroupBy OrderBy"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="ServiceRespHeader DatapointList"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:message name="CMS_Document_Search-Input">
+        <wsdl:part name="ServiceReqHeader" type="ns0:ServiceReqHeader"/>
+        <wsdl:part name="CMS_Document_Search-Request" type="ns1:CMS_Document_Search-Request"/>
+    </wsdl:message>
+    <wsdl:message name="CMS_Document_Search-Output">
+        <wsdl:part name="ServiceRespHeader" type="ns2:ServiceRespHeader"/>
+        <wsdl:part name="CMS_Document_Search-Response" type="ns1:CMS_Document_Search-Response"/>
+    </wsdl:message>
+    <wsdl:message name="CMS_Document_Store-Input">
+        <wsdl:part name="ServiceReqHeader" type="ns0:ServiceReqHeader"/>
+        <wsdl:part name="CMS_Document_Store-Request" type="ns1:CMS_Document_Store-Request"/>
+    </wsdl:message>
+    <wsdl:message name="CMS_Document_Store-Output">
+        <wsdl:part name="ServiceRespHeader" type="ns2:ServiceRespHeader"/>
+        <wsdl:part name="CMS_Document_Store-Response" type="ns1:CMS_Document_Store-Response"/>
+    </wsdl:message>
+    <wsdl:message name="CMS_Document_Delete-Input">
+        <wsdl:part name="ServiceReqHeader" type="ns0:ServiceReqHeader"/>
+        <wsdl:part name="CMS_Document_Delete-Request" type="ns1:CMS_Document_Delete-Request"/>
+    </wsdl:message>
+    <wsdl:message name="CMS_Document_Delete-Output">
+        <wsdl:part name="ServiceRespHeader" type="ns2:ServiceRespHeader"/>
+        <wsdl:part name="CMS_Document_Delete-Response" type="ns1:CMS_Document_Delete-Response"/>
+    </wsdl:message>
+    <wsdl:message name="CMS_Document_Retrieve-Input">
+        <wsdl:part name="ServiceReqHeader" type="ns0:ServiceReqHeader"/>
+        <wsdl:part name="CMS_Document_Retrieve-Request" type="ns1:CMS_Document_Retrieve-Request"/>
+    </wsdl:message>
+    <wsdl:message name="CMS_Document_Retrieve-Output">
+        <wsdl:part name="ServiceRespHeader" type="ns2:ServiceRespHeader"/>
+        <wsdl:part name="CMS_Document_Retrieve-Response" type="ns1:CMS_Document_Retrieve-Response"/>
+    </wsdl:message>
+    <wsdl:message name="CMS_ReportBucket_Read-Input">
+        <wsdl:part name="ServiceReqHeader" type="ns0:ServiceReqHeader"/>
+        <wsdl:part name="DatapointDetail" type="ns1:DatapointDetail"/>
+        <wsdl:part name="start_datetime" type="xs:string"/>
+        <wsdl:part name="end_datetime" type="xs:string"/>
+        <wsdl:part name="GroupBy" type="xs:string"/>
+        <wsdl:part name="OrderBy" type="xs:string"/>
+    </wsdl:message>
+    <wsdl:message name="CMS_ReportBucket_Read-Output">
+        <wsdl:part name="ServiceRespHeader" type="ns2:ServiceRespHeader"/>
+        <wsdl:part name="DatapointList" type="ns1:DatapointList"/>
+    </wsdl:message>
+</wsdl:definitions>

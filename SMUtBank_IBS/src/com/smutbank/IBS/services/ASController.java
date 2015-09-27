@@ -36,10 +36,12 @@ public class ASController {
     private void connect() {
     	//timer start
     	long startTime = System.nanoTime();
-    	String memberName = (IBSProperties.getIBSProp("ActiveSpacesMemberName") == "")? "IBServer": IBSProperties.getIBSProp("ActiveSpacesMemberName");
+    	String memberName = (IBSProperties.getIBSProp("ActiveSpacesMemberName").equals(""))? "IBServer": IBSProperties.getIBSProp("ActiveSpacesMemberName");
+    	String activeSpacesPort = (IBSProperties.getIBSProp("ActiveSpacesPort").equals(""))? "tcp://localhost:61000": IBSProperties.getIBSProp("ActiveSpacesPort");
     	MemberDef memberDef = MemberDef.create();
         memberDef.setDiscovery("tibpgm");
-        memberDef.setListen("tcp");
+//        memberDef.setListen("tcp"); // AM 20150802 default port 50000 conflicts with DB2
+        memberDef.setListen(activeSpacesPort);
         memberDef.setMemberName(memberName);
         try {
             String datastorePath = (!IBSProperties.getIBSProp("ASDataStorePath").equals(""))? IBSProperties.getIBSProp("ASDataStorePath").replace("/", "\\") : ASController.class.getResource("/").toURI().getPath().substring(1).replace("/", "\\") + "ASDataStore\\";

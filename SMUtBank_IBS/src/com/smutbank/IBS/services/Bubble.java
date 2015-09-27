@@ -113,7 +113,7 @@ public class Bubble {
     }
     
     public static LinkedHashMap<String,String> scrubBubble(String soapMsg, String newRootTag, ArrayList<String> tagCaptureList) {
-        LinkedHashMap<String,String> result = new LinkedHashMap<String,String>();
+    	LinkedHashMap<String,String> result = new LinkedHashMap<String,String>();
         try {
             //long startTime = System.nanoTime();
             Document soapDoc = parseXML(soapMsg);
@@ -172,7 +172,7 @@ public class Bubble {
     }
     
     private static boolean hasLetters(String s) {
-    	return s.matches("[\\w\\d.&@,+ :-]+");
+    	return s.matches("[\\w\\d.&@,+ :/-]+");
     }
     
     private static String toString(Document doc) throws Exception {

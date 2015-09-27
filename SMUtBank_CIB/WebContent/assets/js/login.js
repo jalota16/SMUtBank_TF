@@ -119,6 +119,7 @@ login.cancelAuth = function() {
 };
 
 login.createSMSOTP = function() {
+	console.log("reached login SMS OTP");
     if(!(document.getElementById("username").value.length > 0)) {
         alert("Username cannot be blank");
         return;
@@ -129,11 +130,14 @@ login.createSMSOTP = function() {
     }
     
     var populater = function(response, extras) {
+    	console.log("reahed pop");
         if(response.status == "ok" && response.esbStatus == "Authenticated") {
+        	console.log("esb is OK");
             login.disableAdvert();
             login.buildSMSOTP();
         } else {
             document.getElementById("status").innerHTML = response.esbStatus;
+            console.log(response.esbStatus);
         }
     };
     var payload = '{LoginID:"' + document.getElementById("username").value + '",Pin:"' + document.getElementById("password").value + '"}';

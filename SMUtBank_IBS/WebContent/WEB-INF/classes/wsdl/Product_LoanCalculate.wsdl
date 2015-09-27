@@ -142,17 +142,17 @@
             <jms:targetAddress destination="queue">product.endpoint</jms:targetAddress>
         </wsdl:port>
         <wsdl:port name="Product_LoanCalculate_HTTPEndpoint" binding="tns:Product_LoanCalculate_HTTPEndpointBinding">
-            <soap:address location="http://localhost:9090/Product_LoanCalculate.serviceagent/Product_LoanCalculate_HTTPEndpoint"/>
+            <soap:address location="http://localhost:9091/Product_LoanCalculate.serviceagent/Product_LoanCalculate_HTTPEndpoint"/>
         </wsdl:port>
     </wsdl:service>
     <wsdl:portType name="Product_LoanCalculate">
-        <wsdl:operation name="Product_LoanFullRepayment_Calculate">
-            <wsdl:input message="tns:Product_LoanFullRepayment_Calculate-Input"/>
-            <wsdl:output message="tns:Product_LoanFullRepayment_Calculate-Output"/>
-        </wsdl:operation>
         <wsdl:operation name="Product_LoanInstallment_Calculate">
             <wsdl:input message="tns:Product_LoanInstallment_Calculate-Input"/>
             <wsdl:output message="tns:Product_LoanInstallment_Calculate-Output"/>
+        </wsdl:operation>
+        <wsdl:operation name="Product_LoanFullRepayment_Calculate">
+            <wsdl:input message="tns:Product_LoanFullRepayment_Calculate-Input"/>
+            <wsdl:output message="tns:Product_LoanFullRepayment_Calculate-Output"/>
         </wsdl:operation>
         <wsdl:operation name="Test_Installment">
             <wsdl:input message="tns:TestInstallment-Input"/>
@@ -162,10 +162,23 @@
             <wsdl:input message="tns:Product_LoanPartialRepayment_Calculate-Input"/>
             <wsdl:output message="tns:Product_LoanPartialRepayment_Calculate-Output"/>
         </wsdl:operation>
+        <wsdl:operation name="Product_LoanInstallment_Calculate_v1">
+            <wsdl:input message="tns:Product_LoanInstallment_Calculate-Input"/>
+            <wsdl:output message="tns:Product_LoanInstallment_Calculate-Output"/>
+        </wsdl:operation>
     </wsdl:portType>
     <wsdl:binding name="Product_LoanCalculate_JMSEndpointBinding" type="tns:Product_LoanCalculate">
         <soap:binding style="rpc" transport="http://www.tibco.com/namespaces/ws/2004/soap/binding/JMS"/>
         <jms:binding messageFormat="Text"/>
+        <wsdl:operation name="Product_LoanInstallment_Calculate">
+            <soap:operation style="rpc" soapAction="/Product_LoanCalculate.serviceagent/Product_LoanCalculate_JMSEndpoint/Product_LoanInstallment_Calculate"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="ServiceReqHeader InstallmentRequest"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="ServiceRespHeader InstallmentResponse"/>
+            </wsdl:output>
+        </wsdl:operation>
         <wsdl:operation name="Product_LoanFullRepayment_Calculate">
             <soap:operation style="rpc" soapAction="/Product_LoanCalculate.serviceagent/Product_LoanCalculate_JMSEndpoint/Product_LoanFullRepayment_Calculate"/>
             <wsdl:input>
@@ -193,8 +206,8 @@
                 <soap:body use="literal" parts="ServiceRespHeader PartialRepaymentResponse"/>
             </wsdl:output>
         </wsdl:operation>
-        <wsdl:operation name="Product_LoanInstallment_Calculate">
-            <soap:operation style="rpc" soapAction="/Product_LoanCalculate.serviceagent/Product_LoanCalculate_JMSEndpoint/Product_LoanInstallment_Calculate_v2"/>
+        <wsdl:operation name="Product_LoanInstallment_Calculate_v1">
+            <soap:operation style="rpc" soapAction="/Product_LoanCalculate.serviceagent/Product_LoanCalculate_JMSEndpoint/Product_LoanInstallment_Calculate_v1"/>
             <wsdl:input>
                 <soap:body use="literal" parts="ServiceReqHeader InstallmentRequest"/>
             </wsdl:input>
@@ -205,6 +218,15 @@
     </wsdl:binding>
     <wsdl:binding name="Product_LoanCalculate_HTTPEndpointBinding" type="tns:Product_LoanCalculate">
         <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="Product_LoanInstallment_Calculate">
+            <soap:operation style="rpc" soapAction="/Product_LoanCalculate.serviceagent/Product_LoanCalculate_HTTPEndpoint/Product_LoanInstallment_Calculate"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="ServiceReqHeader InstallmentRequest"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="ServiceRespHeader InstallmentResponse"/>
+            </wsdl:output>
+        </wsdl:operation>
         <wsdl:operation name="Product_LoanFullRepayment_Calculate">
             <soap:operation style="rpc" soapAction="/Product_LoanCalculate.serviceagent/Product_LoanCalculate_HTTPEndpoint/Product_LoanFullRepayment_Calculate"/>
             <wsdl:input>
@@ -232,8 +254,8 @@
                 <soap:body use="literal" parts="ServiceRespHeader PartialRepaymentResponse"/>
             </wsdl:output>
         </wsdl:operation>
-        <wsdl:operation name="Product_LoanInstallment_Calculate">
-            <soap:operation style="rpc" soapAction="/Product_LoanCalculate.serviceagent/Product_LoanCalculate_HTTPEndpoint/Product_LoanInstallment_Calculate_v2"/>
+        <wsdl:operation name="Product_LoanInstallment_Calculate_v1">
+            <soap:operation style="rpc" soapAction="/Product_LoanCalculate.serviceagent/Product_LoanCalculate_HTTPEndpoint/Product_LoanInstallment_Calculate_v1"/>
             <wsdl:input>
                 <soap:body use="literal" parts="ServiceReqHeader InstallmentRequest"/>
             </wsdl:input>
@@ -242,14 +264,6 @@
             </wsdl:output>
         </wsdl:operation>
     </wsdl:binding>
-    <wsdl:message name="Product_LoanFullRepayment_Calculate-Input">
-        <wsdl:part name="ServiceReqHeader" type="ns0:ServiceReqHeader"/>
-        <wsdl:part name="FullRepaymentRequest" type="ns1:LoanCalculateFullRepayment_Request"/>
-    </wsdl:message>
-    <wsdl:message name="Product_LoanFullRepayment_Calculate-Output">
-        <wsdl:part name="ServiceRespHeader" type="ns2:ServiceRespHeader"/>
-        <wsdl:part name="FullRepaymentResponse" type="ns1:LoanCalculateFullRepayment_Response"/>
-    </wsdl:message>
     <wsdl:message name="Product_LoanInstallment_Calculate-Input">
         <wsdl:part name="ServiceReqHeader" type="ns0:ServiceReqHeader"/>
         <wsdl:part name="InstallmentRequest" type="ns1:LoanCalculateInstallment_Request"/>
@@ -257,6 +271,14 @@
     <wsdl:message name="Product_LoanInstallment_Calculate-Output">
         <wsdl:part name="ServiceRespHeader" element="ns2:ServiceRespHeader"/>
         <wsdl:part name="InstallmentResponse" type="ns1:LoanCalculateInstallment_Response"/>
+    </wsdl:message>
+    <wsdl:message name="Product_LoanFullRepayment_Calculate-Input">
+        <wsdl:part name="ServiceReqHeader" type="ns0:ServiceReqHeader"/>
+        <wsdl:part name="FullRepaymentRequest" type="ns1:LoanCalculateFullRepayment_Request"/>
+    </wsdl:message>
+    <wsdl:message name="Product_LoanFullRepayment_Calculate-Output">
+        <wsdl:part name="ServiceRespHeader" type="ns2:ServiceRespHeader"/>
+        <wsdl:part name="FullRepaymentResponse" type="ns1:LoanCalculateFullRepayment_Response"/>
     </wsdl:message>
     <wsdl:message name="TestInstallment-Input">
         <wsdl:part name="AccountID" type="xs:int"/>
